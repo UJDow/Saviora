@@ -75,23 +75,7 @@
       min-height: 100vh;
       padding: 0;
     }
-    .logo-block {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 18px;
-    }
-    .logo-img {
-      width: 110px;
-      max-width: 40vw;
-      height: auto;
-      margin-bottom: 10px;
-      display: block;
-      object-fit: contain;
-      background: transparent;
-      filter: drop-shadow(0 2px 24px #bed0f1cc);
-      transition: filter 0.4s;
-    }
+    /* Removed .logo-block and .logo-img for centered logo */
     .waitlist-btn {
       position: absolute;
       top: 32px;
@@ -272,6 +256,23 @@
       font-weight: 700;
       margin-top: 18px;
     }
+    /* --- LOGO FIXED IN TOP LEFT --- */
+    .logo-fixed {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      z-index: 100;
+      background: transparent;
+    }
+    .logo-fixed-img {
+      width: 80px;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 24px #bed0f1cc);
+      transition: filter 0.4s;
+      background: transparent;
+    }
     @media (max-width: 900px) {
       .container {
         padding: 32px 8px 28px 8px;
@@ -300,8 +301,12 @@
       .desc {
         font-size: 1rem;
       }
-      .logo-img {
-        width: 70px;
+      .logo-fixed {
+        top: 8px;
+        left: 8px;
+      }
+      .logo-fixed-img {
+        width: 50px;
       }
       .waitlist-btn {
         font-size: 0.95rem;
@@ -323,6 +328,11 @@
   </style>
 </head>
 <body>
+  <!-- Logo in upper left corner -->
+  <div class="logo-fixed">
+    <img src="logo.png" alt="Saviora Logo" class="logo-fixed-img" />
+  </div>
+
   <div class="bg-blobs">
     <div class="blob blob1"></div>
     <div class="blob blob2"></div>
@@ -331,9 +341,7 @@
   </div>
   <button class="waitlist-btn" id="waitlistBtn">App Waitlist</button>
   <div class="main-center">
-    <div class="logo-block">
-      <img src="photo_2025-06-30_22-00-32%20copy.png" alt="Saviora Logo" class="logo-img" />
-    </div>
+    <!-- Centered logo removed to only show logo in the top-left corner -->
     <div class="container">
       <div class="subtitle">Интерпретация сновидений</div>
       <div class="desc">Запишите своё сновидение — мы поможем услышать, что оно хочет сказать.</div>
@@ -427,6 +435,7 @@
 
         modalContent.style.display = 'none';
         queueNumber.style.display = '';
+        queueNumber.style.display = '';
         queueNumber.textContent = `Вы №${number} в списке ожидания Saviora`;
 
         // Очищаем поле email и деактивируем кнопку
@@ -439,8 +448,7 @@
       }
     };
 
-    // Исправление пути к логотипу (если файл лежит рядом с html)
-    document.querySelector('.logo-img').src = encodeURIComponent('photo_2025-06-30_22-00-32 copy.png');
+    // No logo-img src fix needed anymore; logo is now only in top-left.
   </script>
 </body>
 </html>
