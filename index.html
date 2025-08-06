@@ -17,7 +17,6 @@
       transition: background 0.5s;
       overflow-x: hidden;
     }
-    /* Overlay for the semi-transparent background image */
     .background-overlay {
       position: fixed;
       top: 0; left: 0;
@@ -25,9 +24,8 @@
       z-index: 0;
       pointer-events: none;
       background: url('background 1.png') center center/cover no-repeat fixed;
-      opacity: 0.35; /* reduced by 30% */
+      opacity: 0.35;
     }
-    /* Dreamy color/light overlay */
     body::after {
       content: "";
       position: fixed;
@@ -37,7 +35,7 @@
       z-index: 1;
       background: radial-gradient(ellipse at 70% 20%, #ffe6c9cc 0%, #b6c7e688 100%);
       mix-blend-mode: lighten;
-      opacity: 0.5; /* slightly reduced */
+      opacity: 0.5;
       backdrop-filter: blur(4px);
     }
     .main-center {
@@ -75,11 +73,11 @@
     }
     .container {
       width: 100%;
-      max-width: 420px; /* reduced by 30% */
+      max-width: 420px;
       background: rgba(255,255,255,0.91);
       border-radius: 38px;
       box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9;
-      padding: 34px 25px 28px 25px; /* reduced by ~30% */
+      padding: 34px 25px 28px 25px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -92,7 +90,8 @@
       50%  { box-shadow: 0 12px 64px 0 rgba(180, 160, 120, 0.18), 0 2.5px 18px 0 #ffe6c9; }
       100% { box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9; }
     }
-    .subtitle {
+    /* BOLD phrase, large font */
+    .main-phrase {
       font-size: 2.2rem;
       font-weight: 700;
       color: #222;
@@ -102,14 +101,17 @@
       text-shadow: 0 2px 12px #ffe6c9cc;
       font-family: 'Montserrat', Arial, sans-serif;
     }
+    /* Italic desc, small font */
     .desc {
-      font-size: 1.1rem;
+      font-size: 0.8rem;
       color: #666;
       margin-bottom: 32px;
       text-align: center;
       max-width: 500px;
       text-shadow: 0 1px 8px #fff6e9cc;
       font-family: 'Montserrat', Arial, sans-serif;
+      font-style: italic;
+      font-weight: 400;
     }
     form {
       width: 100%;
@@ -246,10 +248,10 @@
     }
     @media (max-width: 900px) {
       .container {
-        padding: 22px 6px 20px 6px; /* reduced by ~30% */
-        max-width: 68vw; /* reduced */
+        padding: 22px 6px 20px 6px;
+        max-width: 68vw;
       }
-      .subtitle {
+      .main-phrase {
         font-size: 1.3rem;
       }
       .waitlist-btn {
@@ -263,14 +265,14 @@
         padding: 0 0 24px 0;
       }
       .container {
-        padding: 13px 3vw 13px 3vw; /* reduced */
+        padding: 13px 3vw 13px 3vw;
         border-radius: 22px;
       }
-      .subtitle {
+      .main-phrase {
         font-size: 1.1rem;
       }
       .desc {
-        font-size: 1rem;
+        font-size: 0.7rem;
       }
       .waitlist-btn {
         font-size: 0.95rem;
@@ -297,8 +299,8 @@
   <button class="waitlist-btn" id="waitlistBtn">App Waitlist</button>
   <div class="main-center">
     <div class="container">
-      <div class="subtitle">Толкование сновидений</div>
-      <div class="desc">Сны говорят, мы помогаем слушать</div>
+      <div class="main-phrase"><b>Сны говорят, мы помогаем слушать</b></div>
+      <div class="desc">Saviora — делимся тем, что помогает лучше понять себя...</div>
       <form
         action="https://formspree.io/f/xanbpkgn"
         method="POST"
