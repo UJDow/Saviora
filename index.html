@@ -11,17 +11,23 @@
       --glow1: #ffe6c9;
       --glow2: #bed0f1;
       --glow3: #f7d6b6;
-      --evening-bg: #2e3145;
-      --evening-gradient1: #554e6c;
-      --evening-gradient2: #3d415a;
-      --evening-gradient3: #2e3145;
+      --light-bg: #fff6e9;
+      --overlay-light: rgba(255,255,255,0.82);
+      --bg-gradient1: #ffe6c9cc;
+      --bg-gradient2: #b6c7e688;
+      --panel-bg: rgba(255,255,255,0.94);
+      --textarea-bg: #f7f7f7;
+      --textarea-shadow: #ffe6c9;
+      --container-shadow: #ffe6c9;
+      --container-shadow2: rgba(180, 160, 120, 0.13);
+      --input-bg: #f7f7f7;
     }
     html, body {
       height: 100%;
       width: 100vw;
       box-sizing: border-box;
       font-family: 'Montserrat', Arial, sans-serif;
-      background: var(--evening-bg);
+      background: var(--light-bg);
       color: var(--blue);
       text-shadow: 0 1px 2px #fff6e955;
       margin: 0;
@@ -45,7 +51,7 @@
       opacity: 1;
       min-width: 100vw;
       min-height: 100vh;
-      background: var(--evening-bg);
+      background: var(--light-bg);
     }
     body::after {
       content: "";
@@ -54,11 +60,11 @@
       width: 100vw; height: 100vh;
       pointer-events: none;
       z-index: 1;
-      /* Less transparent and warmer for evening */
-      background: radial-gradient(ellipse at 70% 20%, #3d415a 0%, #554e6c 70%, #2e3145 100%);
-      opacity: 0.92;
-      backdrop-filter: blur(5px);
+      background: radial-gradient(ellipse at 70% 20%, var(--bg-gradient1) 0%, var(--bg-gradient2) 100%);
+      opacity: 0.5;
+      backdrop-filter: blur(4px);
       mix-blend-mode: lighten;
+      transition: opacity 0.5s;
     }
     .main-center {
       position: relative;
@@ -96,24 +102,24 @@
     .container {
       width: 100%;
       max-width: 420px;
-      background: rgba(48, 54, 70, 0.96); /* deeper cozy */
+      background: var(--panel-bg);
       border-radius: 38px;
-      box-shadow: 0 8px 48px 0 rgba(80, 60, 120, 0.16), 0 1.5px 12px 0 #3d415a;
+      box-shadow: 0 8px 48px 0 var(--container-shadow2), 0 1.5px 12px 0 var(--container-shadow);
       padding: 34px 25px 28px 25px;
       display: flex;
       flex-direction: column;
       align-items: center;
       margin: 0 auto;
-      backdrop-filter: blur(3px);
+      backdrop-filter: blur(2px);
       animation: containerGlow 6s ease-in-out infinite alternate;
       box-sizing: border-box;
       color: var(--blue);
       text-shadow: 0 1px 2px #fff6e955;
     }
     @keyframes containerGlow {
-      0%   { box-shadow: 0 8px 48px 0 rgba(80, 60, 120, 0.12), 0 1.5px 12px 0 #3d415a;}
-      50%  { box-shadow: 0 12px 64px 0 rgba(120, 100, 180, 0.18), 0 2.5px 18px 0 #554e6c;}
-      100% { box-shadow: 0 8px 48px 0 rgba(80, 60, 120, 0.12), 0 1.5px 12px 0 #3d415a;}
+      0%   { box-shadow: 0 8px 48px 0 var(--container-shadow2), 0 1.5px 12px 0 var(--container-shadow);}
+      50%  { box-shadow: 0 12px 64px 0 var(--container-shadow2), 0 2.5px 18px 0 var(--container-shadow);}
+      100% { box-shadow: 0 8px 48px 0 var(--container-shadow2), 0 1.5px 12px 0 var(--container-shadow);}
     }
     .main-phrase {
       font-size: 2.2rem;
@@ -122,7 +128,7 @@
       margin-bottom: 24px;
       text-align: center;
       line-height: 1.2;
-      text-shadow: 0 2px 8px #fff6e9bb;
+      text-shadow: 0 2px 8px var(--glow1);
       font-family: 'Montserrat', Arial, sans-serif;
     }
     form {
@@ -151,14 +157,14 @@
       padding: 22px;
       font-size: 0.95rem;
       font-style: italic;
-      background: #2e3145;
+      background: var(--textarea-bg);
       color: var(--blue);
       outline: none;
       margin-bottom: 0;
       resize: vertical;
       box-sizing: border-box;
       transition: border 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 12px 0 #3d415a;
+      box-shadow: 0 2px 12px 0 var(--textarea-shadow);
       animation: textareaGlow 7s ease-in-out infinite alternate;
       font-family: 'Montserrat', Arial, sans-serif;
     }
@@ -171,13 +177,13 @@
       text-shadow: none;
     }
     @keyframes textareaGlow {
-      0%   { box-shadow: 0 2px 12px 0 #3d415a; }
-      50%  { box-shadow: 0 4px 24px 0 #554e6c; }
-      100% { box-shadow: 0 2px 12px 0 #3d415a; }
+      0%   { box-shadow: 0 2px 12px 0 var(--textarea-shadow);}
+      50%  { box-shadow: 0 4px 24px 0 var(--glow1);}
+      100% { box-shadow: 0 2px 12px 0 var(--textarea-shadow);}
     }
     textarea:focus {
       border: 1.5px solid var(--blue);
-      box-shadow: 0 0 0 2px #554e6c;
+      box-shadow: 0 0 0 2px var(--glow1);
     }
     .dream-glow-btn {
       width: 100%;
@@ -186,15 +192,15 @@
       border-radius: 32px;
       font-size: 1.18rem;
       font-weight: 700;
-      background: linear-gradient(90deg, var(--blue) 0%, #554e6c 100%);
+      background: linear-gradient(90deg, var(--blue) 0%, var(--glow1) 100%);
       color: var(--blue);
       cursor: pointer;
       margin-top: 14px;
       transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 24px 0 #554e6c;
+      box-shadow: 0 2px 24px 0 var(--glow1);
       animation: btnGlow 5s ease-in-out infinite alternate;
       font-family: 'Montserrat', Arial, sans-serif;
-      text-shadow: 0 0 16px var(--glow1), 0 0 32px var(--glow2), 0 2px 8px #fff6e9bb;
+      text-shadow: 0 0 16px var(--glow1), 0 0 32px var(--glow2), 0 2px 8px var(--glow1);
       position: relative;
       overflow: hidden;
     }
@@ -204,14 +210,14 @@
       will-change: text-shadow, transform;
     }
     @keyframes btnGlow {
-      0%   { box-shadow: 0 2px 12px 0 #554e6c; }
-      50%  { box-shadow: 0 4px 24px 0 var(--blue); }
-      100% { box-shadow: 0 2px 12px 0 #554e6c; }
+      0%   { box-shadow: 0 2px 12px 0 var(--glow1);}
+      50%  { box-shadow: 0 4px 24px 0 var(--blue);}
+      100% { box-shadow: 0 2px 12px 0 var(--glow1);}
     }
     @keyframes dreamTextGlow {
-      0%   { text-shadow: 0 0 16px var(--glow1), 0 0 32px var(--glow2), 0 2px 8px #fff6e9bb;}
-      50%  { text-shadow: 0 0 30px var(--glow2), 0 0 44px var(--glow3), 0 2px 12px #ffe6c9;}
-      100% { text-shadow: 0 0 16px var(--glow1), 0 0 32px var(--glow2), 0 2px 8px #fff6e9bb;}
+      0%   { text-shadow: 0 0 16px var(--glow1), 0 0 32px var(--glow2), 0 2px 8px var(--glow1);}
+      50%  { text-shadow: 0 0 30px var(--glow2), 0 0 44px var(--glow3), 0 2px 12px var(--glow1);}
+      100% { text-shadow: 0 0 16px var(--glow1), 0 0 32px var(--glow2), 0 2px 8px var(--glow1);}
     }
     @keyframes dreamWave {
       0%   { transform: translateX(-5px);}
@@ -219,7 +225,7 @@
       100% { transform: translateX(-5px);}
     }
     button[type="submit"]:active, .dream-glow-btn:active {
-      background: linear-gradient(90deg, #5a8ec7 0%, #554e6c 100%);
+      background: linear-gradient(90deg, #5a8ec7 0%, var(--glow1) 100%);
     }
     /* Modal styles - synchronized with main frame */
     .modal-bg {
@@ -239,9 +245,9 @@
       opacity: 1;
     }
     .modal {
-      background: rgba(48, 54, 70, 0.98);
+      background: var(--panel-bg);
       border-radius: 38px;
-      box-shadow: 0 8px 48px 0 rgba(80, 60, 120, 0.18), 0 1.5px 12px 0 #554e6c;
+      box-shadow: 0 8px 48px 0 var(--container-shadow2), 0 1.5px 12px 0 var(--container-shadow);
       padding: 34px 25px 28px 25px;
       max-width: 420px;
       width: 100vw;
@@ -261,14 +267,14 @@
       border-radius: 32px;
       border: 1.5px solid var(--blue);
       font-size: 1.15rem;
-      background: #2e3145;
+      background: var(--input-bg);
       color: var(--blue);
       outline: none;
       margin-bottom: 18px;
       box-sizing: border-box;
       transition: border 0.2s;
       font-family: 'Montserrat', Arial, sans-serif;
-      box-shadow: 0 2px 12px 0 #554e6c;
+      box-shadow: 0 2px 12px 0 var(--glow1);
       text-align: left;
       display: block;
     }
@@ -288,19 +294,19 @@
       border-radius: 32px;
       font-size: 1.18rem;
       font-weight: 700;
-      background: linear-gradient(90deg, var(--blue) 0%, #554e6c 100%);
+      background: linear-gradient(90deg, var(--blue) 0%, var(--glow1) 100%);
       color: var(--blue);
       cursor: pointer;
       margin-bottom: 0;
       margin-top: 8px;
       transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 12px 0 #554e6c;
+      box-shadow: 0 2px 12px 0 var(--glow1);
       animation: btnGlow 5s ease-in-out infinite alternate;
       font-family: 'Montserrat', Arial, sans-serif;
-      text-shadow: 0 1px 2px #fff6e9bb;
+      text-shadow: 0 1px 2px var(--glow1);
     }
     .modal .btn:active, #joinWaitlistBtn:active {
-      background: linear-gradient(90deg, #5a8ec7 0%, #3d415a 100%);
+      background: linear-gradient(90deg, #5a8ec7 0%, var(--glow1) 100%);
     }
     .close-modal {
       position: absolute;
@@ -320,7 +326,7 @@
       font-family: 'Montserrat', Arial, sans-serif;
       text-align: center;
       width: 100%;
-      text-shadow: 0 1px 2px #fff6e9bb;
+      text-shadow: 0 1px 2px var(--glow1);
     }
     @media (max-width: 900px) {
       .container, .modal {
@@ -397,7 +403,6 @@
   </style>
 </head>
 <body>
-  <!-- Video background (video.mp4) -->
   <video class="background-video" autoplay loop muted playsinline>
     <source src="video.mp4" type="video/mp4">
   </video>
