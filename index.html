@@ -25,7 +25,7 @@
       z-index: 0;
       pointer-events: none;
       background: url('background 1.png') center center/cover no-repeat fixed;
-      opacity: 0.5;
+      opacity: 0.35; /* reduced by 30% */
     }
     /* Dreamy color/light overlay */
     body::after {
@@ -37,7 +37,7 @@
       z-index: 1;
       background: radial-gradient(ellipse at 70% 20%, #ffe6c9cc 0%, #b6c7e688 100%);
       mix-blend-mode: lighten;
-      opacity: 0.65;
+      opacity: 0.5; /* slightly reduced */
       backdrop-filter: blur(4px);
     }
     .main-center {
@@ -66,6 +66,7 @@
       cursor: pointer;
       transition: background 0.2s, color 0.2s;
       z-index: 3;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
     .waitlist-btn.active {
       background: #bed0f1;
@@ -74,11 +75,11 @@
     }
     .container {
       width: 100%;
-      max-width: 600px;
+      max-width: 420px; /* reduced by 30% */
       background: rgba(255,255,255,0.91);
       border-radius: 38px;
       box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9;
-      padding: 48px 36px 40px 36px;
+      padding: 34px 25px 28px 25px; /* reduced by ~30% */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -99,6 +100,7 @@
       text-align: center;
       line-height: 1.2;
       text-shadow: 0 2px 12px #ffe6c9cc;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
     .desc {
       font-size: 1.1rem;
@@ -107,6 +109,7 @@
       text-align: center;
       max-width: 500px;
       text-shadow: 0 1px 8px #fff6e9cc;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
     form {
       width: 100%;
@@ -114,6 +117,7 @@
       flex-direction: column;
       gap: 18px;
       align-items: center;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
     label {
       display: flex;
@@ -122,6 +126,7 @@
       color: #444;
       margin-bottom: 2px;
       width: 100%;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
     textarea {
       width: 100%;
@@ -140,6 +145,7 @@
       transition: border 0.2s, box-shadow 0.2s;
       box-shadow: 0 2px 12px 0 #ffe6c9;
       animation: textareaGlow 7s ease-in-out infinite alternate;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
     @keyframes textareaGlow {
       0%   { box-shadow: 0 2px 12px 0 #ffe6c9; }
@@ -164,6 +170,7 @@
       transition: background 0.2s, color 0.2s, box-shadow 0.2s;
       box-shadow: 0 2px 12px 0 #ffe6c9;
       animation: btnGlow 5s ease-in-out infinite alternate;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
     @keyframes btnGlow {
       0%   { box-shadow: 0 2px 12px 0 #ffe6c9; }
@@ -183,6 +190,7 @@
       justify-content: center;
       opacity: 0;
       transition: opacity 0.25s;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
     .modal-bg.active {
       display: flex;
@@ -197,6 +205,7 @@
       box-shadow: 0 4px 24px rgba(0,0,0,0.13);
       text-align: center;
       position: relative;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
     .modal input[type="email"] {
       width: 100%;
@@ -209,12 +218,14 @@
       color: #222;
       outline: none;
       transition: border 0.2s;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
     .modal input[type="email"]:focus {
       border: 1.5px solid #bed0f1;
     }
     .modal .btn {
       margin-bottom: 0;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
     .close-modal {
       position: absolute;
@@ -224,17 +235,19 @@
       cursor: pointer;
       background: none;
       border: none;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
     .queue-number {
       font-size: 1.2rem;
       color: #bed0f1;
       font-weight: 700;
       margin-top: 18px;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
     @media (max-width: 900px) {
       .container {
-        padding: 32px 8px 28px 8px;
-        max-width: 98vw;
+        padding: 22px 6px 20px 6px; /* reduced by ~30% */
+        max-width: 68vw; /* reduced */
       }
       .subtitle {
         font-size: 1.3rem;
@@ -250,7 +263,7 @@
         padding: 0 0 24px 0;
       }
       .container {
-        padding: 18px 4vw 18px 4vw;
+        padding: 13px 3vw 13px 3vw; /* reduced */
         border-radius: 22px;
       }
       .subtitle {
@@ -284,14 +297,14 @@
   <button class="waitlist-btn" id="waitlistBtn">App Waitlist</button>
   <div class="main-center">
     <div class="container">
-      <div class="subtitle">Интерпретация сновидений</div>
-      <div class="desc">Запишите своё сновидение — мы поможем услышать, что оно хочет сказать.</div>
+      <div class="subtitle">Толкование сновидений</div>
+      <div class="desc">Сны говорят, мы помогаем слушать</div>
       <form
         action="https://formspree.io/f/xanbpkgn"
         method="POST"
       >
         <label>
-          <textarea name="message" required placeholder="Запишите свое сновидение. Вечер, тишина, только вы и ваши сны..."></textarea>
+          <textarea name="message" required placeholder="Saviora — делимся тем, что помогает лучше понять себя..."></textarea>
         </label>
         <button type="submit">Отправить сновидение</button>
       </form>
