@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Saviora</title>
-  <meta name="viewport" content="width=480, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -14,17 +14,16 @@
       color: #222;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
+      min-height: 100vh;
     }
     .header {
       width: 100%;
-      max-width: 900px;
+      max-width: 1200px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 32px 32px 0 32px;
+      padding: 32px 40px 0 40px;
       box-sizing: border-box;
     }
     .logo-img {
@@ -49,10 +48,17 @@
       color: #fff;
       border: 2px solid #bed0f1;
     }
+    .main-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
     .container {
       width: 100%;
       max-width: 600px;
-      margin: 40px auto 0 auto;
       background: rgba(255,255,255,0.92);
       border-radius: 24px;
       box-shadow: 0 4px 24px rgba(0,0,0,0.07);
@@ -60,6 +66,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin: 0 auto;
     }
     .subtitle {
       font-size: 2.2rem;
@@ -198,38 +205,72 @@
       font-weight: 700;
       margin-top: 18px;
     }
-    @media (max-width: 700px) {
-      .container { padding: 24px 8px 24px 8px; }
-      .header { padding: 18px 8px 0 8px; }
-      .subtitle { font-size: 1.3rem; }
+    @media (max-width: 900px) {
+      .header {
+        padding: 18px 12px 0 12px;
+      }
+      .container {
+        padding: 32px 8px 28px 8px;
+        max-width: 98vw;
+      }
+      .subtitle {
+        font-size: 1.3rem;
+      }
+    }
+    @media (max-width: 600px) {
+      .main-center {
+        padding: 0 0 24px 0;
+      }
+      .container {
+        padding: 18px 4vw 18px 4vw;
+        border-radius: 14px;
+      }
+      .subtitle {
+        font-size: 1.1rem;
+      }
+      .desc {
+        font-size: 1rem;
+      }
+      .header {
+        padding: 10px 4vw 0 4vw;
+      }
+      .logo-img {
+        height: 32px;
+      }
+      .waitlist-btn {
+        padding: 7px 14px;
+        font-size: 0.95rem;
+      }
     }
   </style>
 </head>
 <body>
   <div class="header">
-    <!-- Лого Saviora (можно заменить на картинку, если есть SVG/PNG) -->
+    <!-- Лого Saviora -->
     <div>
       <img src="https://i.imgur.com/0y8Ftya.png" alt="Saviora Logo" class="logo-img" />
     </div>
     <button class="waitlist-btn" id="waitlistBtn">App Waitlist</button>
   </div>
-  <div class="container">
-    <div class="subtitle">Интерпретация сновидений</div>
-    <div class="desc">Запишите своё сновидение — мы поможем услышать, что оно хочет сказать.</div>
-    <form
-      action="https://formspree.io/f/xanbpkgn"
-      method="POST"
-    >
-      <label>
-        Ваш email:
-        <input type="email" name="email" required>
-      </label>
-      <label>
-        Ваше сновидение:
-        <textarea name="message" required placeholder="Запишите свое сновидение. Они говорят, мы помогаем слушать"></textarea>
-      </label>
-      <button type="submit">Отправить сновидение</button>
-    </form>
+  <div class="main-center">
+    <div class="container">
+      <div class="subtitle">Интерпретация сновидений</div>
+      <div class="desc">Запишите своё сновидение — мы поможем услышать, что оно хочет сказать.</div>
+      <form
+        action="https://formspree.io/f/xanbpkgn"
+        method="POST"
+      >
+        <label>
+          Ваш email:
+          <input type="email" name="email" required>
+        </label>
+        <label>
+          Ваше сновидение:
+          <textarea name="message" required placeholder="Запишите свое сновидение. Они говорят, мы помогаем слушать"></textarea>
+        </label>
+        <button type="submit">Отправить сновидение</button>
+      </form>
+    </div>
   </div>
 
   <!-- Модальное окно для waitlist -->
