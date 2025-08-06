@@ -206,7 +206,7 @@
   </div>
 
   <script>
-    // Waitlist modal logic (визуал, без backend)
+    // Waitlist modal logic
     const waitlistBtn = document.getElementById('waitlistBtn');
     const modalBg = document.getElementById('modalBg');
     const closeModal = document.getElementById('closeModal');
@@ -233,7 +233,10 @@
       if (e.target === modalBg) closeModal.onclick();
     };
 
-    joinWaitlistBtn.onclick = () => {
+    // Подключение к Google Sheets через SheetDB
+    const SHEETDB_API_URL = "https://sheetdb.io/api/v1/tj7alk98vxxrr"; // <-- твой URL
+
+    joinWaitlistBtn.onclick = async () => {
       const email = waitlistEmail.value.trim();
       if (!email || !email.includes('@')) {
         waitlistEmail.style.border = '1.5px solid red';
@@ -242,14 +245,27 @@
       joinWaitlistBtn.disabled = true;
       joinWaitlistBtn.textContent = 'Отправка...';
 
-      // Визуальный эффект: случайный номер в очереди
-      setTimeout(() => {
+      try {
+        // Добавляем email в Google Sheets через SheetDB
+        await fetch(SHEETDB_API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ data: [{ email, timestamp: new Date().toISOString() }] })
+        });
+
+        // Получаем общее количество заявок
+        const res = await fetch(SHEETDB_API_URL);
+        const data = await res.json();
+        const number = data.length;
+
         modalContent.style.display = 'none';
         queueNumber.style.display = '';
-        // Можно заменить на реальный номер через backend
-        const number = Math.floor(Math.random() * 100) + 1;
         queueNumber.textContent = `Вы №${number} в списке ожидания Saviora`;
-      }, 900);
+      } catch (e) {
+        joinWaitlistBtn.disabled = false;
+        joinWaitlistBtn.textContent = 'Встать в очередь';
+        alert('Ошибка при добавлении в waitlist. Попробуйте позже.');
+      }
     };
   </script>
 </body>
