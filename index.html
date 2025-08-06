@@ -176,6 +176,7 @@
     button[type="submit"]:active {
       background: linear-gradient(90deg, #a7b6d1 0%, #f7d6b6 100%);
     }
+    /* Modal styles - synchronized with main frame */
     .modal-bg {
       display: none;
       position: fixed;
@@ -193,35 +194,56 @@
       opacity: 1;
     }
     .modal {
-      background: #fff;
-      border-radius: 24px;
-      padding: 32px 24px 24px 24px;
-      max-width: 340px;
+      background: rgba(255,255,255,0.94);
+      border-radius: 38px;
+      box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9;
+      padding: 34px 25px 28px 25px;
+      max-width: 420px;
       width: 100%;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.13);
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: containerGlow 6s ease-in-out infinite alternate;
       position: relative;
-      font-family: 'Montserrat', Arial, sans-serif;
     }
     .modal input[type="email"] {
       width: 100%;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid #d1d1d1;
-      margin-bottom: 16px;
-      font-size: 1rem;
+      max-width: 100%;
+      padding: 18px 14px;
+      border-radius: 32px;
+      border: 1.5px solid #d1d1d1;
+      font-size: 1.15rem;
       background: #f7f7f7;
       color: #222;
       outline: none;
+      margin-bottom: 18px;
+      box-sizing: border-box;
       transition: border 0.2s;
       font-family: 'Montserrat', Arial, sans-serif;
+      box-shadow: 0 2px 12px 0 #ffe6c9;
     }
     .modal input[type="email"]:focus {
       border: 1.5px solid #bed0f1;
     }
-    .modal .btn {
+    .modal .btn, .modal button.btn, #joinWaitlistBtn {
+      width: 100%;
+      padding: 18px 0;
+      border: none;
+      border-radius: 32px;
+      font-size: 1.18rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #bed0f1 0%, #ffe6c9 100%);
+      color: #222;
+      cursor: pointer;
       margin-bottom: 0;
+      margin-top: 8px;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 12px 0 #ffe6c9;
+      animation: btnGlow 5s ease-in-out infinite alternate;
       font-family: 'Montserrat', Arial, sans-serif;
+    }
+    .modal .btn:active, #joinWaitlistBtn:active {
+      background: linear-gradient(90deg, #a7b6d1 0%, #f7d6b6 100%);
     }
     .close-modal {
       position: absolute;
@@ -239,9 +261,11 @@
       font-weight: 700;
       margin-top: 18px;
       font-family: 'Montserrat', Arial, sans-serif;
+      text-align: center;
+      width: 100%;
     }
     @media (max-width: 900px) {
-      .container {
+      .container, .modal {
         padding: 22px 6px 20px 6px;
         max-width: 68vw;
       }
@@ -253,18 +277,19 @@
       .main-center {
         padding: 0 0 24px 0;
       }
-      .container {
+      .container, .modal {
         padding: 13px 3vw 13px 3vw;
         border-radius: 22px;
+        max-width: 98vw;
       }
       .main-phrase {
         font-size: 1.1rem;
       }
-      textarea {
+      textarea, .modal input[type="email"] {
         border-radius: 22px;
         padding: 14px;
       }
-      button[type="submit"] {
+      button[type="submit"], .modal .btn, .modal button.btn, #joinWaitlistBtn {
         border-radius: 22px;
         padding: 14px 0;
       }
@@ -273,7 +298,6 @@
 </head>
 <body>
   <div class="background-overlay"></div>
-
   <button class="waitlist-btn" id="waitlistBtn">App Waitlist</button>
   <div class="main-center">
     <div class="container">
@@ -291,8 +315,8 @@
   <div class="modal-bg" id="modalBg" aria-modal="true" role="dialog">
     <div class="modal" id="modal">
       <button class="close-modal" id="closeModal" aria-label="Закрыть">&times;</button>
-      <div id="modalContent">
-        <div style="font-weight:600; font-size:1.1rem; margin-bottom:10px;">Ваша заявка в список ожидания</div>
+      <div id="modalContent" style="width:100%;display:flex;flex-direction:column;align-items:center;">
+        <div style="font-weight:600; font-size:1.1rem; margin-bottom:16px; text-align:center;">Ваша заявка в список ожидания</div>
         <input type="email" id="waitlistEmail" placeholder="Ваш email" required autocomplete="email">
         <button class="btn" id="joinWaitlistBtn">Встать в очередь</button>
       </div>
@@ -310,7 +334,6 @@
     const modalContent = document.getElementById('modalContent');
     const queueNumber = document.getElementById('queueNumber');
 
-    // Email regex for better validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     waitlistBtn.onclick = () => {
@@ -321,7 +344,6 @@
     closeModal.onclick = () => {
       modalBg.classList.remove('active');
       waitlistBtn.classList.remove('active');
-      // reset modal
       modalContent.style.display = '';
       queueNumber.style.display = 'none';
       waitlistEmail.value = '';
@@ -336,7 +358,6 @@
       if (e.key === 'Escape' && modalBg.classList.contains('active')) closeModal.onclick();
     });
 
-    // SheetDB API
     const SHEETDB_API_URL = "https://sheetdb.io/api/v1/tj7alk98vxxrr";
 
     joinWaitlistBtn.onclick = async () => {
@@ -351,24 +372,21 @@
       joinWaitlistBtn.textContent = 'Отправка...';
 
       try {
-        // Добавляем email в Google Sheets через SheetDB
         await fetch(SHEETDB_API_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ data: [{ email, timestamp: new Date().toISOString() }] })
         });
 
-        // Получаем общее количество заявок
         const res = await fetch(SHEETDB_API_URL);
         const data = await res.json();
         const number = data.length;
 
         modalContent.style.display = 'none';
         queueNumber.style.display = '';
-        queueNumber.style.display = '';
         queueNumber.textContent = `Вы №${number} в списке ожидания Saviora`;
+        queueNumber.style.display = '';
 
-        // Очищаем поле email и деактивируем кнопку
         waitlistEmail.value = '';
         joinWaitlistBtn.disabled = true;
       } catch (e) {
