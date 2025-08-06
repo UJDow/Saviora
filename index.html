@@ -79,21 +79,27 @@
       text-shadow: 0 2px 12px #ffe6c9cc;
       font-family: 'Montserrat', Arial, sans-serif;
     }
+    .textarea-label {
+      width: 100%;
+    }
+    .saviora-placeholder {
+      font-size: 0.95rem;  /* 2 sizes smaller than 1.15rem */
+      font-style: italic;
+      color: #888;
+      font-family: 'Montserrat', Arial, sans-serif;
+      margin-bottom: 10px;
+      text-align: center;
+      display: block;
+      width: 100%;
+      pointer-events: none;
+      user-select: none;
+    }
     form {
       width: 100%;
       display: flex;
       flex-direction: column;
       gap: 18px;
       align-items: center;
-      font-family: 'Montserrat', Arial, sans-serif;
-    }
-    label {
-      display: flex;
-      flex-direction: column;
-      font-size: 1rem;
-      color: #444;
-      margin-bottom: 2px;
-      width: 100%;
       font-family: 'Montserrat', Arial, sans-serif;
     }
     textarea {
@@ -155,6 +161,9 @@
       .main-phrase {
         font-size: 1.3rem;
       }
+      .saviora-placeholder {
+        font-size: 0.7rem;
+      }
     }
     @media (max-width: 600px) {
       .main-center {
@@ -166,6 +175,9 @@
       }
       .main-phrase {
         font-size: 1.1rem;
+      }
+      .saviora-placeholder {
+        font-size: 0.6rem;
       }
       textarea {
         border-radius: 22px;
@@ -183,12 +195,10 @@
   <div class="main-center">
     <div class="container">
       <div class="main-phrase"><b>Сны говорят, мы помогаем слушать</b></div>
-      <form
-        action="https://formspree.io/f/xanbpkgn"
-        method="POST"
-      >
-        <label>
-          <textarea name="message" required placeholder="Saviora — делимся тем, что помогает лучше понять себя..."></textarea>
+      <form action="https://formspree.io/f/xanbpkgn" method="POST">
+        <label class="textarea-label">
+          <span class="saviora-placeholder">Saviora — делимся тем, что помогает лучше понять себя...</span>
+          <textarea name="message" required aria-label="Saviora — делимся тем, что помогает лучше понять себя..."></textarea>
         </label>
         <button type="submit">Отправить сновидение</button>
       </form>
