@@ -6,34 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --blue: #6ca6e3;
-      --glow1: #ffe6c9;
-      --glow2: #bed0f1;
-      --glow3: #f7d6b6;
-      --light-bg: #fff6e9;
-      --overlay-light: rgba(255,255,255,0.82);
-      --bg-gradient1: #ffe6c9cc;
-      --bg-gradient2: #b6c7e688;
-      --panel-bg: rgba(255,255,255,0.94);
-      --textarea-bg: #f7f7f7;
-      --textarea-shadow: #ffe6c9;
-      --container-shadow: #ffe6c9;
-      --container-shadow2: rgba(180, 160, 120, 0.13);
-      --input-bg: #f7f7f7;
-    }
     html, body {
       height: 100%;
       width: 100vw;
       box-sizing: border-box;
       font-family: 'Montserrat', Arial, sans-serif;
-      background: var(--light-bg);
-      color: var(--blue);
-      text-shadow: 0 1px 2px #fff6e955;
+      background: none;
+      color: #bed0f1;
+      text-shadow: 0 1px 8px #fff6e9cc;
       margin: 0;
       padding: 0;
       overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
       padding-left: env(safe-area-inset-left);
       padding-right: env(safe-area-inset-right);
       padding-top: env(safe-area-inset-top);
@@ -42,17 +25,14 @@
     *, *:before, *:after {
       box-sizing: inherit;
     }
-    .background-video {
+    .background-overlay {
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
-      object-fit: cover;
       z-index: 0;
       pointer-events: none;
-      opacity: 1;
-      min-width: 100vw;
-      min-height: 100vh;
-      background: var(--light-bg);
+      background: url('background 1.png') center center/cover no-repeat fixed;
+      opacity: 0.35;
     }
     body::after {
       content: "";
@@ -61,15 +41,14 @@
       width: 100vw; height: 100vh;
       pointer-events: none;
       z-index: 1;
-      background: radial-gradient(ellipse at 70% 20%, var(--bg-gradient1) 0%, var(--bg-gradient2) 100%);
+      background: radial-gradient(ellipse at 70% 20%, #ffe6c9cc 0%, #b6c7e688 100%);
+      mix-blend-mode: lighten;
       opacity: 0.5;
       backdrop-filter: blur(4px);
-      mix-blend-mode: lighten;
-      transition: opacity 0.5s;
     }
     .main-center {
       position: relative;
-      z-index: 3;
+      z-index: 2;
       min-height: 100vh;
       width: 100vw;
       display: flex;
@@ -78,63 +57,33 @@
       justify-content: center;
       padding: 0;
     }
-    /* Desktop: button absolute top right */
     .waitlist-btn {
       background: #fff;
-      color: var(--blue);
-      border: 2px solid var(--blue);
+      color: #bed0f1;
+      border: 2px solid #bed0f1;
       border-radius: 10px;
       padding: 10px 28px;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
       transition: background 0.2s, color 0.2s;
-      z-index: 4;
+      z-index: 3;
       font-family: 'Montserrat', Arial, sans-serif;
       position: absolute;
       top: 32px;
       right: 32px;
-      opacity: 1 !important;
-      box-shadow: 0 2px 16px 0 #bed0f1cc;
-      display: block;
     }
     .waitlist-btn.active {
-      background: var(--blue);
+      background: #bed0f1;
       color: #fff;
-      border: 2px solid var(--blue);
-    }
-    /* Mobile: button centered above phrase, in the flow */
-    @media (max-width: 900px) {
-      .waitlist-btn {
-        position: relative;
-        display: block;
-        width: 90vw;
-        max-width: 420px;
-        margin: 28px auto 12px auto;
-        left: 0;
-        right: 0;
-        top: auto;
-        border-radius: 18px;
-        font-size: 1.15rem;
-        z-index: 10;
-        box-sizing: border-box;
-        box-shadow: 0 2px 16px 0 #bed0f1cc;
-      }
-      .main-center {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        min-height: 100vh;
-        padding-top: 0;
-      }
+      border: 2px solid #bed0f1;
     }
     .container {
       width: 100%;
       max-width: 420px;
-      background: var(--panel-bg);
+      background: rgba(255,255,255,0.91);
       border-radius: 38px;
-      box-shadow: 0 8px 48px 0 var(--container-shadow2), 0 1.5px 12px 0 var(--container-shadow);
+      box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9;
       padding: 34px 25px 28px 25px;
       display: flex;
       flex-direction: column;
@@ -143,22 +92,22 @@
       backdrop-filter: blur(2px);
       animation: containerGlow 6s ease-in-out infinite alternate;
       box-sizing: border-box;
-      color: var(--blue);
-      text-shadow: 0 1px 2px #fff6e955;
+      color: #bed0f1;
+      text-shadow: 0 1px 8px #fff6e9cc;
     }
     @keyframes containerGlow {
-      0%   { box-shadow: 0 8px 48px 0 var(--container-shadow2), 0 1.5px 12px 0 var(--container-shadow);}
-      50%  { box-shadow: 0 12px 64px 0 var(--container-shadow2), 0 2.5px 18px 0 var(--container-shadow);}
-      100% { box-shadow: 0 8px 48px 0 var(--container-shadow2), 0 1.5px 12px 0 var(--container-shadow);}
+      0%   { box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9; }
+      50%  { box-shadow: 0 12px 64px 0 rgba(180, 160, 120, 0.18), 0 2.5px 18px 0 #ffe6c9; }
+      100% { box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9; }
     }
     .main-phrase {
       font-size: 2.2rem;
       font-weight: 700;
-      color: var(--blue);
+      color: #bed0f1;
       margin-bottom: 24px;
       text-align: center;
       line-height: 1.2;
-      text-shadow: 0 2px 8px var(--glow1);
+      text-shadow: 0 2px 12px #fff6e9cc;
       font-family: 'Montserrat', Arial, sans-serif;
     }
     form {
@@ -168,13 +117,13 @@
       gap: 18px;
       align-items: center;
       font-family: 'Montserrat', Arial, sans-serif;
-      color: var(--blue);
+      color: #bed0f1;
     }
     label {
       display: flex;
       flex-direction: column;
       font-size: 1rem;
-      color: var(--blue);
+      color: #bed0f1;
       margin-bottom: 2px;
       width: 100%;
       font-family: 'Montserrat', Arial, sans-serif;
@@ -183,23 +132,23 @@
       width: 100%;
       min-height: 180px;
       border-radius: 32px;
-      border: 1.5px solid var(--blue);
+      border: 1.5px solid #bed0f1;
       padding: 22px;
       font-size: 0.95rem;
       font-style: italic;
-      background: var(--textarea-bg);
-      color: var(--blue);
+      background: #f7f7f7;
+      color: #bed0f1;
       outline: none;
       margin-bottom: 0;
       resize: vertical;
       box-sizing: border-box;
       transition: border 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 12px 0 var(--textarea-shadow);
+      box-shadow: 0 2px 12px 0 #ffe6c9;
       animation: textareaGlow 7s ease-in-out infinite alternate;
       font-family: 'Montserrat', Arial, sans-serif;
     }
     textarea::placeholder {
-      color: var(--blue);
+      color: #bed0f1;
       font-size: 0.95rem;
       font-style: italic;
       font-family: 'Montserrat', Arial, sans-serif;
@@ -207,57 +156,39 @@
       text-shadow: none;
     }
     @keyframes textareaGlow {
-      0%   { box-shadow: 0 2px 12px 0 var(--textarea-shadow);}
-      50%  { box-shadow: 0 4px 24px 0 var(--glow1);}
-      100% { box-shadow: 0 2px 12px 0 var(--textarea-shadow);}
+      0%   { box-shadow: 0 2px 12px 0 #ffe6c9; }
+      50%  { box-shadow: 0 4px 24px 0 #ffe6c9cc; }
+      100% { box-shadow: 0 2px 12px 0 #ffe6c9; }
     }
     textarea:focus {
-      border: 1.5px solid var(--blue);
-      box-shadow: 0 0 0 2px var(--glow1);
+      border: 1.5px solid #bed0f1;
+      box-shadow: 0 0 0 2px #ffe6c9;
     }
-    .dream-glow-btn {
+    button[type="submit"] {
       width: 100%;
       padding: 18px 0;
       border: none;
       border-radius: 32px;
       font-size: 1.18rem;
       font-weight: 700;
-      background: linear-gradient(90deg, var(--blue) 0%, var(--glow1) 100%);
-      color: var(--blue);
+      background: linear-gradient(90deg, #bed0f1 0%, #ffe6c9 100%);
+      color: #bed0f1;
       cursor: pointer;
       margin-top: 14px;
       transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 24px 0 var(--glow1);
+      box-shadow: 0 2px 12px 0 #ffe6c9;
       animation: btnGlow 5s ease-in-out infinite alternate;
       font-family: 'Montserrat', Arial, sans-serif;
-      text-shadow: 0 0 16px var(--glow1), 0 0 32px var(--glow2), 0 2px 8px var(--glow1);
-      position: relative;
-      overflow: hidden;
-    }
-    .dream-glow-btn span {
-      display: inline-block;
-      animation: dreamTextGlow 2.6s ease-in-out infinite alternate, dreamWave 3.7s cubic-bezier(.58,.01,.41,1) infinite alternate;
-      will-change: text-shadow, transform;
+      text-shadow: 0 1px 8px #fff6e9cc;
     }
     @keyframes btnGlow {
-      0%   { box-shadow: 0 2px 12px 0 var(--glow1);}
-      50%  { box-shadow: 0 4px 24px 0 var(--blue);}
-      100% { box-shadow: 0 2px 12px 0 var(--glow1);}
+      0%   { box-shadow: 0 2px 12px 0 #ffe6c9; }
+      50%  { box-shadow: 0 4px 24px 0 #bed0f1cc; }
+      100% { box-shadow: 0 2px 12px 0 #ffe6c9; }
     }
-    @keyframes dreamTextGlow {
-      0%   { text-shadow: 0 0 16px var(--glow1), 0 0 32px var(--glow2), 0 2px 8px var(--glow1);}
-      50%  { text-shadow: 0 0 30px var(--glow2), 0 0 44px var(--glow3), 0 2px 12px var(--glow1);}
-      100% { text-shadow: 0 0 16px var(--glow1), 0 0 32px var(--glow2), 0 2px 8px var(--glow1);}
+    button[type="submit"]:active {
+      background: linear-gradient(90deg, #a7b6d1 0%, #f7d6b6 100%);
     }
-    @keyframes dreamWave {
-      0%   { transform: translateX(-5px);}
-      50%  { transform: translateX(5px);}
-      100% { transform: translateX(-5px);}
-    }
-    button[type="submit"]:active, .dream-glow-btn:active {
-      background: linear-gradient(90deg, #5a8ec7 0%, var(--glow1) 100%);
-    }
-    /* Modal styles - synchronized with main frame */
     .modal-bg {
       display: none;
       position: fixed;
@@ -275,9 +206,9 @@
       opacity: 1;
     }
     .modal {
-      background: var(--panel-bg);
+      background: rgba(255,255,255,0.94);
       border-radius: 38px;
-      box-shadow: 0 8px 48px 0 var(--container-shadow2), 0 1.5px 12px 0 var(--container-shadow);
+      box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9;
       padding: 34px 25px 28px 25px;
       max-width: 420px;
       width: 100vw;
@@ -287,35 +218,29 @@
       animation: containerGlow 6s ease-in-out infinite alternate;
       position: relative;
       box-sizing: border-box;
-      color: var(--blue);
-      text-shadow: 0 1px 2px #fff6e9bb;
+      color: #bed0f1;
+      text-shadow: 0 1px 8px #fff6e9cc;
     }
     .modal input[type="email"] {
       width: 100%;
       max-width: 100%;
       padding: 18px 14px;
       border-radius: 32px;
-      border: 1.5px solid var(--blue);
+      border: 1.5px solid #bed0f1;
       font-size: 1.15rem;
-      background: var(--input-bg);
-      color: var(--blue);
+      background: #f7f7f7;
+      color: #bed0f1;
       outline: none;
       margin-bottom: 18px;
       box-sizing: border-box;
       transition: border 0.2s;
       font-family: 'Montserrat', Arial, sans-serif;
-      box-shadow: 0 2px 12px 0 var(--glow1);
+      box-shadow: 0 2px 12px 0 #ffe6c9;
       text-align: left;
       display: block;
     }
-    .modal input[type="email"]::placeholder {
-      color: var(--blue);
-      opacity: 1;
-      font-style: italic;
-      font-size: 1.02rem;
-    }
     .modal input[type="email"]:focus {
-      border: 1.5px solid var(--blue);
+      border: 1.5px solid #bed0f1;
     }
     .modal .btn, .modal button.btn, #joinWaitlistBtn {
       width: 100%;
@@ -324,25 +249,25 @@
       border-radius: 32px;
       font-size: 1.18rem;
       font-weight: 700;
-      background: linear-gradient(90deg, var(--blue) 0%, var(--glow1) 100%);
-      color: var(--blue);
+      background: linear-gradient(90deg, #bed0f1 0%, #ffe6c9 100%);
+      color: #bed0f1;
       cursor: pointer;
       margin-bottom: 0;
       margin-top: 8px;
       transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 12px 0 var(--glow1);
+      box-shadow: 0 2px 12px 0 #ffe6c9;
       animation: btnGlow 5s ease-in-out infinite alternate;
       font-family: 'Montserrat', Arial, sans-serif;
-      text-shadow: 0 1px 2px var(--glow1);
+      text-shadow: 0 1px 8px #fff6e9cc;
     }
     .modal .btn:active, #joinWaitlistBtn:active {
-      background: linear-gradient(90deg, #5a8ec7 0%, var(--glow1) 100%);
+      background: linear-gradient(90deg, #a7b6d1 0%, #f7d6b6 100%);
     }
     .close-modal {
       position: absolute;
       top: 10px; right: 14px;
       font-size: 1.2rem;
-      color: var(--blue);
+      color: #bed0f1;
       cursor: pointer;
       background: none;
       border: none;
@@ -350,13 +275,32 @@
     }
     .queue-number {
       font-size: 1.2rem;
-      color: var(--blue);
+      color: #bed0f1;
       font-weight: 700;
       margin-top: 18px;
       font-family: 'Montserrat', Arial, sans-serif;
       text-align: center;
       width: 100%;
-      text-shadow: 0 1px 2px var(--glow1);
+      text-shadow: 0 1px 8px #fff6e9cc;
+    }
+    @media (max-width: 900px) {
+      .container, .modal {
+        padding: 22px 6px 20px 6px;
+        max-width: 98vw;
+      }
+      .main-phrase {
+        font-size: 1.3rem;
+      }
+      .waitlist-btn {
+        position: static;
+        width: 100%;
+        margin: 0 0 18px 0;
+        padding: 10px 0;
+        border-radius: 18px;
+        font-size: 1.1rem;
+        top: auto;
+        right: auto;
+      }
     }
     @media (max-width: 600px) {
       html, body {
@@ -379,7 +323,7 @@
         padding: 10px;
         font-size: 0.9rem;
       }
-      button[type="submit"], .dream-glow-btn, .modal .btn, .modal button.btn, #joinWaitlistBtn {
+      button[type="submit"], .modal .btn, .modal button.btn, #joinWaitlistBtn {
         border-radius: 13px;
         padding: 12px 0;
         font-size: 1rem;
@@ -388,15 +332,6 @@
         font-size: 1rem;
         border-radius: 13px;
         padding: 10px 0;
-        opacity: 1 !important;
-      }
-      .dream-glow-btn span {
-        animation: dreamTextGlow 2.6s ease-in-out infinite alternate, dreamWaveMobile 3.7s cubic-bezier(.58,.01,.41,1) infinite alternate;
-      }
-      @keyframes dreamWaveMobile {
-        0%   { transform: translateX(-7px);}
-        50%  { transform: translateX(7px);}
-        100% { transform: translateX(-7px);}
       }
     }
     @media (max-width: 400px) {
@@ -413,12 +348,9 @@
   </style>
 </head>
 <body>
-  <video class="background-video" autoplay loop muted playsinline>
-    <source src="stabilized.mp4" type="video/mp4">
-  </video>
+  <div class="background-overlay"></div>
+  <button class="waitlist-btn" id="waitlistBtn">App Waitlist</button>
   <div class="main-center">
-    <!-- Button is in the flow, above the phrase on mobile; top-right absolute on desktop -->
-    <button class="waitlist-btn" id="waitlistBtn">App Waitlist</button>
     <div class="container">
       <div class="main-phrase"><b>Сны говорят, мы помогаем слушать</b></div>
       <form action="https://formspree.io/f/xanbpkgn" method="POST">
@@ -426,10 +358,11 @@
           <textarea name="message" required
             placeholder="Saviora — делимся тем, что помогает лучше понять себя..."></textarea>
         </label>
-        <button type="submit" class="dream-glow-btn"><span>Отправить сновидение</span></button>
+        <button type="submit">Отправить сновидение</button>
       </form>
     </div>
   </div>
+
   <div class="modal-bg" id="modalBg" aria-modal="true" role="dialog">
     <div class="modal" id="modal">
       <button class="close-modal" id="closeModal" aria-label="Закрыть">&times;</button>
@@ -441,6 +374,7 @@
       <div class="queue-number" id="queueNumber" style="display:none;"></div>
     </div>
   </div>
+
   <script>
     // Waitlist modal logic
     const waitlistBtn = document.getElementById('waitlistBtn');
