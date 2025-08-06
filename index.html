@@ -7,16 +7,65 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
   <style>
     body {
-      background: #bed0f1;
-      font-family: 'Montserrat', Arial, sans-serif;
+      min-height: 100vh;
       margin: 0;
-      min-height: 100vh;
+      font-family: 'Montserrat', Arial, sans-serif;
       color: #222;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      background: radial-gradient(ellipse at 70% 20%, #ffe6c9 0%, #f7d6b6 30%, #b6c7e6 100%);
+      background-attachment: fixed;
+      box-shadow: 0 0 120px 40px #f7d6b6 inset;
+      transition: background 0.5s;
+      overflow-x: hidden;
+    }
+    /* Абстрактные пятна */
+    .bg-blobs {
+      position: fixed;
+      z-index: 0;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.45;
+      filter: blur(12px);
+      animation: blobMove 18s ease-in-out infinite alternate;
+      mix-blend-mode: lighten;
+    }
+    .blob1 {
+      width: 420px; height: 420px;
+      background: radial-gradient(circle at 60% 40%, #b6c7e6 0%, #ffe6c9 100%);
+      top: 8%; left: 8%;
+      animation-delay: 0s;
+    }
+    .blob2 {
+      width: 340px; height: 340px;
+      background: radial-gradient(circle at 40% 60%, #f7d6b6 0%, #bed0f1 100%);
+      top: 60%; left: 60%;
+      animation-delay: 3s;
+    }
+    .blob3 {
+      width: 260px; height: 260px;
+      background: radial-gradient(circle at 70% 30%, #ffe6c9 0%, #b6c7e6 100%);
+      top: 50%; left: 20%;
+      animation-delay: 7s;
+    }
+    .blob4 {
+      width: 180px; height: 180px;
+      background: radial-gradient(circle at 30% 70%, #bed0f1 0%, #f7d6b6 100%);
+      top: 20%; left: 70%;
+      animation-delay: 11s;
+    }
+    @keyframes blobMove {
+      0%   { transform: scale(1) translateY(0) translateX(0);}
+      40%  { transform: scale(1.08) translateY(-18px) translateX(12px);}
+      60%  { transform: scale(0.95) translateY(12px) translateX(-18px);}
+      100% { transform: scale(1.1) translateY(-10px) translateX(20px);}
     }
     .main-center {
+      position: relative;
+      z-index: 1;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -24,6 +73,7 @@
       justify-content: center;
       width: 100%;
       min-height: 100vh;
+      padding: 0;
     }
     .logo-block {
       display: flex;
@@ -37,6 +87,10 @@
       height: auto;
       margin-bottom: 10px;
       display: block;
+      object-fit: contain;
+      background: transparent;
+      filter: drop-shadow(0 2px 24px #bed0f1cc);
+      transition: filter 0.4s;
     }
     .waitlist-btn {
       position: absolute;
@@ -61,14 +115,21 @@
     .container {
       width: 100%;
       max-width: 600px;
-      background: rgba(255,255,255,0.92);
-      border-radius: 24px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      background: rgba(255,255,255,0.93);
+      border-radius: 38px;
+      box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9;
       padding: 48px 36px 40px 36px;
       display: flex;
       flex-direction: column;
       align-items: center;
       margin: 0 auto;
+      backdrop-filter: blur(2px);
+      animation: containerGlow 6s ease-in-out infinite alternate;
+    }
+    @keyframes containerGlow {
+      0%   { box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9; }
+      50%  { box-shadow: 0 12px 64px 0 rgba(180, 160, 120, 0.18), 0 2.5px 18px 0 #ffe6c9; }
+      100% { box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9; }
     }
     .subtitle {
       font-size: 2.2rem;
@@ -77,6 +138,7 @@
       margin-bottom: 10px;
       text-align: center;
       line-height: 1.2;
+      text-shadow: 0 2px 12px #ffe6c9cc;
     }
     .desc {
       font-size: 1.1rem;
@@ -84,6 +146,7 @@
       margin-bottom: 32px;
       text-align: center;
       max-width: 500px;
+      text-shadow: 0 1px 8px #fff6e9cc;
     }
     form {
       width: 100%;
@@ -100,28 +163,12 @@
       margin-bottom: 2px;
       width: 100%;
     }
-    input[type="email"] {
-      width: 100%;
-      border-radius: 14px;
-      border: 1px solid #d1d1d1;
-      padding: 12px;
-      font-size: 1rem;
-      background: #f7f7f7;
-      color: #222;
-      outline: none;
-      margin-top: 6px;
-      margin-bottom: 0;
-      transition: border 0.2s;
-    }
-    input[type="email"]:focus {
-      border: 1.5px solid #bed0f1;
-    }
     textarea {
       width: 100%;
       min-height: 180px;
-      border-radius: 18px;
+      border-radius: 32px;
       border: 1.5px solid #d1d1d1;
-      padding: 18px;
+      padding: 22px;
       font-size: 1.15rem;
       background: #f7f7f7;
       color: #222;
@@ -130,33 +177,41 @@
       margin-bottom: 0;
       resize: vertical;
       box-sizing: border-box;
-      transition: border 0.2s;
+      transition: border 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 12px 0 #ffe6c9;
+      animation: textareaGlow 7s ease-in-out infinite alternate;
+    }
+    @keyframes textareaGlow {
+      0%   { box-shadow: 0 2px 12px 0 #ffe6c9; }
+      50%  { box-shadow: 0 4px 24px 0 #ffe6c9cc; }
+      100% { box-shadow: 0 2px 12px 0 #ffe6c9; }
     }
     textarea:focus {
       border: 1.5px solid #bed0f1;
-    }
-    .hint {
-      color: #888;
-      font-size: 1.05rem;
-      margin-bottom: 10px;
-      text-align: center;
-      width: 100%;
+      box-shadow: 0 0 0 2px #ffe6c9;
     }
     button[type="submit"] {
       width: 100%;
-      padding: 16px 0;
+      padding: 18px 0;
       border: none;
-      border-radius: 14px;
-      font-size: 1.15rem;
-      font-weight: 600;
-      background: #bed0f1;
+      border-radius: 32px;
+      font-size: 1.18rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #bed0f1 0%, #ffe6c9 100%);
       color: #222;
       cursor: pointer;
       margin-top: 8px;
-      transition: background 0.2s, color 0.2s;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 12px 0 #ffe6c9;
+      animation: btnGlow 5s ease-in-out infinite alternate;
+    }
+    @keyframes btnGlow {
+      0%   { box-shadow: 0 2px 12px 0 #ffe6c9; }
+      50%  { box-shadow: 0 4px 24px 0 #bed0f1cc; }
+      100% { box-shadow: 0 2px 12px 0 #ffe6c9; }
     }
     button[type="submit"]:active {
-      background: #a7b6d1;
+      background: linear-gradient(90deg, #a7b6d1 0%, #f7d6b6 100%);
     }
     /* Модальное окно */
     .modal-bg {
@@ -167,10 +222,16 @@
       background: rgba(0,0,0,0.18);
       align-items: center;
       justify-content: center;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .modal-bg.active {
+      display: flex;
+      opacity: 1;
     }
     .modal {
       background: #fff;
-      border-radius: 18px;
+      border-radius: 24px;
       padding: 32px 24px 24px 24px;
       max-width: 340px;
       width: 100%;
@@ -188,6 +249,10 @@
       background: #f7f7f7;
       color: #222;
       outline: none;
+      transition: border 0.2s;
+    }
+    .modal input[type="email"]:focus {
+      border: 1.5px solid #bed0f1;
     }
     .modal .btn {
       margin-bottom: 0;
@@ -227,7 +292,7 @@
       }
       .container {
         padding: 18px 4vw 18px 4vw;
-        border-radius: 14px;
+        border-radius: 22px;
       }
       .subtitle {
         font-size: 1.1rem;
@@ -240,15 +305,34 @@
       }
       .waitlist-btn {
         font-size: 0.95rem;
+        padding: 7px 10px;
+      }
+      .modal {
+        padding: 18px 6vw 18px 6vw;
+        max-width: 98vw;
+      }
+      textarea {
+        border-radius: 22px;
+        padding: 14px;
+      }
+      button[type="submit"] {
+        border-radius: 22px;
+        padding: 14px 0;
       }
     }
   </style>
 </head>
 <body>
+  <div class="bg-blobs">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+    <div class="blob blob4"></div>
+  </div>
   <button class="waitlist-btn" id="waitlistBtn">App Waitlist</button>
   <div class="main-center">
     <div class="logo-block">
-      <img src="photo_2025-06-30_22-00-32 copy.png" alt="Saviora Logo" class="logo-img" />
+      <img src="photo_2025-06-30_22-00-32%20copy.png" alt="Saviora Logo" class="logo-img" />
     </div>
     <div class="container">
       <div class="subtitle">Интерпретация сновидений</div>
@@ -258,12 +342,7 @@
         method="POST"
       >
         <label>
-          Ваш email:
-          <input type="email" name="email" required>
-        </label>
-        <label>
-          Ваше сновидение:
-          <textarea name="message" required placeholder="Запишите свое сновидение. Они говорят, мы помогаем слушать"></textarea>
+          <textarea name="message" required placeholder="Запишите свое сновидение. Вечер, тишина, только вы и ваши сны..."></textarea>
         </label>
         <button type="submit">Отправить сновидение</button>
       </form>
@@ -271,12 +350,12 @@
   </div>
 
   <!-- Модальное окно для waitlist -->
-  <div class="modal-bg" id="modalBg">
+  <div class="modal-bg" id="modalBg" aria-modal="true" role="dialog">
     <div class="modal" id="modal">
-      <button class="close-modal" id="closeModal">&times;</button>
+      <button class="close-modal" id="closeModal" aria-label="Закрыть">&times;</button>
       <div id="modalContent">
         <div style="font-weight:600; font-size:1.1rem; margin-bottom:10px;">Ваша заявка в список ожидания</div>
-        <input type="email" id="waitlistEmail" placeholder="Ваш email" required>
+        <input type="email" id="waitlistEmail" placeholder="Ваш email" required autocomplete="email">
         <button class="btn" id="joinWaitlistBtn">Встать в очередь</button>
       </div>
       <div class="queue-number" id="queueNumber" style="display:none;"></div>
@@ -293,33 +372,43 @@
     const modalContent = document.getElementById('modalContent');
     const queueNumber = document.getElementById('queueNumber');
 
+    // Email regex for better validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     waitlistBtn.onclick = () => {
-      modalBg.style.display = 'flex';
+      modalBg.classList.add('active');
       waitlistBtn.classList.add('active');
+      waitlistEmail.focus();
     };
     closeModal.onclick = () => {
-      modalBg.style.display = 'none';
+      modalBg.classList.remove('active');
       waitlistBtn.classList.remove('active');
       // reset modal
       modalContent.style.display = '';
       queueNumber.style.display = 'none';
       waitlistEmail.value = '';
+      waitlistEmail.style.border = '';
       joinWaitlistBtn.disabled = false;
       joinWaitlistBtn.textContent = 'Встать в очередь';
     };
     modalBg.onclick = (e) => {
       if (e.target === modalBg) closeModal.onclick();
     };
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modalBg.classList.contains('active')) closeModal.onclick();
+    });
 
-    // Подключение к Google Sheets через SheetDB
-    const SHEETDB_API_URL = "https://sheetdb.io/api/v1/tj7alk98vxxrr"; // <-- твой URL
+    // SheetDB API
+    const SHEETDB_API_URL = "https://sheetdb.io/api/v1/tj7alk98vxxrr";
 
     joinWaitlistBtn.onclick = async () => {
       const email = waitlistEmail.value.trim();
-      if (!email || !email.includes('@')) {
+      if (!emailRegex.test(email)) {
         waitlistEmail.style.border = '1.5px solid red';
+        waitlistEmail.focus();
         return;
       }
+      waitlistEmail.style.border = '';
       joinWaitlistBtn.disabled = true;
       joinWaitlistBtn.textContent = 'Отправка...';
 
@@ -339,12 +428,19 @@
         modalContent.style.display = 'none';
         queueNumber.style.display = '';
         queueNumber.textContent = `Вы №${number} в списке ожидания Saviora`;
+
+        // Очищаем поле email и деактивируем кнопку
+        waitlistEmail.value = '';
+        joinWaitlistBtn.disabled = true;
       } catch (e) {
         joinWaitlistBtn.disabled = false;
         joinWaitlistBtn.textContent = 'Встать в очередь';
         alert('Ошибка при добавлении в waitlist. Попробуйте позже.');
       }
     };
+
+    // Исправление пути к логотипу (если файл лежит рядом с html)
+    document.querySelector('.logo-img').src = encodeURIComponent('photo_2025-06-30_22-00-32 copy.png');
   </script>
 </body>
 </html>
