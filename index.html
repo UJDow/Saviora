@@ -75,7 +75,6 @@
       min-height: 100vh;
       padding: 0;
     }
-    /* Removed .logo-block and .logo-img for centered logo */
     .waitlist-btn {
       position: absolute;
       top: 32px;
@@ -256,22 +255,26 @@
       font-weight: 700;
       margin-top: 18px;
     }
-    /* --- LOGO FIXED IN TOP LEFT --- */
+    /* --- LOGO FIXED IN TOP LEFT, BIG AND TRANSPARENT --- */
     .logo-fixed {
       position: fixed;
       top: 24px;
       left: 24px;
       z-index: 100;
       background: transparent;
+      pointer-events: none;
     }
     .logo-fixed-img {
-      width: 80px;
+      width: 140px;
       height: auto;
       display: block;
       object-fit: contain;
-      filter: drop-shadow(0 2px 24px #bed0f1cc);
-      transition: filter 0.4s;
+      opacity: 0.28;
+      filter: blur(1px) drop-shadow(0 2px 32px #bed0f1cc);
       background: transparent;
+      transition: filter 0.4s, opacity 0.4s, width 0.4s;
+      pointer-events: none;
+      user-select: none;
     }
     @media (max-width: 900px) {
       .container {
@@ -306,7 +309,7 @@
         left: 8px;
       }
       .logo-fixed-img {
-        width: 50px;
+        width: 90px;
       }
       .waitlist-btn {
         font-size: 0.95rem;
@@ -341,7 +344,6 @@
   </div>
   <button class="waitlist-btn" id="waitlistBtn">App Waitlist</button>
   <div class="main-center">
-    <!-- Centered logo removed to only show logo in the top-left corner -->
     <div class="container">
       <div class="subtitle">Интерпретация сновидений</div>
       <div class="desc">Запишите своё сновидение — мы поможем услышать, что оно хочет сказать.</div>
