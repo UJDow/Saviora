@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Saviora</title>
+  <meta name="viewport" content="width=480, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #bed0f1;
+      font-family: 'Montserrat', Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .container {
+      width: 100%;
+      max-width: 420px;
+      margin-top: 60px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 24px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      padding: 36px 28px 32px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .logo {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 18px;
+      color: #222;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      color: #666;
+      margin-bottom: 28px;
+      text-align: center;
+    }
+    form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    label {
+      display: flex;
+      flex-direction: column;
+      font-size: 1rem;
+      color: #444;
+      margin-bottom: 2px;
+    }
+    input[type="email"], textarea {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid #d1d1d1;
+      padding: 12px;
+      font-size: 1rem;
+      background: #f7f7f7;
+      color: #222;
+      outline: none;
+      margin-top: 6px;
+      margin-bottom: 0;
+      transition: border 0.2s;
+    }
+    input[type="email"]:focus, textarea:focus {
+      border: 1.5px solid #bed0f1;
+    }
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+    .hint {
+      color: #888;
+      font-size: 0.98rem;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    button[type="submit"] {
+      width: 100%;
+      padding: 14px 0;
+      border: none;
+      border-radius: 14px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      background: #bed0f1;
+      color: #222;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s, color 0.2s;
+    }
+    button[type="submit"]:active {
+      background: #a7b6d1;
+    }
+    .waitlist-btn {
+      position: absolute;
+      top: 32px;
+      right: 32px;
+      background: #fff;
+      color: #bed0f1;
+      border: 2px solid #bed0f1;
+      border-radius: 10px;
+      padding: 8px 22px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .waitlist-btn.active {
+      background: #bed0f1;
+      color: #fff;
+      border: 2px solid #bed0f1;
+    }
+    /* Модальное окно */
+    .modal-bg {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0; top: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.18);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal {
+      background: #fff;
+      border-radius: 18px;
+      padding: 32px 24px 24px 24px;
+      max-width: 340px;
+      width: 100%;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+      text-align: center;
+      position: relative;
+    }
+    .modal input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #d1d1d1;
+      margin-bottom: 16px;
+      font-size: 1rem;
+      background: #f7f7f7;
+      color: #222;
+      outline: none;
+    }
+    .modal .btn {
+      margin-bottom: 0;
+    }
+    .close-modal {
+      position: absolute;
+      top: 10px; right: 14px;
+      font-size: 1.2rem;
+      color: #aaa;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+    .queue-number {
+      font-size: 1.2rem;
+      color: #bed0f1;
+      font-weight: 700;
+      margin-top: 18px;
+    }
+    @media (max-width: 600px) {
+      .container { margin-top: 24px; }
+      .waitlist-btn { top: 12px; right: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <button class="waitlist-btn" id="waitlistBtn">App Waitlist</button>
+  <div class="container">
+    <div class="logo">Saviora</div>
+    <div class="subtitle">Интерпретация сновидений</div>
+    <form
+      action="https://formspree.io/f/xanbpkgn"
+      method="POST"
+    >
+      <label>
+        Ваш email:
+        <input type="email" name="email" required>
+      </label>
+      <label>
+        Ваше сновидение:
+        <textarea name="message" required placeholder="Запишите свое сновидение. Они говорят, мы помогаем слушать"></textarea>
+      </label>
+      <button type="submit">Отправить сновидение</button>
+    </form>
+  </div>
+
+  <!-- Модальное окно для waitlist -->
+  <div class="modal-bg" id="modalBg">
+    <div class="modal" id="modal">
+      <button class="close-modal" id="closeModal">&times;</button>
+      <div id="modalContent">
+        <div style="font-weight:600; font-size:1.1rem; margin-bottom:10px;">Ваша заявка в список ожидания</div>
+        <input type="email" id="waitlistEmail" placeholder="Ваш email" required>
+        <button class="btn" id="joinWaitlistBtn">Встать в очередь</button>
+      </div>
+      <div class="queue-number" id="queueNumber" style="display:none;"></div>
+    </div>
+  </div>
+
+  <script>
+    // Waitlist modal logic (визуал, без backend)
+    const waitlistBtn = document.getElementById('waitlistBtn');
+    const modalBg = document.getElementById('modalBg');
+    const closeModal = document.getElementById('closeModal');
+    const joinWaitlistBtn = document.getElementById('joinWaitlistBtn');
+    const waitlistEmail = document.getElementById('waitlistEmail');
+    const modalContent = document.getElementById('modalContent');
+    const queueNumber = document.getElementById('queueNumber');
+
+    waitlistBtn.onclick = () => {
+      modalBg.style.display = 'flex';
+      waitlistBtn.classList.add('active');
+    };
+    closeModal.onclick = () => {
+      modalBg.style.display = 'none';
+      waitlistBtn.classList.remove('active');
+      // reset modal
+      modalContent.style.display = '';
+      queueNumber.style.display = 'none';
+      waitlistEmail.value = '';
+      joinWaitlistBtn.disabled = false;
+      joinWaitlistBtn.textContent = 'Встать в очередь';
+    };
+    modalBg.onclick = (e) => {
+      if (e.target === modalBg) closeModal.onclick();
+    };
+
+    joinWaitlistBtn.onclick = () => {
+      const email = waitlistEmail.value.trim();
+      if (!email || !email.includes('@')) {
+        waitlistEmail.style.border = '1.5px solid red';
+        return;
+      }
+      joinWaitlistBtn.disabled = true;
+      joinWaitlistBtn.textContent = 'Отправка...';
+
+      // Визуальный эффект: случайный номер в очереди
+      setTimeout(() => {
+        modalContent.style.display = 'none';
+        queueNumber.style.display = '';
+        // Можно заменить на реальный номер через backend
+        const number = Math.floor(Math.random() * 100) + 1;
+        queueNumber.textContent = `Вы №${number} в списке ожидания Saviora`;
+      }, 900);
+    };
+  </script>
+</body>
+</html>
