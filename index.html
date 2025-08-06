@@ -99,6 +99,22 @@
       color: #fff;
       border: 2px solid var(--blue);
     }
+    @media (max-width: 900px) {
+      .waitlist-btn {
+        position: static;
+        display: block;
+        width: 100%;
+        margin: 0 0 18px 0;
+        padding: 14px 0;
+        border-radius: 18px;
+        font-size: 1.15rem;
+        top: auto;
+        right: auto;
+        opacity: 1 !important;
+        z-index: 10;
+        box-sizing: border-box;
+      }
+    }
     .container {
       width: 100%;
       max-width: 420px;
@@ -338,14 +354,17 @@
       }
       .waitlist-btn {
         position: static;
+        display: block;
         width: 100%;
         margin: 0 0 18px 0;
-        padding: 10px 0;
+        padding: 14px 0;
         border-radius: 18px;
-        font-size: 1.1rem;
+        font-size: 1.15rem;
         top: auto;
         right: auto;
         opacity: 1 !important;
+        z-index: 10;
+        box-sizing: border-box;
       }
     }
     @media (max-width: 600px) {
