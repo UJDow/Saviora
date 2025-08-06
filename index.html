@@ -11,19 +11,31 @@
       margin: 0;
       font-family: 'Montserrat', Arial, sans-serif;
       color: #222;
-      background: url('background.1.png') center center/cover no-repeat fixed;
+      /* Remove background here, handled by overlay */
+      background: none;
       position: relative;
       box-shadow: 0 0 120px 40px #f7d6b6 inset;
       transition: background 0.5s;
       overflow-x: hidden;
     }
+    /* Overlay for the semi-transparent background image */
+    .background-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      background: url('background.1.png') center center/cover no-repeat fixed;
+      opacity: 0.5;
+    }
+    /* Dreamy color/light overlay */
     body::after {
       content: "";
       position: fixed;
       left: 0; top: 0;
       width: 100vw; height: 100vh;
       pointer-events: none;
-      z-index: 0;
+      z-index: 1;
       background: radial-gradient(ellipse at 70% 20%, #ffe6c9cc 0%, #b6c7e688 100%);
       mix-blend-mode: lighten;
       opacity: 0.65;
@@ -31,7 +43,7 @@
     }
     .main-center {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -54,7 +66,7 @@
       font-weight: 600;
       cursor: pointer;
       transition: background 0.2s, color 0.2s;
-      z-index: 2;
+      z-index: 3;
     }
     .waitlist-btn.active {
       background: #bed0f1;
@@ -162,7 +174,6 @@
     button[type="submit"]:active {
       background: linear-gradient(90deg, #a7b6d1 0%, #f7d6b6 100%);
     }
-    /* Модальное окно */
     .modal-bg {
       display: none;
       position: fixed;
@@ -221,26 +232,6 @@
       font-weight: 700;
       margin-top: 18px;
     }
-    .logo-fixed {
-      position: fixed;
-      top: 24px;
-      left: 24px;
-      z-index: 100;
-      background: transparent;
-      pointer-events: none;
-    }
-    .logo-fixed-img {
-      width: 140px;
-      height: auto;
-      display: block;
-      object-fit: contain;
-      opacity: 0.28;
-      filter: blur(1px) drop-shadow(0 2px 32px #bed0f1cc);
-      background: transparent;
-      transition: filter 0.4s, opacity 0.4s, width 0.4s;
-      pointer-events: none;
-      user-select: none;
-    }
     @media (max-width: 900px) {
       .container {
         padding: 32px 8px 28px 8px;
@@ -269,13 +260,6 @@
       .desc {
         font-size: 1rem;
       }
-      .logo-fixed {
-        top: 8px;
-        left: 8px;
-      }
-      .logo-fixed-img {
-        width: 90px;
-      }
       .waitlist-btn {
         font-size: 0.95rem;
         padding: 7px 10px;
@@ -296,10 +280,7 @@
   </style>
 </head>
 <body>
-  <!-- Logo in upper left corner -->
-  <div class="logo-fixed">
-    <img src="logo.png" alt="Saviora Logo" class="logo-fixed-img" />
-  </div>
+  <div class="background-overlay"></div>
 
   <button class="waitlist-btn" id="waitlistBtn">App Waitlist</button>
   <div class="main-center">
@@ -318,7 +299,6 @@
     </div>
   </div>
 
-  <!-- Модальное окно для waitlist -->
   <div class="modal-bg" id="modalBg" aria-modal="true" role="dialog">
     <div class="modal" id="modal">
       <button class="close-modal" id="closeModal" aria-label="Закрыть">&times;</button>
