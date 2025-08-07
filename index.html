@@ -475,6 +475,47 @@
           <textarea name="message" required
             placeholder="Saviora — делимся тем, что помогает лучше понять себя..."></textarea>
         </label>
+
+        <!-- Микро-игровой блок -->
+        <div id="detailsBlock" style="margin-top:18px;">
+          <div style="font-size:1.05rem;font-weight:600;margin-bottom:8px;">Хотите добавить немного деталей?</div>
+          <div style="margin-bottom:10px;">
+            <div style="margin-bottom:4px;">Какие эмоции вы испытали во сне?</div>
+            <div id="emotions" style="display:flex;gap:10px;flex-wrap:wrap;">
+              <span class="emotion" data-value="радость" title="Радость" style="cursor:pointer;font-size:1.5rem;">😊</span>
+              <span class="emotion" data-value="страх" title="Страх" style="cursor:pointer;font-size:1.5rem;">😨</span>
+              <span class="emotion" data-value="грусть" title="Грусть" style="cursor:pointer;font-size:1.5rem;">😢</span>
+              <span class="emotion" data-value="удивление" title="Удивление" style="cursor:pointer;font-size:1.5rem;">😲</span>
+              <span class="emotion" data-value="злость" title="Злость" style="cursor:pointer;font-size:1.5rem;">😡</span>
+              <span class="emotion" data-value="любовь" title="Любовь" style="cursor:pointer;font-size:1.5rem;">😍</span>
+              <span class="emotion" data-value="спокойствие" title="Спокойствие" style="cursor:pointer;font-size:1.5rem;">😌</span>
+            </div>
+          </div>
+          <div style="margin-bottom:10px;">
+            <div style="margin-bottom:4px;">Что из этого было во сне?</div>
+            <div id="associations" style="display:flex;gap:10px;flex-wrap:wrap;">
+              <span class="assoc" data-value="вода" title="Вода" style="cursor:pointer;font-size:1.3rem;">💧</span>
+              <span class="assoc" data-value="окно" title="Окно" style="cursor:pointer;font-size:1.3rem;">🪟</span>
+              <span class="assoc" data-value="дорога" title="Дорога" style="cursor:pointer;font-size:1.3rem;">🛤️</span>
+              <span class="assoc" data-value="животное" title="Животное" style="cursor:pointer;font-size:1.3rem;">🐾</span>
+              <span class="assoc" data-value="дом" title="Дом" style="cursor:pointer;font-size:1.3rem;">🏠</span>
+              <span class="assoc" data-value="свет" title="Свет" style="cursor:pointer;font-size:1.3rem;">💡</span>
+              <span class="assoc" data-value="тьма" title="Тьма" style="cursor:pointer;font-size:1.3rem;">🌑</span>
+            </div>
+          </div>
+          <div style="margin-bottom:10px;">
+            <div style="margin-bottom:4px;">Какой цвет подходит к вашему сну?</div>
+            <div id="colors" style="display:flex;gap:10px;">
+              <span class="color-choice" data-value="голубой" title="Голубой" style="cursor:pointer;width:28px;height:28px;border-radius:50%;background:#6ca6e3;display:inline-block;border:2px solid #fff;box-shadow:0 0 4px #6ca6e3;"></span>
+              <span class="color-choice" data-value="фиолетовый" title="Фиолетовый" style="cursor:pointer;width:28px;height:28px;border-radius:50%;background:#b7aaff;display:inline-block;border:2px solid #fff;box-shadow:0 0 4px #b7aaff;"></span>
+              <span class="color-choice" data-value="желтый" title="Желтый" style="cursor:pointer;width:28px;height:28px;border-radius:50%;background:#ffe6c9;display:inline-block;border:2px solid #fff;box-shadow:0 0 4px #ffe6c9;"></span>
+              <span class="color-choice" data-value="розовый" title="Розовый" style="cursor:pointer;width:28px;height:28px;border-radius:50%;background:#f7d6b6;display:inline-block;border:2px solid #fff;box-shadow:0 0 4px #f7d6b6;"></span>
+              <span class="color-choice" data-value="серый" title="Серый" style="cursor:pointer;width:28px;height:28px;border-radius:50%;background:#b0b0b0;display:inline-block;border:2px solid #fff;box-shadow:0 0 4px #b0b0b0;"></span>
+            </div>
+          </div>
+        </div>
+        <!-- Конец микро-игрового блока -->
+
         <button type="submit" class="dream-glow-btn"><span>Отправить сновидение</span></button>
         <div class="anon-note">
           Оставь Instagram или Telegram для связи. Мы всегда рады новым историям.
@@ -546,6 +587,50 @@
     const queueNumber = document.getElementById('queueNumber');
     const waitlistWelcome = document.getElementById('waitlistWelcome');
 
+    // --- Микро-игровой блок: логика выбора ---
+    // Эмоции (можно несколько)
+    const emotions = document.querySelectorAll('.emotion');
+    let selectedEmotions = [];
+    emotions.forEach(e => {
+      e.onclick = () => {
+        const val = e.getAttribute('data-value');
+        if (selectedEmotions.includes(val)) {
+          selectedEmotions = selectedEmotions.filter(v => v !== val);
+          e.style.filter = '';
+        } else {
+          selectedEmotions.push(val);
+          e.style.filter = 'drop-shadow(0 0 6px #6ca6e3)';
+        }
+      };
+    });
+
+    // Ассоциации (можно несколько)
+    const assocs = document.querySelectorAll('.assoc');
+    let selectedAssocs = [];
+    assocs.forEach(a => {
+      a.onclick = () => {
+        const val = a.getAttribute('data-value');
+        if (selectedAssocs.includes(val)) {
+          selectedAssocs = selectedAssocs.filter(v => v !== val);
+          a.style.filter = '';
+        } else {
+          selectedAssocs.push(val);
+          a.style.filter = 'drop-shadow(0 0 6px #b7aaff)';
+        }
+      };
+    });
+
+    // Цвет (только один)
+    const colors = document.querySelectorAll('.color-choice');
+    let selectedColor = '';
+    colors.forEach(c => {
+      c.onclick = () => {
+        colors.forEach(cc => cc.style.outline = '');
+        c.style.outline = '2.5px solid #6ca6e3';
+        selectedColor = c.getAttribute('data-value');
+      };
+    });
+
     // Email валидация
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -556,15 +641,34 @@
       const message = textarea.value.trim();
       if (!message) return;
 
+      // Собираем детали
+      const details = {
+        emotions: selectedEmotions,
+        associations: selectedAssocs,
+        color: selectedColor
+      };
+
       // Показываем модалку благодарности мгновенно
       thanksModalBg.classList.add('active');
       textarea.value = '';
+      // Сброс выбора
+      emotions.forEach(e => e.style.filter = '');
+      assocs.forEach(a => a.style.filter = '');
+      colors.forEach(c => c.style.outline = '');
+      selectedEmotions = [];
+      selectedAssocs = [];
+      selectedColor = '';
 
-      // Отправляем сон через Formspree в фоне
+      // Отправляем сон + детали через Formspree в фоне
       fetch("https://formspree.io/f/xanbpkgn", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message })
+        body: JSON.stringify({
+          message,
+          emotions: details.emotions.join(', '),
+          associations: details.associations.join(', '),
+          color: details.color
+        })
       }).catch(() => {});
     };
 
