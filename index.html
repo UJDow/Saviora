@@ -40,8 +40,6 @@
       background: url('background 1.png') center center/cover no-repeat fixed;
       opacity: 0.35;
     }
-    /* .background-girl { ... }  -- УДАЛЕНО */
-
     body::after {
       content: "";
       position: fixed;
@@ -66,27 +64,31 @@
       padding: 0;
     }
     .waitlist-btn {
-      background: #fff !important; /* всегда белая */
+      background: #fff !important;
+      background-color: #fff !important;
       color: var(--blue) !important;
-      border: 2px solid var(--blue);
-      border-radius: 10px;
-      padding: 10px 28px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-      z-index: 4;
-      font-family: 'Montserrat', Arial, sans-serif;
-      position: absolute;
-      top: 32px;
-      right: 32px;
+      border: 2px solid var(--blue) !important;
+      border-radius: 10px !important;
+      padding: 10px 28px !important;
+      font-size: 1rem !important;
+      font-weight: 600 !important;
+      cursor: pointer !important;
+      transition: background 0.2s, color 0.2s !important;
+      z-index: 4 !important;
+      font-family: 'Montserrat', Arial, sans-serif !important;
+      position: absolute !important;
+      top: 32px !important;
+      right: 32px !important;
       opacity: 1 !important;
-      box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9;
+      box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9 !important;
+      -webkit-appearance: none !important;
+      appearance: none !important;
     }
     .waitlist-btn.active {
       background: var(--blue) !important;
+      background-color: var(--blue) !important;
       color: #fff !important;
-      border: 2px solid var(--blue);
+      border: 2px solid var(--blue) !important;
     }
     .container {
       width: 100%;
@@ -327,20 +329,21 @@
         font-size: 1.3rem;
       }
       .waitlist-btn {
-        position: static;
-        width: 100%;
-        margin: 0 0 18px 0;
-        padding: 10px 0;
-        border-radius: 18px;
-        font-size: 1.1rem;
-        top: auto;
-        right: auto;
-        opacity: 1 !important;
-        background: #fff !important; /* белая на мобилке */
+        position: static !important;
+        width: 100% !important;
+        margin: 0 0 18px 0 !important;
+        padding: 10px 0 !important;
+        border-radius: 18px !important;
+        font-size: 1.1rem !important;
+        top: auto !important;
+        right: auto !important;
+        background: #fff !important;
+        background-color: #fff !important;
         color: var(--blue) !important;
-        box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9;
+        box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9 !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
       }
-      /* .background-girl { ... } -- УДАЛЕНО */
     }
     @media (max-width: 600px) {
       html, body {
@@ -369,15 +372,17 @@
         font-size: 1rem;
       }
       .waitlist-btn {
-        font-size: 1rem;
-        border-radius: 13px;
-        padding: 10px 0;
+        font-size: 1rem !important;
+        border-radius: 13px !important;
+        padding: 10px 0 !important;
         opacity: 1 !important;
-        background: #fff !important; /* белая на мобилке */
+        background: #fff !important;
+        background-color: #fff !important;
         color: var(--blue) !important;
-        box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9;
+        box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9 !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
       }
-      /* .background-girl { ... } -- УДАЛЕНО */
     }
     @media (max-width: 400px) {
       .container, .modal {
@@ -394,7 +399,7 @@
 </head>
 <body>
   <div class="background-overlay"></div>
-  <!-- <img src="girl.png" alt="smiling dream girl" class="background-girl" draggable="false" />  УДАЛЕНО -->
+  <!-- Картинка dreamgirl удалена -->
   <button class="waitlist-btn" id="waitlistBtn">App Waitlist</button>
   <div class="main-center">
     <div class="container">
