@@ -341,6 +341,35 @@
       position: relative;
       user-select: none;
     }
+    /* Кнопка App Waitlist */
+    .waitlist-header-btn {
+      position: fixed;
+      top: 32px;
+      right: 40px;
+      z-index: 20;
+      width: auto;
+      min-width: 160px;
+      max-width: 220px;
+      padding: 12px 28px;
+      font-size: 1.08rem;
+      border-radius: 32px;
+      box-shadow: 0 2px 12px 0 #ffe6c9;
+      background: linear-gradient(90deg, var(--blue) 0%, #ffe6c9 100%);
+      color: var(--blue);
+      font-family: 'Montserrat', Arial, sans-serif;
+      text-shadow: 0 0 16px var(--glow1), 0 0 32px var(--glow2), 0 2px 8px #fff6e9bb;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      animation: btnGlow 5s ease-in-out infinite alternate;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      border: none;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
     @media (max-width: 900px) {
       .container, .modal {
         padding: 22px 6px 20px 6px;
@@ -376,6 +405,18 @@
         padding: 12px 0;
         font-size: 1rem;
       }
+      .waitlist-header-btn {
+        position: fixed;
+        top: 10px;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        min-width: 60vw;
+        max-width: 90vw;
+        font-size: 1rem;
+        padding: 10px 0;
+        border-radius: 13px;
+      }
     }
     @media (max-width: 400px) {
       .container, .modal {
@@ -391,6 +432,11 @@
   </style>
 </head>
 <body>
+  <!-- Кнопка App Waitlist -->
+  <button id="waitlistHeaderBtn" class="dream-glow-btn waitlist-header-btn">
+    <span>App Waitlist</span>
+  </button>
+
   <div class="background-overlay"></div>
   <div class="main-center">
     <div class="container">
@@ -404,7 +450,9 @@
             placeholder="Saviora — делимся тем, что помогает лучше понять себя..."></textarea>
         </label>
         <button type="submit" class="dream-glow-btn"><span>Отправить сновидение</span></button>
-        <div class="anon-note">Анонимно. Без осуждения. Только для тебя.</div>
+        <div class="anon-note">
+          Без осуждения. Только для тебя. Оставь свой Instagram & Telegram и мы свяжемся
+        </div>
       </form>
     </div>
   </div>
@@ -530,6 +578,18 @@
     };
 
     joinWaitlistBtn.onclick = originalJoinWaitlistHandler;
+
+    // Кнопка в шапке открывает модалку
+    document.getElementById('waitlistHeaderBtn').onclick = function() {
+      modalBg.classList.add('active');
+      waitlistEmail.value = '';
+      queueNumber.style.display = 'none';
+      queueNumber.innerHTML = '';
+      joinWaitlistBtn.disabled = false;
+      joinWaitlistBtn.textContent = 'Встать в App Waitlist';
+      waitlistEmail.style.border = '';
+      joinWaitlistBtn.onclick = originalJoinWaitlistHandler;
+    };
   </script>
 </body>
 </html>
