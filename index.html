@@ -11,6 +11,9 @@
       --glow1: #ffe6c9;
       --glow2: #bed0f1;
       --glow3: #f7d6b6;
+      --cloud-violet: #b7aaff;
+      --cloud-blue: #6ca6e3;
+      --cloud-alpha: rgba(183,170,255,0.55);
     }
     html, body {
       height: 100%;
@@ -160,7 +163,7 @@
       box-shadow: 0 0 0 2px #ffe6c9;
     }
     .anon-note {
-      font-size: 0.98rem;
+      font-size: 0.88rem;
       color: var(--blue);
       opacity: 0.7;
       margin-top: 6px;
@@ -438,6 +441,19 @@
       margin-top: 0;
       font-weight: 600;
       line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .cloud-emoji {
+      display: inline-block;
+      vertical-align: middle;
+      width: 38px;
+      height: 28px;
+      margin-left: 4px;
+      margin-bottom: -6px;
+      filter: drop-shadow(0 2px 8px #b7aaff88);
     }
   </style>
 </head>
@@ -461,7 +477,7 @@
         </label>
         <button type="submit" class="dream-glow-btn"><span>Отправить сновидение</span></button>
         <div class="anon-note">
-          Без осуждения. Только для тебя. Оставь свой Instagram & Telegram и мы свяжемся
+          Только с заботой и теплом. Оставь Instagram и Telegram — и стань частью нашего пространства, где сны помогают лучше понять себя. Мы всегда рады новым историям.
         </div>
       </form>
     </div>
@@ -472,9 +488,29 @@
     <div class="modal thanks-modal" id="thanksModal">
       <button class="close-modal" id="closeThanksModal" aria-label="Закрыть">&times;</button>
       <div class="success-message">
-        Спасибо за сновидение!<br>
-        Свяжемся в Telegram или Instagram.<br>
-        Загляните в правый верхний угол 💫
+        <span>Saviora скоро тихонько постучится в Telegram или Instagram.</span>
+        <span style="display:flex;align-items:center;justify-content:center;">
+          Загляни в правый верхний угол
+          <svg class="cloud-emoji" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="24" cy="20" rx="20" ry="10" fill="url(#cloudGradient)" fill-opacity="0.7"/>
+            <ellipse cx="16" cy="16" rx="8" ry="8" fill="url(#cloudGradient2)" fill-opacity="0.7"/>
+            <ellipse cx="32" cy="16" rx="10" ry="10" fill="url(#cloudGradient3)" fill-opacity="0.7"/>
+            <defs>
+              <linearGradient id="cloudGradient" x1="4" y1="10" x2="44" y2="30" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#b7aaff" stop-opacity="0.7"/>
+                <stop offset="1" stop-color="#6ca6e3" stop-opacity="0.7"/>
+              </linearGradient>
+              <linearGradient id="cloudGradient2" x1="8" y1="8" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#b7aaff" stop-opacity="0.7"/>
+                <stop offset="1" stop-color="#6ca6e3" stop-opacity="0.7"/>
+              </linearGradient>
+              <linearGradient id="cloudGradient3" x1="22" y1="6" x2="42" y2="26" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#b7aaff" stop-opacity="0.7"/>
+                <stop offset="1" stop-color="#6ca6e3" stop-opacity="0.7"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </span>
       </div>
     </div>
   </div>
@@ -513,26 +549,22 @@
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     // Отправка сна
-    dreamForm.onsubmit = async (e) => {
+    dreamForm.onsubmit = (e) => {
       e.preventDefault();
       const textarea = dreamForm.querySelector('textarea');
       const message = textarea.value.trim();
       if (!message) return;
 
-      // Отправляем сон через Formspree
-      try {
-        await fetch("https://formspree.io/f/xanbpkgn", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message })
-        });
-      } catch (e) {
-        // Даже если Formspree не ответил, всё равно показываем окно благодарности
-      }
-
-      // Показываем модалку благодарности
+      // Показываем модалку благодарности мгновенно
       thanksModalBg.classList.add('active');
       textarea.value = '';
+
+      // Отправляем сон через Formspree в фоне
+      fetch("https://formspree.io/f/xanbpkgn", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message })
+      }).catch(() => {});
     };
 
     // Закрытие модалки благодарности
