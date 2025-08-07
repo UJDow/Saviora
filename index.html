@@ -477,7 +477,7 @@
         </label>
         <button type="submit" class="dream-glow-btn"><span>Отправить сновидение</span></button>
         <div class="anon-note">
-          Только с заботой и теплом. Оставь Instagram и Telegram — и стань частью нашего пространства, где сны помогают лучше понять себя. Мы всегда рады новым историям.
+          Оставь Instagram или Telegram — и стань частью нашего пространства, где сны помогают лучше понять себя. Мы всегда рады новым историям.
         </div>
       </form>
     </div>
@@ -520,7 +520,7 @@
     <div class="modal" id="modal">
       <button class="close-modal" id="closeModal" aria-label="Закрыть">&times;</button>
       <div id="modalContent" style="width:100%;display:flex;flex-direction:column;align-items:center;">
-        <div class="success-message">
+        <div class="success-message" id="waitlistWelcome">
           Saviora — это пространство, где можно прислушаться к себе через сновидения.<br>
           Мы всегда рады новым историям.
         </div>
@@ -544,6 +544,7 @@
     const waitlistEmail = document.getElementById('waitlistEmail');
     const modalContent = document.getElementById('modalContent');
     const queueNumber = document.getElementById('queueNumber');
+    const waitlistWelcome = document.getElementById('waitlistWelcome');
 
     // Email валидация
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -585,6 +586,8 @@
       queueNumber.style.display = 'none';
       queueNumber.innerHTML = '';
       waitlistEmail.value = '';
+      waitlistEmail.style.display = '';
+      joinWaitlistBtn.style.display = '';
       waitlistEmail.style.border = '';
       joinWaitlistBtn.disabled = false;
       joinWaitlistBtn.textContent = 'Встать в App Waitlist';
@@ -611,16 +614,12 @@
       joinWaitlistBtn.disabled = true;
       joinWaitlistBtn.textContent = 'Отправка...';
 
+      // Получаем номер сразу
       let number = '';
       try {
-        await fetch(SHEETDB_API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ data: [{ email, timestamp: new Date().toISOString() }] })
-        });
         const res = await fetch(SHEETDB_API_URL);
         const data = await res.json();
-        number = data.length;
+        number = data.length + 1; // +1, т.к. мы ещё не добавили текущий email
       } catch (e) {
         joinWaitlistBtn.disabled = false;
         joinWaitlistBtn.textContent = 'Встать в App Waitlist';
@@ -628,14 +627,18 @@
         return;
       }
 
-      modalContent.style.display = 'flex';
+      // Показываем номер и приветствие сразу, скрываем email и кнопку
       queueNumber.style.display = '';
       queueNumber.textContent = `Вы №${number} в списке ожидания Saviora`;
+      waitlistEmail.style.display = 'none';
+      joinWaitlistBtn.style.display = 'none';
 
-      waitlistEmail.value = '';
-      joinWaitlistBtn.disabled = false;
-      joinWaitlistBtn.textContent = 'Готово!';
-      joinWaitlistBtn.onclick = closeModal;
+      // Отправляем email в фоне
+      fetch(SHEETDB_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: [{ email, timestamp: new Date().toISOString() }] })
+      }).catch(() => {});
     };
 
     joinWaitlistBtn.onclick = originalJoinWaitlistHandler;
@@ -644,6 +647,8 @@
     document.getElementById('waitlistHeaderBtn').onclick = function() {
       modalBg.classList.add('active');
       waitlistEmail.value = '';
+      waitlistEmail.style.display = '';
+      joinWaitlistBtn.style.display = '';
       queueNumber.style.display = 'none';
       queueNumber.innerHTML = '';
       joinWaitlistBtn.disabled = false;
