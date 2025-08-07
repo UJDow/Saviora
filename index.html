@@ -14,6 +14,8 @@
       --cloud-violet: #b7aaff;
       --cloud-blue: #6ca6e3;
       --cloud-alpha: rgba(183,170,255,0.55);
+      --accent: #b7aaff;
+      --accent2: #ffe6c9;
     }
     html, body {
       height: 100%;
@@ -218,251 +220,80 @@
     button[type="submit"]:active, .dream-glow-btn:active {
       background: linear-gradient(90deg, #5a8ec7 0%, #f7d6b6 100%);
     }
-    /* Modal styles - synchronized with main frame */
-    .modal-bg {
-      display: none;
-      position: fixed;
-      z-index: 10;
-      left: 0; top: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.18);
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.25s;
-      font-family: 'Montserrat', Arial, sans-serif;
-    }
-    .modal-bg.active {
+    /* --- Микро-игровой блок --- */
+    .details-toggle {
       display: flex;
-      opacity: 1;
-    }
-    .modal {
-      background: rgba(255,255,255,0.94);
-      border-radius: 38px;
-      box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9;
-      padding: 34px 25px 28px 25px;
-      max-width: 420px;
-      width: 100vw;
-      display: flex;
-      flex-direction: column;
       align-items: center;
-      animation: containerGlow 6s ease-in-out infinite alternate;
-      position: relative;
-      box-sizing: border-box;
-      color: var(--blue);
-      text-shadow: 0 1px 2px #fff6e9bb;
-    }
-    .modal .success-message {
+      gap: 0.5em;
+      cursor: pointer;
       font-size: 1.08rem;
+      font-weight: 600;
       color: var(--blue);
-      text-align: center;
-      margin-bottom: 18px;
-      margin-top: 8px;
-      font-weight: 500;
-      line-height: 1.4;
-    }
-    .modal input[type="email"] {
-      width: 100%;
-      max-width: 100%;
-      padding: 18px 14px;
-      border-radius: 32px;
-      border: 1.5px solid var(--blue);
-      font-size: 1.15rem;
-      background: #f7f7f7;
-      color: var(--blue);
-      outline: none;
-      margin-bottom: 18px;
-      box-sizing: border-box;
-      transition: border 0.2s;
-      font-family: 'Montserrat', Arial, sans-serif;
-      box-shadow: 0 2px 12px 0 #ffe6c9;
-      text-align: left;
-      display: block;
-    }
-    .modal input[type="email"]::placeholder {
-      color: var(--blue);
-      opacity: 1;
-      font-style: italic;
-      font-size: 1.02rem;
-    }
-    .modal input[type="email"]:focus {
-      border: 1.5px solid var(--blue);
-    }
-    .modal .btn, .modal button.btn, #joinWaitlistBtn {
-      width: 100%;
-      padding: 18px 0;
-      border: none;
-      border-radius: 32px;
-      font-size: 1.18rem;
-      font-weight: 700;
-      background: linear-gradient(90deg, var(--blue) 0%, #ffe6c9 100%);
-      color: var(--blue);
-      cursor: pointer;
-      margin-bottom: 0;
-      margin-top: 8px;
-      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-      box-shadow: 0 2px 12px 0 #ffe6c9;
-      animation: btnGlow 5s ease-in-out infinite alternate;
-      font-family: 'Montserrat', Arial, sans-serif;
-      text-shadow: 0 1px 2px #fff6e9bb;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-    .modal .btn:active, #joinWaitlistBtn:active {
-      background: linear-gradient(90deg, #5a8ec7 0%, #f7d6b6 100%);
-    }
-    .close-modal {
-      position: absolute;
-      top: 10px; right: 14px;
-      font-size: 1.2rem;
-      color: var(--blue);
-      cursor: pointer;
       background: none;
       border: none;
-      font-family: 'Montserrat', Arial, sans-serif;
-    }
-    .queue-number {
-      font-size: 1.2rem;
-      color: var(--blue);
-      font-weight: 700;
-      margin-top: 18px;
-      font-family: 'Montserrat', Arial, sans-serif;
-      text-align: center;
-      width: 100%;
-      text-shadow: 0 1px 2px #fff6e9bb;
-    }
-    .footer {
-      width: 100vw;
-      text-align: center;
-      color: var(--blue);
-      opacity: 0.6;
-      font-size: 0.98rem;
-      font-family: 'Montserrat', Arial, sans-serif;
-      margin-top: 24px;
-      margin-bottom: 8px;
-      letter-spacing: 0.01em;
-      z-index: 5;
-      position: relative;
+      outline: none;
+      margin: 0 0 8px 0;
+      padding: 0;
+      transition: color 0.2s;
       user-select: none;
     }
-    /* Кнопка App Waitlist */
-    .waitlist-header-btn {
-      position: fixed;
-      top: 32px;
-      right: 40px;
-      z-index: 20;
-      width: auto;
-      min-width: 160px;
-      max-width: 220px;
-      padding: 12px 28px;
-      font-size: 1.08rem;
-      border-radius: 32px;
-      box-shadow: 0 2px 12px 0 #ffe6c9;
-      background: linear-gradient(90deg, var(--blue) 0%, #ffe6c9 100%);
-      color: var(--blue);
-      font-family: 'Montserrat', Arial, sans-serif;
-      text-shadow: 0 0 16px var(--glow1), 0 0 32px var(--glow2), 0 2px 8px #fff6e9bb;
-      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-      animation: btnGlow 5s ease-in-out infinite alternate;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      border: none;
-      outline: none;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-    @media (max-width: 900px) {
-      .container, .modal {
-        padding: 22px 6px 20px 6px;
-        max-width: 98vw;
-      }
-      .main-phrase {
-        font-size: 1.3rem;
-      }
-    }
-    @media (max-width: 600px) {
-      html, body {
-        font-size: 15px;
-      }
-      .main-center {
-        padding: 0 0 24px 0;
-      }
-      .container, .modal {
-        padding: 10px 2vw 10px 2vw;
-        border-radius: 16px;
-        max-width: 99vw;
-      }
-      .main-phrase {
-        font-size: 1rem;
-        margin-bottom: 16px;
-      }
-      textarea, .modal input[type="email"] {
-        border-radius: 13px;
-        padding: 10px;
-        font-size: 0.9rem;
-      }
-      button[type="submit"], .dream-glow-btn, .modal .btn, .modal button.btn, #joinWaitlistBtn {
-        border-radius: 13px;
-        padding: 12px 0;
-        font-size: 1rem;
-      }
-      .waitlist-header-btn {
-        position: fixed;
-        top: 10px;
-        left: 50%;
-        right: auto;
-        transform: translateX(-50%);
-        min-width: 60vw;
-        max-width: 90vw;
-        font-size: 1rem;
-        padding: 10px 0;
-        border-radius: 13px;
-      }
-    }
-    @media (max-width: 400px) {
-      .container, .modal {
-        padding: 4px 1vw 4px 1vw;
-      }
-      .main-phrase {
-        font-size: 0.84rem;
-      }
-      textarea, .modal input[type="email"] {
-        font-size: 0.82rem;
-      }
-    }
-    /* Модалка благодарности */
-    .thanks-modal .success-message {
-      font-size: 1.15rem;
-      color: var(--blue);
-      text-align: center;
-      margin-bottom: 0;
-      margin-top: 0;
-      font-weight: 600;
-      line-height: 1.5;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-    .cloud-emoji {
+    .details-toggle .arrow {
       display: inline-block;
-      vertical-align: middle;
-      width: 38px;
-      height: 28px;
-      margin-left: 4px;
-      margin-bottom: -6px;
-      filter: drop-shadow(0 2px 8px #b7aaff88);
+      transition: transform 0.35s cubic-bezier(.68,-0.55,.27,1.55);
+      font-size: 1.2em;
+    }
+    .details-toggle.open .arrow {
+      transform: rotate(180deg);
+    }
+    .details-content {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.55s cubic-bezier(.68,-0.55,.27,1.55), opacity 0.35s cubic-bezier(.68,-0.55,.27,1.55);
+      will-change: max-height, opacity;
+    }
+    .details-content.open {
+      max-height: 500px;
+      opacity: 1;
+      transition: max-height 0.65s cubic-bezier(.68,-0.55,.27,1.55), opacity 0.45s cubic-bezier(.68,-0.55,.27,1.55);
+    }
+    .details-section {
+      margin-bottom: 14px;
+      animation: fadeInUp 0.5s cubic-bezier(.68,-0.55,.27,1.55);
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .emotion, .assoc, .color-choice {
+      cursor: pointer;
+      transition: box-shadow 0.25s, background 0.25s, transform 0.18s, outline 0.18s;
+      border-radius: 50%;
+      user-select: none;
+      position: relative;
+    }
+    .emotion.selected, .assoc.selected, .color-choice.selected {
+      box-shadow: 0 0 0 4px var(--accent), 0 0 16px 2px var(--accent2), 0 2px 12px 0 #ffe6c9;
+      background: linear-gradient(120deg, var(--accent) 60%, var(--accent2) 100%);
+      transform: scale(1.18) rotate(-2deg);
+      outline: 2.5px solid var(--blue);
+      z-index: 2;
+    }
+    .color-choice {
+      width: 28px; height: 28px; border-radius: 50%; display: inline-block; border:2px solid #fff; box-shadow:0 0 4px #b0b0b0;
+    }
+    .color-choice.selected {
+      outline: 3px solid var(--blue);
+      box-shadow: 0 0 0 4px var(--accent), 0 0 16px 2px var(--accent2), 0 2px 12px 0 #ffe6c9;
+      transform: scale(1.18) rotate(-2deg);
+      z-index: 2;
     }
   </style>
 </head>
 <body>
-  <!-- Кнопка App Waitlist -->
   <button id="waitlistHeaderBtn" class="dream-glow-btn waitlist-header-btn">
     <span>App Waitlist</span>
   </button>
-
   <div class="background-overlay"></div>
   <div class="main-center">
     <div class="container">
@@ -475,47 +306,48 @@
           <textarea name="message" required
             placeholder="Saviora — делимся тем, что помогает лучше понять себя..."></textarea>
         </label>
-
-        <!-- Микро-игровой блок -->
-        <div id="detailsBlock" style="margin-top:18px;">
-          <div style="font-size:1.05rem;font-weight:600;margin-bottom:8px;">Хотите добавить немного деталей?</div>
-          <div style="margin-bottom:10px;">
-            <div style="margin-bottom:4px;">Какие эмоции вы испытали во сне?</div>
+        <!-- Микро-игровой блок с анимацией -->
+        <button type="button" class="details-toggle" id="detailsToggle">
+          <span>Добавим немного деталей?</span>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="details-content" id="detailsContent">
+          <div class="details-section">
+            <div style="margin-bottom:4px;font-weight:500;">Какие эмоции вы испытали во сне?</div>
             <div id="emotions" style="display:flex;gap:10px;flex-wrap:wrap;">
-              <span class="emotion" data-value="радость" title="Радость" style="cursor:pointer;font-size:1.5rem;">😊</span>
-              <span class="emotion" data-value="страх" title="Страх" style="cursor:pointer;font-size:1.5rem;">😨</span>
-              <span class="emotion" data-value="грусть" title="Грусть" style="cursor:pointer;font-size:1.5rem;">😢</span>
-              <span class="emotion" data-value="удивление" title="Удивление" style="cursor:pointer;font-size:1.5rem;">😲</span>
-              <span class="emotion" data-value="злость" title="Злость" style="cursor:pointer;font-size:1.5rem;">😡</span>
-              <span class="emotion" data-value="любовь" title="Любовь" style="cursor:pointer;font-size:1.5rem;">😍</span>
-              <span class="emotion" data-value="спокойствие" title="Спокойствие" style="cursor:pointer;font-size:1.5rem;">😌</span>
+              <span class="emotion" data-value="радость" title="Радость" style="font-size:1.5rem;">😊</span>
+              <span class="emotion" data-value="страх" title="Страх" style="font-size:1.5rem;">😨</span>
+              <span class="emotion" data-value="грусть" title="Грусть" style="font-size:1.5rem;">😢</span>
+              <span class="emotion" data-value="удивление" title="Удивление" style="font-size:1.5rem;">😲</span>
+              <span class="emotion" data-value="злость" title="Злость" style="font-size:1.5rem;">😡</span>
+              <span class="emotion" data-value="любовь" title="Любовь" style="font-size:1.5rem;">😍</span>
+              <span class="emotion" data-value="спокойствие" title="Спокойствие" style="font-size:1.5rem;">😌</span>
             </div>
           </div>
-          <div style="margin-bottom:10px;">
-            <div style="margin-bottom:4px;">Что из этого было во сне?</div>
+          <div class="details-section">
+            <div style="margin-bottom:4px;font-weight:500;">Что из этого было во сне?</div>
             <div id="associations" style="display:flex;gap:10px;flex-wrap:wrap;">
-              <span class="assoc" data-value="вода" title="Вода" style="cursor:pointer;font-size:1.3rem;">💧</span>
-              <span class="assoc" data-value="окно" title="Окно" style="cursor:pointer;font-size:1.3rem;">🪟</span>
-              <span class="assoc" data-value="дорога" title="Дорога" style="cursor:pointer;font-size:1.3rem;">🛤️</span>
-              <span class="assoc" data-value="животное" title="Животное" style="cursor:pointer;font-size:1.3rem;">🐾</span>
-              <span class="assoc" data-value="дом" title="Дом" style="cursor:pointer;font-size:1.3rem;">🏠</span>
-              <span class="assoc" data-value="свет" title="Свет" style="cursor:pointer;font-size:1.3rem;">💡</span>
-              <span class="assoc" data-value="тьма" title="Тьма" style="cursor:pointer;font-size:1.3rem;">🌑</span>
+              <span class="assoc" data-value="вода" title="Вода" style="font-size:1.3rem;">💧</span>
+              <span class="assoc" data-value="окно" title="Окно" style="font-size:1.3rem;">🪟</span>
+              <span class="assoc" data-value="дорога" title="Дорога" style="font-size:1.3rem;">🛤️</span>
+              <span class="assoc" data-value="животное" title="Животное" style="font-size:1.3rem;">🐾</span>
+              <span class="assoc" data-value="дом" title="Дом" style="font-size:1.3rem;">🏠</span>
+              <span class="assoc" data-value="свет" title="Свет" style="font-size:1.3rem;">💡</span>
+              <span class="assoc" data-value="тьма" title="Тьма" style="font-size:1.3rem;">🌑</span>
             </div>
           </div>
-          <div style="margin-bottom:10px;">
-            <div style="margin-bottom:4px;">Какой цвет подходит к вашему сну?</div>
+          <div class="details-section">
+            <div style="margin-bottom:4px;font-weight:500;">Какой цвет подходит к вашему сну?</div>
             <div id="colors" style="display:flex;gap:10px;">
-              <span class="color-choice" data-value="голубой" title="Голубой" style="cursor:pointer;width:28px;height:28px;border-radius:50%;background:#6ca6e3;display:inline-block;border:2px solid #fff;box-shadow:0 0 4px #6ca6e3;"></span>
-              <span class="color-choice" data-value="фиолетовый" title="Фиолетовый" style="cursor:pointer;width:28px;height:28px;border-radius:50%;background:#b7aaff;display:inline-block;border:2px solid #fff;box-shadow:0 0 4px #b7aaff;"></span>
-              <span class="color-choice" data-value="желтый" title="Желтый" style="cursor:pointer;width:28px;height:28px;border-radius:50%;background:#ffe6c9;display:inline-block;border:2px solid #fff;box-shadow:0 0 4px #ffe6c9;"></span>
-              <span class="color-choice" data-value="розовый" title="Розовый" style="cursor:pointer;width:28px;height:28px;border-radius:50%;background:#f7d6b6;display:inline-block;border:2px solid #fff;box-shadow:0 0 4px #f7d6b6;"></span>
-              <span class="color-choice" data-value="серый" title="Серый" style="cursor:pointer;width:28px;height:28px;border-radius:50%;background:#b0b0b0;display:inline-block;border:2px solid #fff;box-shadow:0 0 4px #b0b0b0;"></span>
+              <span class="color-choice" data-value="голубой" title="Голубой" style="background:#6ca6e3;"></span>
+              <span class="color-choice" data-value="фиолетовый" title="Фиолетовый" style="background:#b7aaff;"></span>
+              <span class="color-choice" data-value="желтый" title="Желтый" style="background:#ffe6c9;"></span>
+              <span class="color-choice" data-value="розовый" title="Розовый" style="background:#f7d6b6;"></span>
+              <span class="color-choice" data-value="серый" title="Серый" style="background:#b0b0b0;"></span>
             </div>
           </div>
         </div>
         <!-- Конец микро-игрового блока -->
-
         <button type="submit" class="dream-glow-btn"><span>Отправить сновидение</span></button>
         <div class="anon-note">
           Оставь Instagram или Telegram для связи. Мы всегда рады новым историям.
@@ -523,7 +355,6 @@
       </form>
     </div>
   </div>
-
   <!-- Модалка благодарности -->
   <div class="modal-bg" id="thanksModalBg" aria-modal="true" role="dialog">
     <div class="modal thanks-modal" id="thanksModal">
@@ -555,7 +386,6 @@
       </div>
     </div>
   </div>
-
   <!-- Модалка App Waitlist -->
   <div class="modal-bg" id="modalBg" aria-modal="true" role="dialog">
     <div class="modal" id="modal">
@@ -571,23 +401,15 @@
       </div>
     </div>
   </div>
-
   <div class="footer">Saviora, 2025</div>
-
   <script>
-    // Форма отправки сна
-    const dreamForm = document.getElementById('dreamForm');
-    const thanksModalBg = document.getElementById('thanksModalBg');
-    const closeThanksModal = document.getElementById('closeThanksModal');
-    const modalBg = document.getElementById('modalBg');
-    const closeModal = document.getElementById('closeModal');
-    const joinWaitlistBtn = document.getElementById('joinWaitlistBtn');
-    const waitlistEmail = document.getElementById('waitlistEmail');
-    const modalContent = document.getElementById('modalContent');
-    const queueNumber = document.getElementById('queueNumber');
-    const waitlistWelcome = document.getElementById('waitlistWelcome');
-
-    // --- Микро-игровой блок: логика выбора ---
+    // --- Микро-игровой блок: логика выбора и анимация раскрытия ---
+    const detailsToggle = document.getElementById('detailsToggle');
+    const detailsContent = document.getElementById('detailsContent');
+    detailsToggle.onclick = function() {
+      detailsToggle.classList.toggle('open');
+      detailsContent.classList.toggle('open');
+    };
     // Эмоции (можно несколько)
     const emotions = document.querySelectorAll('.emotion');
     let selectedEmotions = [];
@@ -596,14 +418,13 @@
         const val = e.getAttribute('data-value');
         if (selectedEmotions.includes(val)) {
           selectedEmotions = selectedEmotions.filter(v => v !== val);
-          e.style.filter = '';
+          e.classList.remove('selected');
         } else {
           selectedEmotions.push(val);
-          e.style.filter = 'drop-shadow(0 0 6px #6ca6e3)';
+          e.classList.add('selected');
         }
       };
     });
-
     // Ассоциации (можно несколько)
     const assocs = document.querySelectorAll('.assoc');
     let selectedAssocs = [];
@@ -612,53 +433,48 @@
         const val = a.getAttribute('data-value');
         if (selectedAssocs.includes(val)) {
           selectedAssocs = selectedAssocs.filter(v => v !== val);
-          a.style.filter = '';
+          a.classList.remove('selected');
         } else {
           selectedAssocs.push(val);
-          a.style.filter = 'drop-shadow(0 0 6px #b7aaff)';
+          a.classList.add('selected');
         }
       };
     });
-
     // Цвет (только один)
     const colors = document.querySelectorAll('.color-choice');
     let selectedColor = '';
     colors.forEach(c => {
       c.onclick = () => {
-        colors.forEach(cc => cc.style.outline = '');
-        c.style.outline = '2.5px solid #6ca6e3';
+        colors.forEach(cc => cc.classList.remove('selected'));
+        c.classList.add('selected');
         selectedColor = c.getAttribute('data-value');
       };
     });
-
-    // Email валидация
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    // Отправка сна
+    // Форма отправки сна
+    const dreamForm = document.getElementById('dreamForm');
+    const thanksModalBg = document.getElementById('thanksModalBg');
+    const closeThanksModal = document.getElementById('closeThanksModal');
     dreamForm.onsubmit = (e) => {
       e.preventDefault();
       const textarea = dreamForm.querySelector('textarea');
       const message = textarea.value.trim();
       if (!message) return;
-
       // Собираем детали
       const details = {
         emotions: selectedEmotions,
         associations: selectedAssocs,
         color: selectedColor
       };
-
       // Показываем модалку благодарности мгновенно
       thanksModalBg.classList.add('active');
       textarea.value = '';
       // Сброс выбора
-      emotions.forEach(e => e.style.filter = '');
-      assocs.forEach(a => a.style.filter = '');
-      colors.forEach(c => c.style.outline = '');
+      emotions.forEach(e => e.classList.remove('selected'));
+      assocs.forEach(a => a.classList.remove('selected'));
+      colors.forEach(c => c.classList.remove('selected'));
       selectedEmotions = [];
       selectedAssocs = [];
       selectedColor = '';
-
       // Отправляем сон + детали через Formspree в фоне
       fetch("https://formspree.io/f/xanbpkgn", {
         method: "POST",
@@ -671,7 +487,6 @@
         })
       }).catch(() => {});
     };
-
     // Закрытие модалки благодарности
     closeThanksModal.onclick = () => {
       thanksModalBg.classList.remove('active');
@@ -682,8 +497,60 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && thanksModalBg.classList.contains('active')) closeThanksModal.onclick();
     });
-
-    // Закрытие модалки App Waitlist
+    // --- Остальной код (waitlist и т.д.) оставлен без изменений ---
+    const modalBg = document.getElementById('modalBg');
+    const closeModal = document.getElementById('closeModal');
+    const joinWaitlistBtn = document.getElementById('joinWaitlistBtn');
+    const waitlistEmail = document.getElementById('waitlistEmail');
+    const modalContent = document.getElementById('modalContent');
+    const queueNumber = document.getElementById('queueNumber');
+    const waitlistWelcome = document.getElementById('waitlistWelcome');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const SHEETDB_API_URL = "https://sheetdb.io/api/v1/tj7alk98vxxrr";
+    const originalJoinWaitlistHandler = async () => {
+      const email = waitlistEmail.value.trim();
+      if (!emailRegex.test(email)) {
+        waitlistEmail.style.border = '1.5px solid red';
+        waitlistEmail.focus();
+        return;
+      }
+      waitlistEmail.style.border = '';
+      joinWaitlistBtn.disabled = true;
+      joinWaitlistBtn.textContent = 'Отправка...';
+      let number = '';
+      try {
+        const res = await fetch(SHEETDB_API_URL);
+        const data = await res.json();
+        number = data.length + 1;
+      } catch (e) {
+        joinWaitlistBtn.disabled = false;
+        joinWaitlistBtn.textContent = 'Встать в App Waitlist';
+        alert('Ошибка при добавлении в waitlist. Попробуйте позже.');
+        return;
+      }
+      queueNumber.style.display = '';
+      queueNumber.textContent = `Вы №${number} в списке ожидания Saviora`;
+      waitlistEmail.style.display = 'none';
+      joinWaitlistBtn.style.display = 'none';
+      fetch(SHEETDB_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: [{ email, timestamp: new Date().toISOString() }] })
+      }).catch(() => {});
+    };
+    joinWaitlistBtn.onclick = originalJoinWaitlistHandler;
+    document.getElementById('waitlistHeaderBtn').onclick = function() {
+      modalBg.classList.add('active');
+      waitlistEmail.value = '';
+      waitlistEmail.style.display = '';
+      joinWaitlistBtn.style.display = '';
+      queueNumber.style.display = 'none';
+      queueNumber.innerHTML = '';
+      joinWaitlistBtn.disabled = false;
+      joinWaitlistBtn.textContent = 'Встать в App Waitlist';
+      waitlistEmail.style.border = '';
+      joinWaitlistBtn.onclick = originalJoinWaitlistHandler;
+    };
     closeModal.onclick = () => {
       modalBg.classList.remove('active');
       modalContent.style.display = '';
@@ -703,63 +570,6 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modalBg.classList.contains('active')) closeModal.onclick();
     });
-
-    // Waitlist логика
-    const SHEETDB_API_URL = "https://sheetdb.io/api/v1/tj7alk98vxxrr";
-
-    const originalJoinWaitlistHandler = async () => {
-      const email = waitlistEmail.value.trim();
-      if (!emailRegex.test(email)) {
-        waitlistEmail.style.border = '1.5px solid red';
-        waitlistEmail.focus();
-        return;
-      }
-      waitlistEmail.style.border = '';
-      joinWaitlistBtn.disabled = true;
-      joinWaitlistBtn.textContent = 'Отправка...';
-
-      // Получаем номер сразу
-      let number = '';
-      try {
-        const res = await fetch(SHEETDB_API_URL);
-        const data = await res.json();
-        number = data.length + 1; // +1, т.к. мы ещё не добавили текущий email
-      } catch (e) {
-        joinWaitlistBtn.disabled = false;
-        joinWaitlistBtn.textContent = 'Встать в App Waitlist';
-        alert('Ошибка при добавлении в waitlist. Попробуйте позже.');
-        return;
-      }
-
-      // Показываем номер и приветствие сразу, скрываем email и кнопку
-      queueNumber.style.display = '';
-      queueNumber.textContent = `Вы №${number} в списке ожидания Saviora`;
-      waitlistEmail.style.display = 'none';
-      joinWaitlistBtn.style.display = 'none';
-
-      // Отправляем email в фоне
-      fetch(SHEETDB_API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: [{ email, timestamp: new Date().toISOString() }] })
-      }).catch(() => {});
-    };
-
-    joinWaitlistBtn.onclick = originalJoinWaitlistHandler;
-
-    // Кнопка в шапке открывает модалку App Waitlist
-    document.getElementById('waitlistHeaderBtn').onclick = function() {
-      modalBg.classList.add('active');
-      waitlistEmail.value = '';
-      waitlistEmail.style.display = '';
-      joinWaitlistBtn.style.display = '';
-      queueNumber.style.display = 'none';
-      queueNumber.innerHTML = '';
-      joinWaitlistBtn.disabled = false;
-      joinWaitlistBtn.textContent = 'Встать в App Waitlist';
-      waitlistEmail.style.border = '';
-      joinWaitlistBtn.onclick = originalJoinWaitlistHandler;
-    };
   </script>
 </body>
 </html>
