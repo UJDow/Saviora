@@ -40,32 +40,8 @@
       background: url('background 1.png') center center/cover no-repeat fixed;
       opacity: 0.35;
     }
-    .background-girl {
-      position: fixed;
-      left: 50%;
-      bottom: 0;
-      z-index: 1;
-      width: 300px;
-      max-width: 90vw;
-      min-width: 200px;
-      pointer-events: none;
-      user-select: none;
-      transform: translateX(-50%) translateY(0);
-      animation: girlFloat 8s ease-in-out infinite alternate, girlSmile 3s ease-in-out infinite;
-      filter: drop-shadow(0 8px 36px #bed0f1aa);
-    }
-    @keyframes girlFloat {
-      0%   { transform: translateX(-50%) translateY(0); }
-      40%  { transform: translateX(-50%) translateY(-8px); }
-      70%  { transform: translateX(-52%) translateY(-2px);}
-      100% { transform: translateX(-50%) translateY(12px);}
-    }
-    @keyframes girlSmile {
-      0%, 100% { filter: drop-shadow(0 8px 36px #bed0f1aa) brightness(1); }
-      45% { filter: drop-shadow(0 8px 36px #bed0f1bb) brightness(1.08); }
-      50% { filter: drop-shadow(0 8px 36px #bed0f1cc) brightness(1.13); }
-      55% { filter: drop-shadow(0 8px 36px #bed0f1bb) brightness(1.08); }
-    }
+    /* .background-girl { ... }  -- УДАЛЕНО */
+
     body::after {
       content: "";
       position: fixed;
@@ -90,8 +66,8 @@
       padding: 0;
     }
     .waitlist-btn {
-      background: #fff;
-      color: var(--blue);
+      background: #fff !important; /* всегда белая */
+      color: var(--blue) !important;
       border: 2px solid var(--blue);
       border-radius: 10px;
       padding: 10px 28px;
@@ -105,10 +81,11 @@
       top: 32px;
       right: 32px;
       opacity: 1 !important;
+      box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9;
     }
     .waitlist-btn.active {
-      background: var(--blue);
-      color: #fff;
+      background: var(--blue) !important;
+      color: #fff !important;
       border: 2px solid var(--blue);
     }
     .container {
@@ -359,11 +336,11 @@
         top: auto;
         right: auto;
         opacity: 1 !important;
+        background: #fff !important; /* белая на мобилке */
+        color: var(--blue) !important;
+        box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9;
       }
-      .background-girl {
-        width: 65vw;
-        min-width: 120px;
-      }
+      /* .background-girl { ... } -- УДАЛЕНО */
     }
     @media (max-width: 600px) {
       html, body {
@@ -396,11 +373,11 @@
         border-radius: 13px;
         padding: 10px 0;
         opacity: 1 !important;
+        background: #fff !important; /* белая на мобилке */
+        color: var(--blue) !important;
+        box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9;
       }
-      .background-girl {
-        width: 86vw;
-        min-width: 90px;
-      }
+      /* .background-girl { ... } -- УДАЛЕНО */
     }
     @media (max-width: 400px) {
       .container, .modal {
@@ -417,7 +394,7 @@
 </head>
 <body>
   <div class="background-overlay"></div>
-  <img src="girl.png" alt="smiling dream girl" class="background-girl" draggable="false" />
+  <!-- <img src="girl.png" alt="smiling dream girl" class="background-girl" draggable="false" />  УДАЛЕНО -->
   <button class="waitlist-btn" id="waitlistBtn">App Waitlist</button>
   <div class="main-center">
     <div class="container">
