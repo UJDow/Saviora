@@ -461,9 +461,11 @@
       modalBg.classList.add('active');
       waitlistEmail.value = '';
       queueNumber.style.display = 'none';
+      queueNumber.innerHTML = '';
       joinWaitlistBtn.disabled = false;
       joinWaitlistBtn.textContent = 'Встать в App Waitlist';
       waitlistEmail.style.border = '';
+      joinWaitlistBtn.onclick = originalJoinWaitlistHandler;
       textarea.value = '';
     };
 
@@ -472,10 +474,12 @@
       modalBg.classList.remove('active');
       modalContent.style.display = '';
       queueNumber.style.display = 'none';
+      queueNumber.innerHTML = '';
       waitlistEmail.value = '';
       waitlistEmail.style.border = '';
       joinWaitlistBtn.disabled = false;
       joinWaitlistBtn.textContent = 'Встать в App Waitlist';
+      joinWaitlistBtn.onclick = originalJoinWaitlistHandler;
     };
     modalBg.onclick = (e) => {
       if (e.target === modalBg) closeModal.onclick();
@@ -486,9 +490,10 @@
 
     // Waitlist логика
     const SHEETDB_API_URL = "https://sheetdb.io/api/v1/tj7alk98vxxrr";
-    joinWaitlistBtn.onclick = async () => {
+
+    const originalJoinWaitlistHandler = async () => {
       const email = waitlistEmail.value.trim();
-      if (email && !emailRegex.test(email)) {
+      if (!emailRegex.test(email)) {
         waitlistEmail.style.border = '1.5px solid red';
         waitlistEmail.focus();
         return;
@@ -497,42 +502,34 @@
       joinWaitlistBtn.disabled = true;
       joinWaitlistBtn.textContent = 'Отправка...';
 
-      if (email) {
-        try {
-          await fetch(SHEETDB_API_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ data: [{ email, timestamp: new Date().toISOString() }] })
-          });
-        } catch (e) {
-          joinWaitlistBtn.disabled = false;
-          joinWaitlistBtn.textContent = 'Встать в App Waitlist';
-          alert('Ошибка при добавлении в waitlist. Попробуйте позже.');
-          return;
-        }
-      }
-
-      // Получаем номер в очереди только если email был введён
       let number = '';
-      if (email) {
-        try {
-          const res = await fetch(SHEETDB_API_URL);
-          const data = await res.json();
-          number = data.length;
-        } catch (e) {
-          number = '';
-        }
+      try {
+        await fetch(SHEETDB_API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ data: [{ email, timestamp: new Date().toISOString() }] })
+        });
+        const res = await fetch(SHEETDB_API_URL);
+        const data = await res.json();
+        number = data.length;
+      } catch (e) {
+        joinWaitlistBtn.disabled = false;
+        joinWaitlistBtn.textContent = 'Встать в App Waitlist';
+        alert('Ошибка при добавлении в waitlist. Попробуйте позже.');
+        return;
       }
 
       modalContent.style.display = 'flex';
       queueNumber.style.display = '';
-      queueNumber.textContent = email
-        ? `Вы №${number} в списке ожидания Saviora`
-        : `Спасибо за интерес к Saviora!`;
+      queueNumber.textContent = `Вы №${number} в списке ожидания Saviora`;
+
       waitlistEmail.value = '';
-      joinWaitlistBtn.disabled = true;
+      joinWaitlistBtn.disabled = false;
       joinWaitlistBtn.textContent = 'Готово!';
+      joinWaitlistBtn.onclick = closeModal;
     };
+
+    joinWaitlistBtn.onclick = originalJoinWaitlistHandler;
   </script>
 </body>
 </html>
