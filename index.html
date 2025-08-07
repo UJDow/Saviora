@@ -373,14 +373,69 @@
       -webkit-appearance: none;
       appearance: none;
     }
-    @media (max-width: 900px) {
-      .container, .modal {
-        padding: 22px 6px 20px 6px;
-        max-width: 98vw;
-      }
-      .main-phrase {
-        font-size: 1.3rem;
-      }
+    /* --- Новый стиль для овала и выпадающего блока --- */
+    .details-oval {
+      background: var(--cloud-alpha, rgba(183,170,255,0.55));
+      border-radius: 999px;
+      padding: 18px 36px;
+      font-size: 0.82rem; /* уменьшено на 3 шага */
+      font-weight: 600;
+      color: var(--blue);
+      box-shadow: 0 2px 16px 0 #b7aaff44;
+      cursor: pointer;
+      text-align: center;
+      margin-bottom: 8px;
+      transition: box-shadow 0.2s, background 0.2s;
+      user-select: none;
+      position: relative;
+      z-index: 1;
+    }
+    .details-oval:hover {
+      box-shadow: 0 4px 24px 0 #b7aaff77;
+      background: rgba(183,170,255,0.65);
+    }
+    .details-dropdown {
+      display: none;
+      background: rgba(255,255,255,0.97);
+      border-radius: 28px;
+      box-shadow: 0 2px 16px 0 #b7aaff33;
+      padding: 18px 16px 10px 16px;
+      margin-top: 6px;
+      animation: fadeIn 0.3s;
+      position: relative;
+      z-index: 2;
+    }
+    .details-dropdown.active {
+      display: block;
+    }
+    .details-question {
+      margin-bottom: 14px;
+    }
+    .details-q-title {
+      font-size: 0.92rem; /* уменьшено на 1 пункт */
+      font-weight: 500;
+      margin-bottom: 4px;
+      color: var(--blue);
+    }
+    .details-emojis span, .details-colors span {
+      font-size: 1.2rem; /* уменьшено на 1 пункт */
+      margin-right: 8px;
+      cursor: pointer;
+      transition: filter 0.15s, outline 0.15s;
+      border-radius: 50%;
+      padding: 2px 4px;
+    }
+    .details-colors span {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 2px solid #fff;
+      box-shadow: 0 0 4px #b7aaff55;
+      margin-right: 8px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-8px);}
+      to   { opacity: 1; transform: translateY(0);}
     }
     @media (max-width: 600px) {
       html, body {
@@ -410,15 +465,19 @@
       }
       .waitlist-header-btn {
         position: fixed;
-        top: 10px;
-        left: 50%;
-        right: auto;
-        transform: translateX(-50%);
-        min-width: 60vw;
-        max-width: 90vw;
+        top: 0;
+        left: 0;
+        right: 0;
+        min-width: 100vw;
+        max-width: 100vw;
         font-size: 1rem;
         padding: 10px 0;
-        border-radius: 13px;
+        border-radius: 0 0 13px 13px;
+        z-index: 100;
+        box-shadow: 0 2px 12px 0 #ffe6c9;
+      }
+      .main-center {
+        margin-top: 56px; /* чтобы не перекрывалось кнопкой */
       }
     }
     @media (max-width: 400px) {
@@ -454,70 +513,6 @@
       margin-left: 4px;
       margin-bottom: -6px;
       filter: drop-shadow(0 2px 8px #b7aaff88);
-    }
-    /* --- Новый стиль для овала и выпадающего блока --- */
-    .details-oval {
-      background: var(--cloud-alpha, rgba(183,170,255,0.55));
-      border-radius: 999px;
-      padding: 18px 36px;
-      font-size: 1.12rem;
-      font-weight: 600;
-      color: var(--blue);
-      box-shadow: 0 2px 16px 0 #b7aaff44;
-      cursor: pointer;
-      text-align: center;
-      margin-bottom: 8px;
-      transition: box-shadow 0.2s, background 0.2s;
-      user-select: none;
-      position: relative;
-      z-index: 1;
-    }
-    .details-oval:hover {
-      box-shadow: 0 4px 24px 0 #b7aaff77;
-      background: rgba(183,170,255,0.65);
-    }
-    .details-dropdown {
-      display: none;
-      background: rgba(255,255,255,0.97);
-      border-radius: 28px;
-      box-shadow: 0 2px 16px 0 #b7aaff33;
-      padding: 18px 16px 10px 16px;
-      margin-top: 6px;
-      animation: fadeIn 0.3s;
-      position: relative;
-      z-index: 2;
-    }
-    .details-dropdown.active {
-      display: block;
-    }
-    .details-question {
-      margin-bottom: 14px;
-    }
-    .details-q-title {
-      font-size: 1rem;
-      font-weight: 500;
-      margin-bottom: 4px;
-      color: var(--blue);
-    }
-    .details-emojis span, .details-colors span {
-      font-size: 1.5rem;
-      margin-right: 8px;
-      cursor: pointer;
-      transition: filter 0.15s, outline 0.15s;
-      border-radius: 50%;
-      padding: 2px 4px;
-    }
-    .details-colors span {
-      display: inline-block;
-      width: 28px;
-      height: 28px;
-      border: 2px solid #fff;
-      box-shadow: 0 0 4px #b7aaff55;
-      margin-right: 8px;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-8px);}
-      to   { opacity: 1; transform: translateY(0);}
     }
   </style>
 </head>
