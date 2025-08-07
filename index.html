@@ -429,6 +429,16 @@
         font-size: 0.82rem;
       }
     }
+    /* Модалка благодарности */
+    .thanks-modal .success-message {
+      font-size: 1.15rem;
+      color: var(--blue);
+      text-align: center;
+      margin-bottom: 0;
+      margin-top: 0;
+      font-weight: 600;
+      line-height: 1.5;
+    }
   </style>
 </head>
 <body>
@@ -457,6 +467,19 @@
     </div>
   </div>
 
+  <!-- Модалка благодарности -->
+  <div class="modal-bg" id="thanksModalBg" aria-modal="true" role="dialog">
+    <div class="modal thanks-modal" id="thanksModal">
+      <button class="close-modal" id="closeThanksModal" aria-label="Закрыть">&times;</button>
+      <div class="success-message">
+        Спасибо за сновидение!<br>
+        Свяжемся в Telegram или Instagram.<br>
+        Загляните в правый верхний угол 💫
+      </div>
+    </div>
+  </div>
+
+  <!-- Модалка App Waitlist -->
   <div class="modal-bg" id="modalBg" aria-modal="true" role="dialog">
     <div class="modal" id="modal">
       <button class="close-modal" id="closeModal" aria-label="Закрыть">&times;</button>
@@ -477,6 +500,8 @@
   <script>
     // Форма отправки сна
     const dreamForm = document.getElementById('dreamForm');
+    const thanksModalBg = document.getElementById('thanksModalBg');
+    const closeThanksModal = document.getElementById('closeThanksModal');
     const modalBg = document.getElementById('modalBg');
     const closeModal = document.getElementById('closeModal');
     const joinWaitlistBtn = document.getElementById('joinWaitlistBtn');
@@ -502,22 +527,26 @@
           body: JSON.stringify({ message })
         });
       } catch (e) {
-        // Даже если Formspree не ответил, всё равно показываем окно
+        // Даже если Formspree не ответил, всё равно показываем окно благодарности
       }
 
-      // Показываем модалку waitlist
-      modalBg.classList.add('active');
-      waitlistEmail.value = '';
-      queueNumber.style.display = 'none';
-      queueNumber.innerHTML = '';
-      joinWaitlistBtn.disabled = false;
-      joinWaitlistBtn.textContent = 'Встать в App Waitlist';
-      waitlistEmail.style.border = '';
-      joinWaitlistBtn.onclick = originalJoinWaitlistHandler;
+      // Показываем модалку благодарности
+      thanksModalBg.classList.add('active');
       textarea.value = '';
     };
 
-    // Закрытие модалки
+    // Закрытие модалки благодарности
+    closeThanksModal.onclick = () => {
+      thanksModalBg.classList.remove('active');
+    };
+    thanksModalBg.onclick = (e) => {
+      if (e.target === thanksModalBg) closeThanksModal.onclick();
+    };
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && thanksModalBg.classList.contains('active')) closeThanksModal.onclick();
+    });
+
+    // Закрытие модалки App Waitlist
     closeModal.onclick = () => {
       modalBg.classList.remove('active');
       modalContent.style.display = '';
@@ -579,7 +608,7 @@
 
     joinWaitlistBtn.onclick = originalJoinWaitlistHandler;
 
-    // Кнопка в шапке открывает модалку
+    // Кнопка в шапке открывает модалку App Waitlist
     document.getElementById('waitlistHeaderBtn').onclick = function() {
       modalBg.classList.add('active');
       waitlistEmail.value = '';
