@@ -63,33 +63,6 @@
       justify-content: center;
       padding: 0;
     }
-    .waitlist-btn {
-      background: #fff !important;
-      background-color: #fff !important;
-      color: var(--blue) !important;
-      border: 2px solid var(--blue) !important;
-      border-radius: 10px !important;
-      padding: 10px 28px !important;
-      font-size: 1rem !important;
-      font-weight: 600 !important;
-      cursor: pointer !important;
-      transition: background 0.2s, color 0.2s !important;
-      z-index: 4 !important;
-      font-family: 'Montserrat', Arial, sans-serif !important;
-      position: absolute !important;
-      top: 32px !important;
-      right: 32px !important;
-      opacity: 1 !important;
-      box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9 !important;
-      -webkit-appearance: none !important;
-      appearance: none !important;
-    }
-    .waitlist-btn.active {
-      background: var(--blue) !important;
-      background-color: var(--blue) !important;
-      color: #fff !important;
-      border: 2px solid var(--blue) !important;
-    }
     .container {
       width: 100%;
       max-width: 420px;
@@ -121,6 +94,16 @@
       line-height: 1.2;
       text-shadow: 0 2px 8px #fff6e9bb;
       font-family: 'Montserrat', Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5em;
+    }
+    .main-phrase .emoji {
+      font-size: 2.2rem;
+      margin-right: 0.1em;
+      filter: drop-shadow(0 2px 8px #fff6e9bb);
+      user-select: none;
     }
     form {
       width: 100%;
@@ -176,6 +159,17 @@
       border: 1.5px solid var(--blue);
       box-shadow: 0 0 0 2px #ffe6c9;
     }
+    .anon-note {
+      font-size: 0.98rem;
+      color: var(--blue);
+      opacity: 0.7;
+      margin-top: 6px;
+      margin-bottom: 0;
+      text-align: center;
+      font-style: italic;
+      font-family: 'Montserrat', Arial, sans-serif;
+      line-height: 1.3;
+    }
     .dream-glow-btn {
       width: 100%;
       padding: 18px 0;
@@ -194,6 +188,8 @@
       text-shadow: 0 0 16px var(--glow1), 0 0 32px var(--glow2), 0 2px 8px #fff6e9bb;
       position: relative;
       overflow: hidden;
+      -webkit-appearance: none;
+      appearance: none;
     }
     .dream-glow-btn span {
       display: inline-block;
@@ -252,6 +248,15 @@
       color: var(--blue);
       text-shadow: 0 1px 2px #fff6e9bb;
     }
+    .modal .success-message {
+      font-size: 1.08rem;
+      color: var(--blue);
+      text-align: center;
+      margin-bottom: 18px;
+      margin-top: 8px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
     .modal input[type="email"] {
       width: 100%;
       max-width: 100%;
@@ -296,6 +301,8 @@
       animation: btnGlow 5s ease-in-out infinite alternate;
       font-family: 'Montserrat', Arial, sans-serif;
       text-shadow: 0 1px 2px #fff6e9bb;
+      -webkit-appearance: none;
+      appearance: none;
     }
     .modal .btn:active, #joinWaitlistBtn:active {
       background: linear-gradient(90deg, #5a8ec7 0%, #f7d6b6 100%);
@@ -320,6 +327,20 @@
       width: 100%;
       text-shadow: 0 1px 2px #fff6e9bb;
     }
+    .footer {
+      width: 100vw;
+      text-align: center;
+      color: var(--blue);
+      opacity: 0.6;
+      font-size: 0.98rem;
+      font-family: 'Montserrat', Arial, sans-serif;
+      margin-top: 24px;
+      margin-bottom: 8px;
+      letter-spacing: 0.01em;
+      z-index: 5;
+      position: relative;
+      user-select: none;
+    }
     @media (max-width: 900px) {
       .container, .modal {
         padding: 22px 6px 20px 6px;
@@ -327,22 +348,6 @@
       }
       .main-phrase {
         font-size: 1.3rem;
-      }
-      .waitlist-btn {
-        position: static !important;
-        width: 100% !important;
-        margin: 0 0 18px 0 !important;
-        padding: 10px 0 !important;
-        border-radius: 18px !important;
-        font-size: 1.1rem !important;
-        top: auto !important;
-        right: auto !important;
-        background: #fff !important;
-        background-color: #fff !important;
-        color: var(--blue) !important;
-        box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9 !important;
-        -webkit-appearance: none !important;
-        appearance: none !important;
       }
     }
     @media (max-width: 600px) {
@@ -371,18 +376,6 @@
         padding: 12px 0;
         font-size: 1rem;
       }
-      .waitlist-btn {
-        font-size: 1rem !important;
-        border-radius: 13px !important;
-        padding: 10px 0 !important;
-        opacity: 1 !important;
-        background: #fff !important;
-        background-color: #fff !important;
-        color: var(--blue) !important;
-        box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9 !important;
-        -webkit-appearance: none !important;
-        appearance: none !important;
-      }
     }
     @media (max-width: 400px) {
       .container, .modal {
@@ -399,17 +392,19 @@
 </head>
 <body>
   <div class="background-overlay"></div>
-  <!-- Картинка dreamgirl удалена -->
-  <button class="waitlist-btn" id="waitlistBtn">App Waitlist</button>
   <div class="main-center">
     <div class="container">
-      <div class="main-phrase"><b>Сны говорят, мы помогаем слушать</b></div>
-      <form action="https://formspree.io/f/xanbpkgn" method="POST">
+      <div class="main-phrase">
+        <span class="emoji">🌙</span>
+        <b>Сны говорят, мы помогаем слушать</b>
+      </div>
+      <form id="dreamForm" autocomplete="off">
         <label>
           <textarea name="message" required
             placeholder="Saviora — делимся тем, что помогает лучше понять себя..."></textarea>
         </label>
         <button type="submit" class="dream-glow-btn"><span>Отправить сновидение</span></button>
+        <div class="anon-note">Анонимно. Без осуждения. Только для тебя.</div>
       </form>
     </div>
   </div>
@@ -418,17 +413,22 @@
     <div class="modal" id="modal">
       <button class="close-modal" id="closeModal" aria-label="Закрыть">&times;</button>
       <div id="modalContent" style="width:100%;display:flex;flex-direction:column;align-items:center;">
-        <div style="font-weight:600; font-size:1.1rem; margin-bottom:16px; text-align:center;">Ваша заявка в список ожидания</div>
-        <input type="email" id="waitlistEmail" placeholder="Ваш email" required autocomplete="email">
-        <button class="btn" id="joinWaitlistBtn">Встать в очередь</button>
+        <div class="success-message">
+          Saviora — это пространство, где можно прислушаться к себе через сновидения.<br>
+          Мы всегда рады новым историям.
+        </div>
+        <input type="email" id="waitlistEmail" placeholder="Ваш email (по желанию)" autocomplete="email">
+        <button class="btn" id="joinWaitlistBtn">Встать в App Waitlist</button>
+        <div class="queue-number" id="queueNumber" style="display:none;"></div>
       </div>
-      <div class="queue-number" id="queueNumber" style="display:none;"></div>
     </div>
   </div>
 
+  <div class="footer">Saviora, 2025</div>
+
   <script>
-    // Waitlist modal logic
-    const waitlistBtn = document.getElementById('waitlistBtn');
+    // Форма отправки сна
+    const dreamForm = document.getElementById('dreamForm');
     const modalBg = document.getElementById('modalBg');
     const closeModal = document.getElementById('closeModal');
     const joinWaitlistBtn = document.getElementById('joinWaitlistBtn');
@@ -436,22 +436,46 @@
     const modalContent = document.getElementById('modalContent');
     const queueNumber = document.getElementById('queueNumber');
 
+    // Email валидация
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    waitlistBtn.onclick = () => {
+    // Отправка сна
+    dreamForm.onsubmit = async (e) => {
+      e.preventDefault();
+      const textarea = dreamForm.querySelector('textarea');
+      const message = textarea.value.trim();
+      if (!message) return;
+
+      // Отправляем сон через Formspree
+      try {
+        await fetch("https://formspree.io/f/xanbpkgn", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message })
+        });
+      } catch (e) {
+        // Даже если Formspree не ответил, всё равно показываем окно
+      }
+
+      // Показываем модалку waitlist
       modalBg.classList.add('active');
-      waitlistBtn.classList.add('active');
-      waitlistEmail.focus();
+      waitlistEmail.value = '';
+      queueNumber.style.display = 'none';
+      joinWaitlistBtn.disabled = false;
+      joinWaitlistBtn.textContent = 'Встать в App Waitlist';
+      waitlistEmail.style.border = '';
+      textarea.value = '';
     };
+
+    // Закрытие модалки
     closeModal.onclick = () => {
       modalBg.classList.remove('active');
-      waitlistBtn.classList.remove('active');
       modalContent.style.display = '';
       queueNumber.style.display = 'none';
       waitlistEmail.value = '';
       waitlistEmail.style.border = '';
       joinWaitlistBtn.disabled = false;
-      joinWaitlistBtn.textContent = 'Встать в очередь';
+      joinWaitlistBtn.textContent = 'Встать в App Waitlist';
     };
     modalBg.onclick = (e) => {
       if (e.target === modalBg) closeModal.onclick();
@@ -460,11 +484,11 @@
       if (e.key === 'Escape' && modalBg.classList.contains('active')) closeModal.onclick();
     });
 
+    // Waitlist логика
     const SHEETDB_API_URL = "https://sheetdb.io/api/v1/tj7alk98vxxrr";
-
     joinWaitlistBtn.onclick = async () => {
       const email = waitlistEmail.value.trim();
-      if (!emailRegex.test(email)) {
+      if (email && !emailRegex.test(email)) {
         waitlistEmail.style.border = '1.5px solid red';
         waitlistEmail.focus();
         return;
@@ -473,29 +497,41 @@
       joinWaitlistBtn.disabled = true;
       joinWaitlistBtn.textContent = 'Отправка...';
 
-      try {
-        await fetch(SHEETDB_API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ data: [{ email, timestamp: new Date().toISOString() }] })
-        });
-
-        const res = await fetch(SHEETDB_API_URL);
-        const data = await res.json();
-        const number = data.length;
-
-        modalContent.style.display = 'none';
-        queueNumber.style.display = '';
-        queueNumber.textContent = `Вы №${number} в списке ожидания Saviora`;
-        queueNumber.style.display = '';
-
-        waitlistEmail.value = '';
-        joinWaitlistBtn.disabled = true;
-      } catch (e) {
-        joinWaitlistBtn.disabled = false;
-        joinWaitlistBtn.textContent = 'Встать в очередь';
-        alert('Ошибка при добавлении в waitlist. Попробуйте позже.');
+      if (email) {
+        try {
+          await fetch(SHEETDB_API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ data: [{ email, timestamp: new Date().toISOString() }] })
+          });
+        } catch (e) {
+          joinWaitlistBtn.disabled = false;
+          joinWaitlistBtn.textContent = 'Встать в App Waitlist';
+          alert('Ошибка при добавлении в waitlist. Попробуйте позже.');
+          return;
+        }
       }
+
+      // Получаем номер в очереди только если email был введён
+      let number = '';
+      if (email) {
+        try {
+          const res = await fetch(SHEETDB_API_URL);
+          const data = await res.json();
+          number = data.length;
+        } catch (e) {
+          number = '';
+        }
+      }
+
+      modalContent.style.display = 'flex';
+      queueNumber.style.display = '';
+      queueNumber.textContent = email
+        ? `Вы №${number} в списке ожидания Saviora`
+        : `Спасибо за интерес к Saviora!`;
+      waitlistEmail.value = '';
+      joinWaitlistBtn.disabled = true;
+      joinWaitlistBtn.textContent = 'Готово!';
     };
   </script>
 </body>
