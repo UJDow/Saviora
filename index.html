@@ -947,7 +947,7 @@
 
     let lastDreamData = null;
 
-    // --- Модалка благодарности с контактом ---
+   // --- Модалка благодарности с контактом ---
     const thanksModalBg = document.getElementById('thanksModalBg');
     const closeThanksModal = document.getElementById('closeThanksModal');
     const contactInput = document.getElementById('contactInput');
@@ -1008,9 +1008,12 @@
       if (e.key === 'Escape' && thanksModalBg.classList.contains('active')) closeThanksModal.onclick();
     });
 
+    // --- Вот тут изменённый обработчик! ---
     closeConfirmModal.onclick = () => {
       confirmModalBg.classList.remove('active');
       confirmModalBg.style.display = 'none';
+      thanksModalBg.classList.remove('active');
+      thanksModalBg.style.display = 'none';
     };
     confirmModalBg.onclick = (e) => {
       if (e.target === confirmModalBg) closeConfirmModal.onclick();
