@@ -72,7 +72,7 @@
       background: rgba(255,255,255,0.91);
       border-radius: 38px;
       box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9;
-      padding: 18px 18px 16px 18px; /* уменьшено */
+      padding: 18px 18px 16px 18px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -89,10 +89,10 @@
       100% { box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9; }
     }
     .main-phrase {
-      font-size: 1.6rem; /* уменьшено */
+      font-size: 1.6rem;
       font-weight: 700;
       color: var(--blue);
-      margin-bottom: 14px; /* уменьшено */
+      margin-bottom: 14px;
       text-align: center;
       line-height: 1.2;
       text-shadow: 0 2px 8px #fff6e9bb;
@@ -103,7 +103,7 @@
       gap: 0.5em;
     }
     .main-phrase .emoji {
-      font-size: 1.6rem; /* уменьшено */
+      font-size: 1.6rem;
       margin-right: 0.1em;
       filter: drop-shadow(0 2px 8px #fff6e9bb);
       user-select: none;
@@ -112,7 +112,7 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 12px; /* уменьшено */
+      gap: 12px;
       align-items: center;
       font-family: 'Montserrat', Arial, sans-serif;
       color: var(--blue);
@@ -128,10 +128,10 @@
     }
     textarea {
       width: 100%;
-      min-height: 90px; /* уменьшено */
+      min-height: 90px;
       border-radius: 32px;
       border: 1.5px solid var(--blue);
-      padding: 14px; /* уменьшено */
+      padding: 14px;
       font-size: 0.95rem;
       font-style: italic;
       background: #f7f7f7;
@@ -166,7 +166,7 @@
       font-size: 0.88rem;
       color: var(--blue);
       opacity: 0.7;
-      margin-top: 4px; /* уменьшено */
+      margin-top: 4px;
       margin-bottom: 0;
       text-align: center;
       font-style: italic;
@@ -175,15 +175,15 @@
     }
     .dream-glow-btn {
       width: 100%;
-      padding: 14px 0; /* уменьшено */
+      padding: 14px 0;
       border: none;
       border-radius: 32px;
-      font-size: 1.08rem; /* уменьшено */
+      font-size: 1.08rem;
       font-weight: 700;
       background: linear-gradient(90deg, var(--blue) 0%, #ffe6c9 100%);
       color: var(--blue);
       cursor: pointer;
-      margin-top: 10px; /* уменьшено */
+      margin-top: 10px;
       transition: background 0.2s, color 0.2s, box-shadow 0.2s;
       box-shadow: 0 2px 12px 0 #ffe6c9;
       animation: btnGlow 5s ease-in-out infinite alternate;
@@ -337,7 +337,7 @@
       opacity: 0.6;
       font-size: 0.98rem;
       font-family: 'Montserrat', Arial, sans-serif;
-      margin-top: 18px; /* уменьшено */
+      margin-top: 18px;
       margin-bottom: 8px;
       letter-spacing: 0.01em;
       z-index: 5;
@@ -425,7 +425,7 @@
       z-index: 2;
       color: var(--blue);
       text-shadow: 0 1px 2px #fff6e9bb;
-      animation: containerGlow 6s ease-in-out infinite alternate;
+      /* animation: containerGlow 6s ease-in-out infinite alternate; */ /* убрано! */
     }
     .details-modal .details-question {
       margin-bottom: 14px;
@@ -441,9 +441,12 @@
       font-size: 1.2rem;
       margin-right: 8px;
       cursor: pointer;
-      transition: filter 0.15s, outline 0.15s;
+      /* transition: filter 0.15s, outline 0.15s; */ /* убрано! */
       border-radius: 50%;
       padding: 2px 4px;
+    }
+    .details-modal .details-emojis span:hover, .details-modal .details-colors span:hover {
+      filter: brightness(1.1);
     }
     .details-modal .details-colors span {
       display: inline-block;
