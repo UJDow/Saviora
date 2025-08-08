@@ -552,6 +552,33 @@
     .support-btn:active {
       color: #5a8ec7;
     }
+    .support-answers {
+      width: 100%;
+      margin-top: 10px;
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .support-answers label {
+      font-size: 0.97em;
+      font-weight: 500;
+      margin-bottom: 2px;
+      color: var(--blue);
+      opacity: 0.8;
+    }
+    .support-answers textarea {
+      min-height: 60px;
+      font-size: 0.97em;
+      border-radius: 12px;
+      border: 1px solid #b7aaff;
+      background: #f7f7f7;
+      padding: 8px 10px;
+      margin-bottom: 0;
+      box-shadow: none;
+      animation: none;
+      resize: vertical;
+    }
     .sending-indicator {
       margin-top: 18px;
       color: var(--blue);
@@ -674,6 +701,10 @@
             </ul>
           </div>
           <button id="showNextTechnique" class="support-btn">Показать ещё одну технику</button>
+        </div>
+        <div class="support-answers">
+          <label for="supportAnswer">Ваши мысли или ответы на вопросы выше (необязательно):</label>
+          <textarea id="supportAnswer" placeholder="Можно записать сюда свои размышления..."></textarea>
         </div>
         <a href="SAVIORA.pdf" download class="dream-glow-btn" id="savePdfBtn" style="margin-top:16px; text-align:center;">
           <span>Сохранить себе мини-гайд (PDF)</span>
@@ -847,7 +878,8 @@
         color: selectedColor,
         contact,
         techniquesViewed: [0],
-        pdfDownloaded: false
+        pdfDownloaded: false,
+        supportAnswer: ''
       };
       currentTechnique = 0;
       techniquesViewed = [0];
@@ -864,6 +896,9 @@
       selectedEmotions = [];
       selectedAssocs = [];
       selectedColor = '';
+      // Сброс поля ответа на техники
+      const supportAnswerField = document.getElementById('supportAnswer');
+      if (supportAnswerField) supportAnswerField.value = '';
     };
 
     // При каждом показе следующей техники — фиксируем просмотренные
@@ -900,6 +935,11 @@
       // Собираем финальные данные
       pendingDreamData.techniquesViewed = [...techniquesViewed];
       pendingDreamData.pdfDownloaded = pdfDownloaded;
+      // Сохраняем ответ пользователя на техники
+      const supportAnswerField = document.getElementById('supportAnswer');
+      if (supportAnswerField) {
+        pendingDreamData.supportAnswer = supportAnswerField.value.trim();
+      }
 
       // 1. На почту
       fetch('/api/dream', {
@@ -955,6 +995,9 @@
       document.getElementById('showNextTechnique').onclick = showNextBtn.onclick;
       sendingIndicator.textContent = '';
       sendingIndicator.className = 'sending-indicator';
+      // Сброс поля ответа на техники
+      const supportAnswerField = document.getElementById('supportAnswer');
+      if (supportAnswerField) supportAnswerField.value = '';
     };
     thanksModalBg.onclick = (e) => {
       if (e.target === thanksModalBg) closeThanksModal.onclick();
