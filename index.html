@@ -609,6 +609,38 @@
     .thanks-modal .contact-btn:active {
       background: linear-gradient(90deg, #5a8ec7 0%, #f7d6b6 100%);
     }
+    .modal-bg#confirmModalBg {
+      z-index: 1000;
+    }
+    .modal#confirmModal {
+      background: rgba(255,255,255,0.97);
+      border-radius: 38px;
+      box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9;
+      padding: 34px 25px 28px 25px;
+      max-width: 420px;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: containerGlow 6s ease-in-out infinite alternate;
+      position: relative;
+      box-sizing: border-box;
+      color: var(--blue);
+      text-shadow: 0 1px 2px #fff6e9bb;
+    }
+    .modal#confirmModal .success-message {
+      font-size: 1.15rem;
+      color: var(--blue);
+      text-align: center;
+      margin-bottom: 0;
+      margin-top: 0;
+      font-weight: 600;
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
   </style>
 </head>
 <body>
@@ -714,7 +746,8 @@
       <button class="close-modal" id="closeThanksModal" aria-label="Закрыть">&times;</button>
       <div class="success-message">
         <span style="display:flex;align-items:center;justify-content:center;">
-          Saviora скоро тихонько постучится в Telegram или Instagram.<svg class="cloud-emoji" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          Вам Telegram или Instagram, пожалуйста
+          <svg class="cloud-emoji" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <ellipse cx="24" cy="20" rx="20" ry="10" fill="url(#cloudGradient)" fill-opacity="0.7"/>
             <ellipse cx="16" cy="16" rx="8" ry="8" fill="url(#cloudGradient2)" fill-opacity="0.7"/>
             <ellipse cx="32" cy="16" rx="10" ry="10" fill="url(#cloudGradient3)" fill-opacity="0.7"/>
@@ -735,11 +768,19 @@
           </svg>
         </span>
       </div>
-      <div class="contact-disclaimer">
-      </div>
+      <div class="contact-disclaimer"></div>
       <input type="text" id="contactInput" class="contact-input" placeholder="@" />
       <button class="contact-btn" id="sendContactBtn">Отправить</button>
-      <!-- Кнопка "Пропустить" удалена -->
+    </div>
+  </div>
+
+  <!-- Новая модалка подтверждения -->
+  <div class="modal-bg" id="confirmModalBg" aria-modal="true" role="dialog" style="display:none;">
+    <div class="modal" id="confirmModal">
+      <button class="close-modal" id="closeConfirmModal" aria-label="Закрыть">&times;</button>
+      <div class="success-message">
+        Saviora скоро тихонько постучится
+      </div>
     </div>
   </div>
 
@@ -781,7 +822,6 @@
     let savedTechniqueAnswer2 = '';
     let savedTechniqueAnswer3 = '';
 
-    // --- Открытие/закрытие модалки ---
     detailsOval.onclick = () => {
       detailsModalBg.classList.add('active');
       showStep(1);
@@ -797,7 +837,6 @@
       if (e.key === 'Escape' && detailsModalBg.classList.contains('active')) closeDetailsModal.onclick();
     });
 
-    // --- Шаги ---
     function showStep(step) {
       detailsStep1.style.display = step === 1 ? '' : 'none';
       detailsStep2.style.display = step === 2 ? '' : 'none';
@@ -831,7 +870,6 @@
       showStep(1);
     };
 
-    // --- Микро-игровой блок: логика выбора ---
     const emotions = document.querySelectorAll('.emotion');
     let selectedEmotions = [];
     emotions.forEach(e => {
@@ -873,7 +911,6 @@
       };
     });
 
-    // --- Цвет овала в зависимости от заполненности ---
     function updateDetailsOvalColor() {
       const allFilled =
         selectedEmotions.length > 0 &&
@@ -906,10 +943,8 @@
       el.addEventListener('input', updateDetailsOvalColor);
     });
 
-    // Email валидация
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    // --- Сбор данных сна и деталей ---
     let lastDreamData = null;
 
     // --- Модалка благодарности с контактом ---
@@ -917,13 +952,14 @@
     const closeThanksModal = document.getElementById('closeThanksModal');
     const contactInput = document.getElementById('contactInput');
     const sendContactBtn = document.getElementById('sendContactBtn');
-    // const skipContactBtn = document.getElementById('skipContactBtn'); // Удалено
+
+    const confirmModalBg = document.getElementById('confirmModalBg');
+    const closeConfirmModal = document.getElementById('closeConfirmModal');
 
     function resetContactModal() {
       contactInput.value = '';
       contactInput.style.display = '';
       sendContactBtn.style.display = '';
-      // skipContactBtn.style.display = ''; // Удалено
       document.querySelector('.contact-disclaimer').style.display = '';
       sendContactBtn.textContent = 'Отправить';
     }
@@ -931,7 +967,6 @@
     function hideContactFields() {
       contactInput.style.display = 'none';
       sendContactBtn.style.display = 'none';
-      // skipContactBtn.style.display = 'none'; // Удалено
       document.querySelector('.contact-disclaimer').style.display = 'none';
     }
 
@@ -950,19 +985,16 @@
       }).then(() => {
         hideContactFields();
         sendContactBtn.textContent = 'Спасибо!';
-        setTimeout(() => {
-          thanksModalBg.classList.remove('active');
-          sendContactBtn.disabled = false;
-          resetContactModal();
-          lastDreamData = null;
-        }, 1200);
+        confirmModalBg.style.display = 'flex';
+        confirmModalBg.classList.add('active');
+        sendContactBtn.disabled = false;
+        resetContactModal();
+        lastDreamData = null;
       }).catch(() => {
         sendContactBtn.disabled = false;
         sendContactBtn.textContent = 'Ошибка. Попробуйте ещё раз';
       });
     };
-
-    // skipContactBtn.onclick = function() { ... } // Удалено
 
     closeThanksModal.onclick = () => {
       thanksModalBg.classList.remove('active');
@@ -974,6 +1006,17 @@
     };
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && thanksModalBg.classList.contains('active')) closeThanksModal.onclick();
+    });
+
+    closeConfirmModal.onclick = () => {
+      confirmModalBg.classList.remove('active');
+      confirmModalBg.style.display = 'none';
+    };
+    confirmModalBg.onclick = (e) => {
+      if (e.target === confirmModalBg) closeConfirmModal.onclick();
+    };
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && confirmModalBg.classList.contains('active')) closeConfirmModal.onclick();
     });
 
     // --- Отправка сна ---
@@ -1017,7 +1060,7 @@
       updateDetailsOvalColor();
     };
 
-    // Закрытие модалки App Waitlist
+    // --- App Waitlist ---
     const modalBg = document.getElementById('modalBg');
     const closeModal = document.getElementById('closeModal');
     const joinWaitlistBtn = document.getElementById('joinWaitlistBtn');
@@ -1046,7 +1089,6 @@
       if (e.key === 'Escape' && modalBg.classList.contains('active')) closeModal.onclick();
     });
 
-    // Waitlist логика
     const SHEETDB_API_URL = "https://sheetdb.io/api/v1/tj7alk98vxxrr";
 
     const originalJoinWaitlistHandler = async () => {
@@ -1060,7 +1102,6 @@
       joinWaitlistBtn.disabled = true;
       joinWaitlistBtn.textContent = 'Отправка...';
 
-      // Получаем номер сразу
       let number = '';
       try {
         const res = await fetch(SHEETDB_API_URL);
