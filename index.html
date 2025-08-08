@@ -216,7 +216,6 @@
     button[type="submit"]:active, .dream-glow-btn:active {
       background: linear-gradient(90deg, #5a8ec7 0%, #f7d6b6 100%);
     }
-    /* Modal styles - synchronized with main frame */
     .modal-bg {
       display: none;
       position: fixed;
@@ -342,7 +341,6 @@
       position: relative;
       user-select: none;
     }
-    /* Кнопка App Waitlist */
     .waitlist-header-btn {
       position: fixed;
       top: 32px;
@@ -371,7 +369,6 @@
       -webkit-appearance: none;
       appearance: none;
     }
-    /* --- Новый стиль для овала и выпадающего блока --- */
     .details-oval {
       background: var(--cloud-alpha, rgba(183,170,255,0.55));
       border-radius: 999px;
@@ -713,6 +710,50 @@
       }
     });
 
+    // --- Микро-игровой блок: логика выбора ---
+    // Эмоции (можно несколько)
+    const emotions = document.querySelectorAll('.emotion');
+    let selectedEmotions = [];
+    emotions.forEach(e => {
+      e.onclick = () => {
+        const val = e.getAttribute('data-value');
+        if (selectedEmotions.includes(val)) {
+          selectedEmotions = selectedEmotions.filter(v => v !== val);
+          e.style.filter = '';
+        } else {
+          selectedEmotions.push(val);
+          e.style.filter = 'drop-shadow(0 0 6px #6ca6e3)';
+        }
+      };
+    });
+
+    // Ассоциации (можно несколько)
+    const assocs = document.querySelectorAll('.assoc');
+    let selectedAssocs = [];
+    assocs.forEach(a => {
+      a.onclick = () => {
+        const val = a.getAttribute('data-value');
+        if (selectedAssocs.includes(val)) {
+          selectedAssocs = selectedAssocs.filter(v => v !== val);
+          a.style.filter = '';
+        } else {
+          selectedAssocs.push(val);
+          a.style.filter = 'drop-shadow(0 0 6px #b7aaff)';
+        }
+      };
+    });
+
+    // Цвет (только один)
+    const colors = document.querySelectorAll('.color-choice');
+    let selectedColor = '';
+    colors.forEach(c => {
+      c.onclick = () => {
+        colors.forEach(cc => cc.style.outline = '');
+        c.style.outline = '2.5px solid #6ca6e3';
+        selectedColor = c.getAttribute('data-value');
+      };
+    });
+
     // --- Мгновенная поддержка: техники ---
     const techniques = [
       {
@@ -741,7 +782,7 @@
         supportBlock.innerHTML = `
           <div class="support-technique-title">${techniques[currentTechnique].title}</div>
           <div class="support-technique-body">${techniques[currentTechnique].body}</div>
-          ${currentTechnique < techniques.length-1 ? '<button id=\'showNextTechnique\' class=\'support-btn\'>Показать ещё одну технику</button>' : ''}
+          ${currentTechnique < techniques.length-1 ? '<button id="showNextTechnique" class="support-btn">Показать ещё одну технику</button>' : ''}
         `;
         if (currentTechnique < techniques.length-1) {
           document.getElementById('showNextTechnique').onclick = showNextBtn.onclick;
@@ -753,15 +794,23 @@
     const dreamForm = document.getElementById('dreamForm');
     const thanksModalBg = document.getElementById('thanksModalBg');
     const closeThanksModal = document.getElementById('closeThanksModal');
-    // ... остальной JS без изменений ...
-    // (оставил только нужное для примера)
     dreamForm.onsubmit = (e) => {
       e.preventDefault();
       const textarea = dreamForm.querySelector('textarea');
       const message = textarea.value.trim();
       if (!message) return;
+
+      // Показываем модалку благодарности мгновенно
       thanksModalBg.classList.add('active');
       textarea.value = '';
+
+      // Сброс выбора
+      emotions.forEach(e => e.style.filter = '');
+      assocs.forEach(a => a.style.filter = '');
+      colors.forEach(c => c.style.outline = '');
+      selectedEmotions = [];
+      selectedAssocs = [];
+      selectedColor = '';
     };
     closeThanksModal.onclick = () => {
       thanksModalBg.classList.remove('active');
@@ -769,7 +818,7 @@
       supportBlock.innerHTML = `
         <div class="support-technique-title">${techniques[0].title}</div>
         <div class="support-technique-body">${techniques[0].body}</div>
-        <button id=\'showNextTechnique\' class=\'support-btn\'>Показать ещё одну технику</button>
+        <button id="showNextTechnique" class="support-btn">Показать ещё одну технику</button>
       `;
       document.getElementById('showNextTechnique').onclick = showNextBtn.onclick;
     };
