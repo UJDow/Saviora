@@ -641,26 +641,27 @@
       align-items: center;
       gap: 10px;
     }
-    .pdf-btn {
-    display: inline-block;
-    margin-top: 18px;
-    padding: 14px 24px;
-    font-size: 1.08rem;
-    font-weight: 700;
-    color: var(--blue);
-    background: linear-gradient(90deg, var(--blue) 0%, #ffe6c9 100%);
-    border-radius: 32px;
-    text-decoration: none;
-    box-shadow: 0 2px 12px 0 #ffe6c9;
-    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-    text-align: center;
-    text-shadow: 0 1px 2px #fff6e9bb;
-  }
-  .pdf-btn:hover, .pdf-btn:focus {
-    background: linear-gradient(90deg, #5a8ec7 0%, #f7d6b6 100%);
-    color: #fff;
-    text-decoration: none;
-  }
+.pdf-btn {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 14px 24px;
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(90deg, var(--blue) 0%, #ffe6c9 100%);
+  border-radius: 32px;
+  text-decoration: none;
+  box-shadow: 0 2px 12px 0 #ffe6c9;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  text-align: center;
+  text-shadow: 0 1px 2px #6ca6e3bb, 0 0 16px var(--glow1), 0 0 32px var(--glow2);
+}
+.pdf-btn:hover, .pdf-btn:focus {
+  background: linear-gradient(90deg, #5a8ec7 0%, #f7d6b6 100%);
+  color: #fff;
+  text-decoration: none;
+  text-shadow: 0 1px 2px #fff6e9bb, 0 0 16px var(--glow2), 0 0 32px var(--glow3);
+}
   </style>
 </head>
 <body>
