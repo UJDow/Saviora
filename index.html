@@ -26,10 +26,6 @@
       margin: 0;
       padding: 0;
       overflow-x: hidden;
-      padding-left: env(safe-area-inset-left);
-      padding-right: env(safe-area-inset-right);
-      padding-top: env(safe-area-inset-top);
-      padding-bottom: env(safe-area-inset-bottom);
     }
     *, *:before, *:after {
       box-sizing: inherit;
@@ -42,18 +38,6 @@
       pointer-events: none;
       background: url('background 1.png') center center/cover no-repeat fixed;
       opacity: 0.35;
-    }
-    body::after {
-      content: "";
-      position: fixed;
-      left: 0; top: 0;
-      width: 100vw; height: 100vh;
-      pointer-events: none;
-      z-index: 2;
-      background: radial-gradient(ellipse at 70% 20%, #ffe6c9cc 0%, #b6c7e688 100%);
-      mix-blend-mode: lighten;
-      opacity: 0.5;
-      backdrop-filter: blur(4px);
     }
     .main-center {
       position: relative;
@@ -78,7 +62,6 @@
       align-items: center;
       margin: 0 auto;
       backdrop-filter: blur(2px);
-      animation: containerGlow 6s ease-in-out infinite alternate;
       box-sizing: border-box;
       color: var(--blue);
       text-shadow: 0 1px 2px #fff6e955;
@@ -108,11 +91,7 @@
       box-sizing: border-box;
       transition: border 0.2s, box-shadow 0.2s;
       box-shadow: 0 2px 12px 0 #ffe6c9;
-      animation: textareaGlow 7s ease-in-out infinite alternate;
       font-family: 'Montserrat', Arial, sans-serif;
-    }
-    #detailsOvalWrapper {
-      margin-top: 8px;
     }
     .dream-glow-btn {
       width: 100%;
@@ -127,7 +106,6 @@
       margin-top: 8px;
       transition: background 0.2s, color 0.2s, box-shadow 0.2s;
       box-shadow: 0 2px 12px 0 #ffe6c9;
-      animation: btnGlow 5s ease-in-out infinite alternate;
       font-family: 'Montserrat', Arial, sans-serif;
       text-shadow: 0 0 16px var(--glow1), 0 0 32px var(--glow2), 0 2px 8px #fff6e9bb;
       position: relative;
@@ -172,15 +150,6 @@
       opacity: 1;
       text-shadow: none;
     }
-    @keyframes textareaGlow {
-      0%   { box-shadow: 0 2px 12px 0 #ffe6c9; }
-      50%  { box-shadow: 0 4px 24px 0 #ffe6c9cc; }
-      100% { box-shadow: 0 2px 12px 0 #ffe6c9; }
-    }
-    textarea:focus {
-      border: 1.5px solid var(--blue);
-      box-shadow: 0 0 0 2px #ffe6c9;
-    }
     .anon-note {
       font-size: 0.88rem;
       color: var(--blue);
@@ -191,30 +160,6 @@
       font-style: italic;
       font-family: 'Montserrat', Arial, sans-serif;
       line-height: 1.3;
-    }
-    @keyframes btnGlow {
-      0%   { box-shadow: 0 2px 12px 0 #ffe6c9; }
-      50%  { box-shadow: 0 4px 24px 0 var(--blue); }
-      100% { box-shadow: 0 2px 12px 0 #ffe6c9; }
-    }
-    .dream-glow-btn span {
-      display: inline-block;
-      animation: dreamTextGlow 2.6s ease-in-out infinite alternate,
-                 dreamWave 3.7s cubic-bezier(.58,.01,.41,1) infinite alternate;
-      will-change: text-shadow, transform;
-    }
-    @keyframes dreamTextGlow {
-      0%   { text-shadow: 0 0 16px var(--glow1), 0 0 32px var(--glow2), 0 2px 8px #fff6e9bb;}
-      50%  { text-shadow: 0 0 30px var(--glow2), 0 0 44px var(--glow3), 0 2px 12px #ffe6c9;}
-      100% { text-shadow: 0 0 16px var(--glow1), 0 0 32px var(--glow2), 0 2px 8px #fff6e9bb;}
-    }
-    @keyframes dreamWave {
-      0%   { transform: translateX(-5px);}
-      50%  { transform: translateX(5px);}
-      100% { transform: translateX(-5px);}
-    }
-    button[type="submit"]:active, .dream-glow-btn:active {
-      background: linear-gradient(90deg, #5a8ec7 0%, #f7d6b6 100%);
     }
     .modal-bg {
       display: none;
@@ -242,7 +187,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      animation: containerGlow 6s ease-in-out infinite alternate;
       position: relative;
       box-sizing: border-box;
       color: var(--blue);
@@ -298,7 +242,6 @@
       margin-top: 8px;
       transition: background 0.2s, color 0.2s, box-shadow 0.2s;
       box-shadow: 0 2px 12px 0 #ffe6c9;
-      animation: btnGlow 5s ease-in-out infinite alternate;
       font-family: 'Montserrat', Arial, sans-serif;
       text-shadow: 0 1px 2px #fff6e9bb;
       -webkit-appearance: none;
@@ -369,259 +312,6 @@
       -webkit-appearance: none;
       appearance: none;
     }
-    .details-oval {
-      background: var(--cloud-alpha, rgba(183,170,255,0.55));
-      border-radius: 999px;
-      padding: 18px 36px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--blue);
-      box-shadow: 0 2px 16px 0 #b7aaff44;
-      cursor: pointer;
-      text-align: center;
-      margin-bottom: 8px;
-      transition: box-shadow 0.2s, background 0.2s;
-      user-select: none;
-      position: relative;
-      z-index: 1;
-    }
-    .details-oval:hover {
-      box-shadow: 0 4px 24px 0 #b7aaff77;
-      background: rgba(183,170,255,0.65);
-    }
-    .details-dropdown {
-      display: none;
-      background: rgba(255,255,255,0.97);
-      border-radius: 28px;
-      box-shadow: 0 2px 16px 0 #b7aaff33;
-      padding: 18px 16px 10px 16px;
-      margin-top: 6px;
-      animation: fadeIn 0.3s;
-      position: relative;
-      z-index: 2;
-    }
-    .details-dropdown.active {
-      display: block;
-    }
-    .details-question {
-      margin-bottom: 14px;
-    }
-    .details-q-title {
-      font-size: 0.92rem;
-      font-weight: 500;
-      margin-bottom: 4px;
-      color: var(--blue);
-    }
-    .details-emojis span, .details-colors span {
-      font-size: 1.2rem;
-      margin-right: 8px;
-      cursor: pointer;
-      transition: filter 0.15s, outline 0.15s;
-      border-radius: 50%;
-      padding: 2px 4px;
-    }
-    .details-colors span {
-      display: inline-block;
-      width: 24px;
-      height: 24px;
-      border: 2px solid #fff;
-      box-shadow: 0 0 4px #b7aaff55;
-      margin-right: 8px;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-8px);}
-      to   { opacity: 1; transform: translateY(0);}
-    }
-    @media (max-width: 600px) {
-      html, body {
-        font-size: 15px;
-      }
-      .main-center {
-        padding: 0 0 24px 0;
-      }
-      .container, .modal {
-        padding: 10px 2vw 10px 2vw;
-        border-radius: 16px;
-        max-width: 99vw;
-      }
-      .main-phrase {
-        font-size: 1rem;
-        margin-bottom: 16px;
-      }
-      textarea, .modal input[type="email"] {
-        border-radius: 13px;
-        padding: 10px;
-        font-size: 0.9rem;
-      }
-      button[type="submit"], .dream-glow-btn, .modal .btn, .modal button.btn, #joinWaitlistBtn {
-        border-radius: 13px;
-        padding: 12px 0;
-        font-size: 1rem;
-      }
-      .waitlist-header-btn {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        min-width: 100vw;
-        max-width: 100vw;
-        font-size: 1rem;
-        padding: 10px 0;
-        border-radius: 0 0 13px 13px;
-        z-index: 100;
-        box-shadow: 0 2px 12px 0 #ffe6c9;
-      }
-      .main-center {
-        margin-top: 56px;
-      }
-    }
-    @media (max-width: 400px) {
-      .container, .modal {
-        padding: 4px 1vw 4px 1vw;
-      }
-      .main-phrase {
-        font-size: 0.84rem;
-      }
-      textarea, .modal input[type="email"] {
-        font-size: 0.82rem;
-      }
-    }
-    .thanks-modal .success-message {
-      font-size: 1.15rem;
-      color: var(--blue);
-      text-align: center;
-      margin-bottom: 0;
-      margin-top: 0;
-      font-weight: 600;
-      line-height: 1.5;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-    .cloud-emoji {
-      display: inline-block;
-      vertical-align: middle;
-      width: 38px;
-      height: 28px;
-      margin-left: 4px;
-      margin-bottom: -6px;
-      filter: drop-shadow(0 2px 8px #b7aaff88);
-    }
-    .support-block {
-      background: #f7f7f7cc;
-      border-radius: 18px;
-      margin: 16px 0 0 0;
-      padding: 14px 12px 10px 12px;
-      color: var(--blue);
-      font-size: 1.01rem;
-      box-shadow: 0 2px 12px 0 #ffe6c933;
-      text-align: left;
-      width: 100%;
-      max-width: 340px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-    }
-    .support-technique-title {
-      font-weight: 600;
-      margin-bottom: 2px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .support-technique-body {
-      margin-left: 0.5em;
-      font-size: 0.98em;
-      line-height: 1.4;
-    }
-    .support-btn {
-      margin-top: 8px;
-      align-self: flex-end;
-      background: none;
-      border: none;
-      color: var(--blue);
-      font-size: 1em;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: underline;
-      padding: 0 0 0 0;
-      transition: color 0.15s;
-    }
-    .support-btn:active {
-      color: #5a8ec7;
-    }
-    .support-answers {
-      width: 100%;
-      margin-top: 10px;
-      margin-bottom: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .support-answers label {
-      font-size: 0.97em;
-      font-weight: 500;
-      margin-bottom: 2px;
-      color: var(--blue);
-      opacity: 0.8;
-    }
-    .support-answers textarea {
-      min-height: 60px;
-      font-size: 0.97em;
-      border-radius: 12px;
-      border: 1px solid #b7aaff;
-      background: #f7f7f7;
-      padding: 8px 10px;
-      margin-bottom: 0;
-      box-shadow: none;
-      animation: none;
-      resize: vertical;
-    }
-    .support-done-btn {
-      margin-top: 10px;
-      align-self: flex-end;
-      background: linear-gradient(90deg, var(--blue) 0%, #ffe6c9 100%);
-      color: var(--blue);
-      border: none;
-      border-radius: 18px;
-      font-size: 1.08em;
-      font-weight: 700;
-      padding: 10px 28px;
-      cursor: pointer;
-      box-shadow: 0 2px 12px 0 #ffe6c9;
-      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-      font-family: 'Montserrat', Arial, sans-serif;
-      text-shadow: 0 1px 2px #fff6e9bb;
-    }
-    .support-done-btn:active {
-      background: linear-gradient(90deg, #5a8ec7 0%, #f7d6b6 100%);
-    }
-    .support-saved {
-      color: #2a9d6a;
-      font-size: 0.95em;
-      margin-top: 4px;
-      min-height: 1.2em;
-      transition: opacity 0.2s;
-      opacity: 0.85;
-      font-style: italic;
-    }
-    .sending-indicator {
-      margin-top: 18px;
-      color: var(--blue);
-      font-size: 1.08rem;
-      text-align: center;
-      min-height: 1.5em;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-    .sending-indicator.error {
-      color: #d44;
-    }
-    .sending-indicator.success {
-      color: #2a9d6a;
-    }
   </style>
 </head>
 <body>
@@ -642,47 +332,6 @@
           <textarea name="message" required
             placeholder="Saviora — делимся тем, что помогает лучше понять себя..."></textarea>
         </label>
-        <div id="detailsOvalWrapper" style="margin-top:8px;">
-          <div id="detailsOval" class="details-oval">
-            <span>Добавим немного деталей</span>
-          </div>
-          <div id="detailsDropdown" class="details-dropdown">
-            <div class="details-question">
-              <div class="details-q-title">Какие эмоции вы испытали во сне?</div>
-              <div id="emotions" class="details-emojis">
-                <span class="emotion" data-value="радость" title="Радость">😊</span>
-                <span class="emotion" data-value="страх" title="Страх">😨</span>
-                <span class="emotion" data-value="грусть" title="Грусть">😢</span>
-                <span class="emotion" data-value="удивление" title="Удивление">😲</span>
-                <span class="emotion" data-value="злость" title="Злость">😡</span>
-                <span class="emotion" data-value="любовь" title="Любовь">😍</span>
-                <span class="emotion" data-value="спокойствие" title="Спокойствие">😌</span>
-              </div>
-            </div>
-            <div class="details-question">
-              <div class="details-q-title">Что из этого было во сне?</div>
-              <div id="associations" class="details-emojis">
-                <span class="assoc" data-value="вода" title="Вода">💧</span>
-                <span class="assoc" data-value="окно" title="Окно">🪟</span>
-                <span class="assoc" data-value="дорога" title="Дорога">🛤️</span>
-                <span class="assoc" data-value="животное" title="Животное">🐾</span>
-                <span class="assoc" data-value="дом" title="Дом">🏠</span>
-                <span class="assoc" data-value="свет" title="Свет">💡</span>
-                <span class="assoc" data-value="тьма" title="Тьма">🌑</span>
-              </div>
-            </div>
-            <div class="details-question">
-              <div class="details-q-title">Какой цвет подходит к вашему сну?</div>
-              <div id="colors" class="details-colors">
-                <span class="color-choice" data-value="голубой" title="Голубой" style="background:#6ca6e3;"></span>
-                <span class="color-choice" data-value="фиолетовый" title="Фиолетовый" style="background:#b7aaff;"></span>
-                <span class="color-choice" data-value="желтый" title="Желтый" style="background:#ffe6c9;"></span>
-                <span class="color-choice" data-value="розовый" title="Розовый" style="background:#f7d6b6;"></span>
-                <span class="color-choice" data-value="серый" title="Серый" style="background:#b0b0b0;"></span>
-              </div>
-            </div>
-          </div>
-        </div>
         <button type="submit" class="dream-glow-btn"><span>Отправить сновидение</span></button>
         <div class="anon-note">
           Оставь Instagram или Telegram для связи. Мы всегда рады новым историям.
@@ -699,25 +348,6 @@
         <span>Saviora скоро тихонько постучится в Telegram или Instagram.</span>
         <span style="display:flex;align-items:center;justify-content:center;">
           Загляни в правый верхний угол
-          <svg class="cloud-emoji" viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="24" cy="20" rx="20" ry="10" fill="url(#cloudGradient)" fill-opacity="0.7"/>
-            <ellipse cx="16" cy="16" rx="8" ry="8" fill="url(#cloudGradient2)" fill-opacity="0.7"/>
-            <ellipse cx="32" cy="16" rx="10" ry="10" fill="url(#cloudGradient3)" fill-opacity="0.7"/>
-            <defs>
-              <linearGradient id="cloudGradient" x1="4" y1="10" x2="44" y2="30" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#b7aaff" stop-opacity="0.7"/>
-                <stop offset="1" stop-color="#6ca6e3" stop-opacity="0.7"/>
-              </linearGradient>
-              <linearGradient id="cloudGradient2" x1="8" y1="8" x2="24" y2="24" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#b7aaff" stop-opacity="0.7"/>
-                <stop offset="1" stop-color="#6ca6e3" stop-opacity="0.7"/>
-              </linearGradient>
-              <linearGradient id="cloudGradient3" x1="22" y1="6" x2="42" y2="26" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#b7aaff" stop-opacity="0.7"/>
-                <stop offset="1" stop-color="#6ca6e3" stop-opacity="0.7"/>
-              </linearGradient>
-            </defs>
-          </svg>
         </span>
         <div id="supportBlock" class="support-block"></div>
         <div class="support-answers">
@@ -770,273 +400,52 @@
       if (e.key === 'Escape' && modalBg.classList.contains('active')) closeModal.onclick();
     });
 
-    // --- Овал "Добавим немного деталей" ---
-    const detailsOval = document.getElementById('detailsOval');
-    const detailsDropdown = document.getElementById('detailsDropdown');
-    let detailsOpen = false;
-    detailsOval.onclick = () => {
-      detailsOpen = !detailsOpen;
-      detailsDropdown.classList.toggle('active', detailsOpen);
-      if (detailsOpen) {
-        setTimeout(() => {
-          detailsDropdown.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 100);
+    // --- App Waitlist: ОТПРАВКА EMAIL ---
+    const joinWaitlistBtn = document.getElementById('joinWaitlistBtn');
+    const waitlistEmail = document.getElementById('waitlistEmail');
+    const queueNumber = document.getElementById('queueNumber');
+    const waitlistWelcome = document.getElementById('waitlistWelcome');
+
+    joinWaitlistBtn.onclick = function() {
+      const email = waitlistEmail.value.trim();
+      if (!email) {
+        waitlistEmail.style.border = '1.5px solid #d44';
+        waitlistEmail.placeholder = 'Пожалуйста, введите email';
+        return;
       }
-    };
-    document.addEventListener('click', (e) => {
-      if (
-        detailsOpen &&
-        !detailsOval.contains(e.target) &&
-        !detailsDropdown.contains(e.target)
-      ) {
-        detailsDropdown.classList.remove('active');
-        detailsOpen = false;
-      }
-    });
+      joinWaitlistBtn.disabled = true;
+      joinWaitlistBtn.textContent = 'Отправка...';
 
-    // --- Микро-игровой блок: логика выбора ---
-    // Эмоции (можно несколько)
-    const emotions = document.querySelectorAll('.emotion');
-    let selectedEmotions = [];
-    emotions.forEach(e => {
-      e.onclick = () => {
-        const val = e.getAttribute('data-value');
-        if (selectedEmotions.includes(val)) {
-          selectedEmotions = selectedEmotions.filter(v => v !== val);
-          e.style.filter = '';
-        } else {
-          selectedEmotions.push(val);
-          e.style.filter = 'drop-shadow(0 0 6px #6ca6e3)';
-        }
-      };
-    });
-
-    // Ассоциации (можно несколько)
-    const assocs = document.querySelectorAll('.assoc');
-    let selectedAssocs = [];
-    assocs.forEach(a => {
-      a.onclick = () => {
-        const val = a.getAttribute('data-value');
-        if (selectedAssocs.includes(val)) {
-          selectedAssocs = selectedAssocs.filter(v => v !== val);
-          a.style.filter = '';
-        } else {
-          selectedAssocs.push(val);
-          a.style.filter = 'drop-shadow(0 0 6px #b7aaff)';
-        }
-      };
-    });
-
-    // Цвет (только один)
-    const colors = document.querySelectorAll('.color-choice');
-    let selectedColor = '';
-    colors.forEach(c => {
-      c.onclick = () => {
-        colors.forEach(cc => cc.style.outline = '');
-        c.style.outline = '2.5px solid #6ca6e3';
-        selectedColor = c.getAttribute('data-value');
-      };
-    });
-
-    // --- Мгновенная поддержка: техники ---
-    const techniques = [
-      {
-        title: '📝 Три вопроса к себе',
-        body: `<ul style="margin:0 0 0 1em;padding:0 0 0 0.2em;">
-          <li>Какие эмоции я испытал(а) во сне?</li>
-          <li>Какой момент или образ запомнился больше всего?</li>
-          <li>Есть ли что-то, что хочется сделать или понять после этого сна?</li>
-        </ul>`
-      },
-      {
-        title: '🎨 Рисунок сна',
-        body: 'Попробуйте нарисовать что-то из сна — даже если это просто линии или цвета. Не думайте о художественности, просто передайте настроение.'
-      },
-      {
-        title: '🔗 Ассоциации',
-        body: 'Запишите 3-5 слов, которые первыми приходят в голову, когда вы думаете о своём сне. Потом посмотрите на этот список — возможно, он подскажет неожиданные смыслы.'
-      }
-    ];
-    let currentTechnique = 0;
-    let techniquesViewed = [0];
-    let pdfDownloaded = false;
-    let supportAnswers = ["", "", ""];
-
-    const supportBlock = document.getElementById('supportBlock');
-    const supportAnswerField = document.getElementById('supportAnswer');
-    const supportSaved = document.getElementById('supportSaved');
-    const supportDoneBtn = document.getElementById('supportDoneBtn');
-
-    function renderTechnique(idx) {
-      supportBlock.innerHTML = `
-        <div class="support-technique-title">${techniques[idx].title}</div>
-        <div class="support-technique-body">${techniques[idx].body}</div>
-        ${idx < techniques.length-1 ? '<button id="showNextTechnique" class="support-btn">Показать ещё одну технику</button>' : ''}
-        ${idx > 0 ? '<button id="showPrevTechnique" class="support-btn" style="margin-left:0;">Назад</button>' : ''}
-      `;
-      supportAnswerField.value = supportAnswers[idx] || "";
-      supportSaved.textContent = "";
-      const showNextBtn = document.getElementById('showNextTechnique');
-      if (showNextBtn) showNextBtn.onclick = () => switchTechnique(idx+1);
-      const showPrevBtn = document.getElementById('showPrevTechnique');
-      if (showPrevBtn) showPrevBtn.onclick = () => switchTechnique(idx-1);
-    }
-    function switchTechnique(newIdx) {
-      supportAnswers[currentTechnique] = supportAnswerField.value;
-      currentTechnique = newIdx;
-      if (!techniquesViewed.includes(newIdx)) techniquesViewed.push(newIdx);
-      renderTechnique(currentTechnique);
-    }
-
-    supportAnswerField.addEventListener('input', () => {
-      supportAnswers[currentTechnique] = supportAnswerField.value;
-      supportSaved.textContent = "Ответ сохранён";
-      setTimeout(() => { supportSaved.textContent = ""; }, 1200);
-    });
-
-    supportDoneBtn.onclick = function() {
-      supportAnswers[currentTechnique] = supportAnswerField.value;
-      supportAnswerField.disabled = true;
-      supportDoneBtn.disabled = true;
-      supportSaved.textContent = "Ответы отправляются...";
-      sendDreamData(true);
-    };
-
-    function initSupportBlock() {
-      currentTechnique = 0;
-      techniquesViewed = [0];
-      supportAnswers = ["", "", ""];
-      supportAnswerField.disabled = false;
-      supportDoneBtn.disabled = false;
-      renderTechnique(0);
-    }
-
-    const savePdfBtn = document.getElementById('savePdfBtn');
-    if (savePdfBtn) {
-      savePdfBtn.addEventListener('click', function() {
-        pdfDownloaded = true;
-      });
-    }
-
-    let pendingDreamData = null;
-    let sending = false;
-    const dreamForm = document.getElementById('dreamForm');
-    const thanksModalBg = document.getElementById('thanksModalBg');
-    const closeThanksModal = document.getElementById('closeThanksModal');
-    let sendingIndicator = document.getElementById('sendingIndicator');
-    if (!sendingIndicator) {
-      sendingIndicator = document.createElement('div');
-      sendingIndicator.id = 'sendingIndicator';
-      sendingIndicator.className = 'sending-indicator';
-      document.querySelector('.thanks-modal .success-message').appendChild(sendingIndicator);
-    }
-
-    dreamForm.onsubmit = (e) => {
-      e.preventDefault();
-      const textarea = dreamForm.querySelector('textarea');
-      const message = textarea.value.trim();
-      if (!message) return;
-      let contact = '';
-      pendingDreamData = {
-        message,
-        emotions: [...selectedEmotions],
-        associations: [...selectedAssocs],
-        color: selectedColor,
-        contact,
-        techniquesViewed: [0],
-        pdfDownloaded: false,
-        supportAnswers: ["", "", ""]
-      };
-      currentTechnique = 0;
-      techniquesViewed = [0];
-      pdfDownloaded = false;
-      supportAnswers = ["", "", ""];
-      thanksModalBg.classList.add('active');
-      textarea.value = '';
-      emotions.forEach(e => e.style.filter = '');
-      assocs.forEach(a => a.style.filter = '');
-      colors.forEach(c => c.style.outline = '');
-      selectedEmotions = [];
-      selectedAssocs = [];
-      selectedColor = '';
-      initSupportBlock();
-      sendingIndicator.textContent = '';
-      sendingIndicator.className = 'sending-indicator';
-    };
-
-    function sendDreamData(fromSupportBtn) {
-      if (!pendingDreamData || sending) return;
-      sending = true;
-      sendingIndicator.textContent = 'Отправка...';
-      sendingIndicator.className = 'sending-indicator';
-      pendingDreamData.techniquesViewed = [...techniquesViewed];
-      pendingDreamData.pdfDownloaded = pdfDownloaded;
-      pendingDreamData.supportAnswers = [...supportAnswers];
+      // Сначала отправляем на Formspree
       fetch('https://formspree.io/f/xanbpkgn', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(pendingDreamData)
-      });
-      fetch('https://sheetdb.io/api/v1/tj7alk98vxxrr', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ data: [pendingDreamData] })
+        body: JSON.stringify({ email })
+      })
+      .then(res => {
+        // Параллельно отправляем на SheetDB
+        return fetch('https://sheetdb.io/api/v1/tj7alk98vxxrr', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ data: [{ email }] })
+        });
       })
       .then(res => {
         if (res.ok) {
-          sendingIndicator.textContent = 'Спасибо, всё получено!';
-          sendingIndicator.className = 'sending-indicator success';
-          supportSaved.textContent = "Ответы отправлены!";
+          waitlistWelcome.innerHTML = 'Спасибо! Вы в списке ожидания.<br>Мы напишем вам, когда приложение будет готово.';
+          queueNumber.style.display = 'none';
+          waitlistEmail.style.display = 'none';
+          joinWaitlistBtn.style.display = 'none';
         } else {
-          sendingIndicator.textContent = 'Ошибка отправки. Попробуйте позже.';
-          sendingIndicator.className = 'sending-indicator error';
-          supportSaved.textContent = "Ошибка отправки.";
-        }
-        sending = false;
-        pendingDreamData = null;
-        if (fromSupportBtn) {
-          setTimeout(() => {
-            thanksModalBg.classList.remove('active');
-            initSupportBlock();
-            sendingIndicator.textContent = '';
-            supportSaved.textContent = '';
-          }, 1200);
+          throw new Error('Ошибка отправки');
         }
       })
       .catch(() => {
-        sendingIndicator.textContent = 'Ошибка отправки. Попробуйте позже.';
-        sendingIndicator.className = 'sending-indicator error';
-        supportSaved.textContent = "Ошибка отправки.";
-        sending = false;
-        pendingDreamData = null;
-        if (fromSupportBtn) {
-          setTimeout(() => {
-            thanksModalBg.classList.remove('active');
-            initSupportBlock();
-            sendingIndicator.textContent = '';
-            supportSaved.textContent = '';
-          }, 1200);
-        }
+        joinWaitlistBtn.disabled = false;
+        joinWaitlistBtn.textContent = 'Встать в App Waitlist';
+        waitlistWelcome.innerHTML = 'Ошибка отправки. Попробуйте позже.';
       });
-    }
-
-    closeThanksModal.onclick = () => {
-      thanksModalBg.classList.remove('active');
-      currentTechnique = 0;
-      techniquesViewed = [0];
-      pdfDownloaded = false;
-      supportAnswers = ["", "", ""];
-      initSupportBlock();
-      sendingIndicator.textContent = '';
-      sendingIndicator.className = 'sending-indicator';
-      supportSaved.textContent = '';
     };
-    thanksModalBg.onclick = (e) => {
-      if (e.target === thanksModalBg) closeThanksModal.onclick();
-    };
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && thanksModalBg.classList.contains('active')) closeThanksModal.onclick();
-    });
   </script>
 </body>
 </html>
