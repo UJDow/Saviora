@@ -552,6 +552,21 @@
     .support-btn:active {
       color: #5a8ec7;
     }
+    .sending-indicator {
+      margin-top: 18px;
+      color: var(--blue);
+      font-size: 1.08rem;
+      text-align: center;
+      min-height: 1.5em;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .sending-indicator.error {
+      color: #d44;
+    }
+    .sending-indicator.success {
+      color: #2a9d6a;
+    }
   </style>
 </head>
 <body>
@@ -660,9 +675,10 @@
           </div>
           <button id="showNextTechnique" class="support-btn">Показать ещё одну технику</button>
         </div>
-        <a href="SAVIORA.pdf" download class="dream-glow-btn" style="margin-top:16px; text-align:center;">
+        <a href="SAVIORA.pdf" download class="dream-glow-btn" id="savePdfBtn" style="margin-top:16px; text-align:center;">
           <span>Сохранить себе мини-гайд (PDF)</span>
         </a>
+        <div id="sendingIndicator" class="sending-indicator"></div>
       </div>
     </div>
   </div>
@@ -774,6 +790,8 @@
       }
     ];
     let currentTechnique = 0;
+    let techniquesViewed = [0];
+    let pdfDownloaded = false;
     const supportBlock = document.getElementById('supportBlock');
     const showNextBtn = document.getElementById('showNextTechnique');
     showNextBtn.onclick = function() {
@@ -784,21 +802,56 @@
           <div class="support-technique-body">${techniques[currentTechnique].body}</div>
           ${currentTechnique < techniques.length-1 ? '<button id="showNextTechnique" class="support-btn">Показать ещё одну технику</button>' : ''}
         `;
+        techniquesViewed.push(currentTechnique);
         if (currentTechnique < techniques.length-1) {
           document.getElementById('showNextTechnique').onclick = showNextBtn.onclick;
         }
       }
     };
+    const savePdfBtn = document.getElementById('savePdfBtn');
+    if (savePdfBtn) {
+      savePdfBtn.addEventListener('click', function() {
+        pdfDownloaded = true;
+      });
+    }
 
-    // Форма отправки сна
+    // --- Сбор и отправка данных ---
+    let pendingDreamData = null;
+    let sending = false;
     const dreamForm = document.getElementById('dreamForm');
     const thanksModalBg = document.getElementById('thanksModalBg');
     const closeThanksModal = document.getElementById('closeThanksModal');
+    let sendingIndicator = document.getElementById('sendingIndicator');
+    if (!sendingIndicator) {
+      sendingIndicator = document.createElement('div');
+      sendingIndicator.id = 'sendingIndicator';
+      sendingIndicator.className = 'sending-indicator';
+      document.querySelector('.thanks-modal .success-message').appendChild(sendingIndicator);
+    }
+
     dreamForm.onsubmit = (e) => {
       e.preventDefault();
       const textarea = dreamForm.querySelector('textarea');
       const message = textarea.value.trim();
       if (!message) return;
+
+      // Собираем контакт (ищем в тексте, если есть @ или ссылку, или можно добавить отдельное поле)
+      let contact = '';
+      // Можно добавить отдельное поле для контакта, если нужно
+
+      // Сохраняем данные во временный объект
+      pendingDreamData = {
+        message,
+        emotions: [...selectedEmotions],
+        associations: [...selectedAssocs],
+        color: selectedColor,
+        contact,
+        techniquesViewed: [0],
+        pdfDownloaded: false
+      };
+      currentTechnique = 0;
+      techniquesViewed = [0];
+      pdfDownloaded = false;
 
       // Показываем модалку благодарности мгновенно
       thanksModalBg.classList.add('active');
@@ -812,15 +865,96 @@
       selectedAssocs = [];
       selectedColor = '';
     };
+
+    // При каждом показе следующей техники — фиксируем просмотренные
+    function updateTechniquesViewed(idx) {
+      if (!techniquesViewed.includes(idx)) techniquesViewed.push(idx);
+    }
+    showNextBtn.onclick = function() {
+      currentTechnique++;
+      if (currentTechnique < techniques.length) {
+        supportBlock.innerHTML = `
+          <div class="support-technique-title">${techniques[currentTechnique].title}</div>
+          <div class="support-technique-body">${techniques[currentTechnique].body}</div>
+          ${currentTechnique < techniques.length-1 ? '<button id="showNextTechnique" class="support-btn">Показать ещё одну технику</button>' : ''}
+        `;
+        updateTechniquesViewed(currentTechnique);
+        if (currentTechnique < techniques.length-1) {
+          document.getElementById('showNextTechnique').onclick = showNextBtn.onclick;
+        }
+      }
+    };
+    if (savePdfBtn) {
+      savePdfBtn.addEventListener('click', function() {
+        pdfDownloaded = true;
+      });
+    }
+
+    // Функция отправки данных на все endpoint'ы
+    function sendDreamData() {
+      if (!pendingDreamData || sending) return;
+      sending = true;
+      sendingIndicator.textContent = 'Отправка...';
+      sendingIndicator.className = 'sending-indicator';
+
+      // Собираем финальные данные
+      pendingDreamData.techniquesViewed = [...techniquesViewed];
+      pendingDreamData.pdfDownloaded = pdfDownloaded;
+
+      // 1. На почту
+      fetch('/api/dream', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(pendingDreamData)
+      });
+
+      // 2. В Excel
+      fetch('https://yourdomain.com/receive-dream', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(pendingDreamData)
+      });
+
+      // 3. В SheetDB (Google Sheets)
+      fetch('https://sheetdb.io/api/v1/xxxxxx', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: [pendingDreamData] })
+      })
+      .then(res => {
+        if (res.ok) {
+          sendingIndicator.textContent = 'Спасибо, всё получено!';
+          sendingIndicator.className = 'sending-indicator success';
+        } else {
+          sendingIndicator.textContent = 'Ошибка отправки. Попробуйте позже.';
+          sendingIndicator.className = 'sending-indicator error';
+        }
+        sending = false;
+        pendingDreamData = null;
+      })
+      .catch(() => {
+        sendingIndicator.textContent = 'Ошибка отправки. Попробуйте позже.';
+        sendingIndicator.className = 'sending-indicator error';
+        sending = false;
+        pendingDreamData = null;
+      });
+    }
+
+    // Закрытие модалки — только тогда отправляем данные
     closeThanksModal.onclick = () => {
+      sendDreamData();
       thanksModalBg.classList.remove('active');
       currentTechnique = 0;
+      techniquesViewed = [0];
+      pdfDownloaded = false;
       supportBlock.innerHTML = `
         <div class="support-technique-title">${techniques[0].title}</div>
         <div class="support-technique-body">${techniques[0].body}</div>
         <button id="showNextTechnique" class="support-btn">Показать ещё одну технику</button>
       `;
       document.getElementById('showNextTechnique').onclick = showNextBtn.onclick;
+      sendingIndicator.textContent = '';
+      sendingIndicator.className = 'sending-indicator';
     };
     thanksModalBg.onclick = (e) => {
       if (e.target === thanksModalBg) closeThanksModal.onclick();
