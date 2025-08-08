@@ -72,7 +72,7 @@
       background: rgba(255,255,255,0.91);
       border-radius: 38px;
       box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9;
-      padding: 34px 25px 28px 25px;
+      padding: 18px 18px 16px 18px; /* уменьшено */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -89,10 +89,10 @@
       100% { box-shadow: 0 8px 48px 0 rgba(180, 160, 120, 0.13), 0 1.5px 12px 0 #ffe6c9; }
     }
     .main-phrase {
-      font-size: 2.2rem;
+      font-size: 1.6rem; /* уменьшено */
       font-weight: 700;
       color: var(--blue);
-      margin-bottom: 24px;
+      margin-bottom: 14px; /* уменьшено */
       text-align: center;
       line-height: 1.2;
       text-shadow: 0 2px 8px #fff6e9bb;
@@ -103,7 +103,7 @@
       gap: 0.5em;
     }
     .main-phrase .emoji {
-      font-size: 2.2rem;
+      font-size: 1.6rem; /* уменьшено */
       margin-right: 0.1em;
       filter: drop-shadow(0 2px 8px #fff6e9bb);
       user-select: none;
@@ -112,7 +112,7 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 12px; /* уменьшено */
       align-items: center;
       font-family: 'Montserrat', Arial, sans-serif;
       color: var(--blue);
@@ -128,10 +128,10 @@
     }
     textarea {
       width: 100%;
-      min-height: 180px;
+      min-height: 90px; /* уменьшено */
       border-radius: 32px;
       border: 1.5px solid var(--blue);
-      padding: 22px;
+      padding: 14px; /* уменьшено */
       font-size: 0.95rem;
       font-style: italic;
       background: #f7f7f7;
@@ -166,7 +166,7 @@
       font-size: 0.88rem;
       color: var(--blue);
       opacity: 0.7;
-      margin-top: 6px;
+      margin-top: 4px; /* уменьшено */
       margin-bottom: 0;
       text-align: center;
       font-style: italic;
@@ -175,15 +175,15 @@
     }
     .dream-glow-btn {
       width: 100%;
-      padding: 18px 0;
+      padding: 14px 0; /* уменьшено */
       border: none;
       border-radius: 32px;
-      font-size: 1.18rem;
+      font-size: 1.08rem; /* уменьшено */
       font-weight: 700;
       background: linear-gradient(90deg, var(--blue) 0%, #ffe6c9 100%);
       color: var(--blue);
       cursor: pointer;
-      margin-top: 14px;
+      margin-top: 10px; /* уменьшено */
       transition: background 0.2s, color 0.2s, box-shadow 0.2s;
       box-shadow: 0 2px 12px 0 #ffe6c9;
       animation: btnGlow 5s ease-in-out infinite alternate;
@@ -337,7 +337,7 @@
       opacity: 0.6;
       font-size: 0.98rem;
       font-family: 'Montserrat', Arial, sans-serif;
-      margin-top: 24px;
+      margin-top: 18px; /* уменьшено */
       margin-bottom: 8px;
       letter-spacing: 0.01em;
       z-index: 5;
@@ -373,11 +373,11 @@
       -webkit-appearance: none;
       appearance: none;
     }
-    /* --- Новый стиль для овала и выпадающего блока --- */
+    /* --- Новый стиль для овала --- */
     .details-oval {
       background: var(--cloud-alpha, rgba(183,170,255,0.55));
       border-radius: 999px;
-      padding: 18px 36px;
+      padding: 14px 28px;
       font-size: 0.82rem;
       font-weight: 600;
       color: var(--blue);
@@ -394,30 +394,50 @@
       box-shadow: 0 4px 24px 0 #b7aaff77;
       background: rgba(183,170,255,0.65);
     }
-    .details-dropdown {
+    /* --- Модалка деталей сна --- */
+    .details-modal-bg {
       display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0; top: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.18);
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.25s;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    .details-modal-bg.active {
+      display: flex;
+      opacity: 1;
+    }
+    .details-modal {
       background: rgba(255,255,255,0.97);
       border-radius: 28px;
       box-shadow: 0 2px 16px 0 #b7aaff33;
-      padding: 18px 16px 10px 16px;
-      margin-top: 6px;
-      animation: fadeIn 0.3s;
+      padding: 22px 16px 10px 16px;
+      max-width: 420px;
+      width: 96vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       position: relative;
       z-index: 2;
+      color: var(--blue);
+      text-shadow: 0 1px 2px #fff6e9bb;
+      animation: containerGlow 6s ease-in-out infinite alternate;
     }
-    .details-dropdown.active {
-      display: block;
-    }
-    .details-question {
+    .details-modal .details-question {
       margin-bottom: 14px;
+      width: 100%;
     }
-    .details-q-title {
+    .details-modal .details-q-title {
       font-size: 0.92rem;
       font-weight: 500;
       margin-bottom: 4px;
       color: var(--blue);
     }
-    .details-emojis span, .details-colors span {
+    .details-modal .details-emojis span, .details-modal .details-colors span {
       font-size: 1.2rem;
       margin-right: 8px;
       cursor: pointer;
@@ -425,7 +445,7 @@
       border-radius: 50%;
       padding: 2px 4px;
     }
-    .details-colors span {
+    .details-modal .details-colors span {
       display: inline-block;
       width: 24px;
       height: 24px;
@@ -433,34 +453,56 @@
       box-shadow: 0 0 4px #b7aaff55;
       margin-right: 8px;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-8px);}
-      to   { opacity: 1; transform: translateY(0);}
+    .details-modal .dream-glow-btn {
+      margin-top: 10px;
+      font-size: 1.08rem;
+      padding: 12px 0;
+    }
+    .details-modal .technique-answer-label {
+      font-size: 0.97em;
+      font-weight: 500;
+      margin-bottom: 2px;
+      color: var(--blue);
+      opacity: 0.8;
+    }
+    .details-modal .technique-answer {
+      min-height: 60px;
+      font-size: 0.97em;
+      border-radius: 12px;
+      border: 1px solid #b7aaff;
+      background: #f7f7f7;
+      padding: 8px 10px;
+      margin-bottom: 0;
+      box-shadow: none;
+      animation: none;
+      resize: vertical;
+      width: 100%;
+      margin-bottom: 8px;
     }
     @media (max-width: 600px) {
       html, body {
         font-size: 15px;
       }
       .main-center {
-        padding: 0 0 24px 0;
+        padding: 0 0 16px 0;
       }
-      .container, .modal {
-        padding: 10px 2vw 10px 2vw;
+      .container, .modal, .details-modal {
+        padding: 8px 2vw 8px 2vw;
         border-radius: 16px;
         max-width: 99vw;
       }
       .main-phrase {
         font-size: 1rem;
-        margin-bottom: 16px;
+        margin-bottom: 10px;
       }
       textarea, .modal input[type="email"] {
         border-radius: 13px;
-        padding: 10px;
+        padding: 8px;
         font-size: 0.9rem;
       }
       button[type="submit"], .dream-glow-btn, .modal .btn, .modal button.btn, #joinWaitlistBtn {
         border-radius: 13px;
-        padding: 12px 0;
+        padding: 10px 0;
         font-size: 1rem;
       }
       .waitlist-header-btn {
@@ -481,7 +523,7 @@
       }
     }
     @media (max-width: 400px) {
-      .container, .modal {
+      .container, .modal, .details-modal {
         padding: 4px 1vw 4px 1vw;
       }
       .main-phrase {
@@ -534,76 +576,79 @@
             placeholder="Saviora — делимся тем, что помогает лучше понять себя..."></textarea>
         </label>
 
-        <!-- Двухшаговый блок -->
-        <div id="detailsOvalWrapper" style="margin-top:18px;">
+        <div id="detailsOvalWrapper" style="margin-top:10px;">
           <div id="detailsOval" class="details-oval">
             <span>Добавим немного деталей</span>
           </div>
-          <div id="detailsDropdown" class="details-dropdown">
-            <div id="detailsStep1">
-              <div class="details-question">
-                <div class="details-q-title">Какие эмоции вы испытали во сне?</div>
-                <div id="emotions" class="details-emojis">
-                  <span class="emotion" data-value="радость" title="Радость">😊</span>
-                  <span class="emotion" data-value="страх" title="Страх">😨</span>
-                  <span class="emotion" data-value="грусть" title="Грусть">😢</span>
-                  <span class="emotion" data-value="удивление" title="Удивление">😲</span>
-                  <span class="emotion" data-value="злость" title="Злость">😡</span>
-                  <span class="emotion" data-value="любовь" title="Любовь">😍</span>
-                  <span class="emotion" data-value="спокойствие" title="Спокойствие">😌</span>
-                </div>
-              </div>
-              <div class="details-question">
-                <div class="details-q-title">Что из этого было во сне?</div>
-                <div id="associations" class="details-emojis">
-                  <span class="assoc" data-value="вода" title="Вода">💧</span>
-                  <span class="assoc" data-value="окно" title="Окно">🪟</span>
-                  <span class="assoc" data-value="дорога" title="Дорога">🛤️</span>
-                  <span class="assoc" data-value="животное" title="Животное">🐾</span>
-                  <span class="assoc" data-value="дом" title="Дом">🏠</span>
-                  <span class="assoc" data-value="свет" title="Свет">💡</span>
-                  <span class="assoc" data-value="тьма" title="Тьма">🌑</span>
-                </div>
-              </div>
-              <div class="details-question">
-                <div class="details-q-title">Какой цвет подходит к вашему сну?</div>
-                <div id="colors" class="details-colors">
-                  <span class="color-choice" data-value="голубой" title="Голубой" style="background:#6ca6e3;"></span>
-                  <span class="color-choice" data-value="фиолетовый" title="Фиолетовый" style="background:#b7aaff;"></span>
-                  <span class="color-choice" data-value="желтый" title="Желтый" style="background:#ffe6c9;"></span>
-                  <span class="color-choice" data-value="розовый" title="Розовый" style="background:#f7d6b6;"></span>
-                  <span class="color-choice" data-value="серый" title="Серый" style="background:#b0b0b0;"></span>
-                </div>
-              </div>
-              <button id="toStep2Btn" class="dream-glow-btn" style="margin-top:10px;"><span>Далее</span></button>
-            </div>
-            <div id="detailsStep2" style="display:none;">
-              <div class="details-question">
-                <div class="details-q-title" style="font-weight:600;">Техники саморефлексии</div>
-                <div style="font-size:0.97em;line-height:1.5;margin-bottom:10px;">
-                  <b>📝 Три вопроса к себе:</b>
-                  <ul style="margin:0 0 0 1em;padding:0 0 0 0.2em;">
-                    <li>Какие эмоции я испытал(а) во сне?</li>
-                    <li>Какой момент или образ запомнился больше всего?</li>
-                    <li>Есть ли что-то, что хочется сделать или понять после этого сна?</li>
-                  </ul>
-                  <b>🎨 Рисунок сна:</b>
-                  <div>Попробуйте нарисовать что-то из сна — даже если это просто линии или цвета. Не думайте о художественности, просто передайте настроение.</div>
-                </div>
-                <label class="technique-answer-label" for="techniqueAnswer" style="font-size:0.97em;font-weight:500;margin-bottom:2px;color:var(--blue);opacity:0.8;">Можно записать сюда свои размышления:</label>
-                <textarea id="techniqueAnswer" class="technique-answer" placeholder="Ваши мысли..." style="min-height:60px;font-size:0.97em;border-radius:12px;border:1px solid #b7aaff;background:#f7f7f7;padding:8px 10px;margin-bottom:0;box-shadow:none;animation:none;resize:vertical;width:100%;margin-bottom:8px;"></textarea>
-              </div>
-              <button id="finishDetailsBtn" class="dream-glow-btn" style="margin-top:10px;"><span>Готово</span></button>
-            </div>
-          </div>
         </div>
-        <!-- Конец двухшагового блока -->
 
         <button type="submit" class="dream-glow-btn"><span>Отправить сновидение</span></button>
         <div class="anon-note">
           Оставь Instagram или Telegram для связи. Мы всегда рады новым историям.
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- Модалка деталей сна и техник -->
+  <div class="details-modal-bg" id="detailsModalBg" aria-modal="true" role="dialog">
+    <div class="details-modal" id="detailsModal">
+      <button class="close-modal" id="closeDetailsModal" aria-label="Закрыть">&times;</button>
+      <div id="detailsStep1">
+        <div class="details-question">
+          <div class="details-q-title">Какие эмоции вы испытали во сне?</div>
+          <div id="emotions" class="details-emojis">
+            <span class="emotion" data-value="радость" title="Радость">😊</span>
+            <span class="emotion" data-value="страх" title="Страх">😨</span>
+            <span class="emotion" data-value="грусть" title="Грусть">😢</span>
+            <span class="emotion" data-value="удивление" title="Удивление">😲</span>
+            <span class="emotion" data-value="злость" title="Злость">😡</span>
+            <span class="emotion" data-value="любовь" title="Любовь">😍</span>
+            <span class="emotion" data-value="спокойствие" title="Спокойствие">😌</span>
+          </div>
+        </div>
+        <div class="details-question">
+          <div class="details-q-title">Что из этого было во сне?</div>
+          <div id="associations" class="details-emojis">
+            <span class="assoc" data-value="вода" title="Вода">💧</span>
+            <span class="assoc" data-value="окно" title="Окно">🪟</span>
+            <span class="assoc" data-value="дорога" title="Дорога">🛤️</span>
+            <span class="assoc" data-value="животное" title="Животное">🐾</span>
+            <span class="assoc" data-value="дом" title="Дом">🏠</span>
+            <span class="assoc" data-value="свет" title="Свет">💡</span>
+            <span class="assoc" data-value="тьма" title="Тьма">🌑</span>
+          </div>
+        </div>
+        <div class="details-question">
+          <div class="details-q-title">Какой цвет подходит к вашему сну?</div>
+          <div id="colors" class="details-colors">
+            <span class="color-choice" data-value="голубой" title="Голубой" style="background:#6ca6e3;"></span>
+            <span class="color-choice" data-value="фиолетовый" title="Фиолетовый" style="background:#b7aaff;"></span>
+            <span class="color-choice" data-value="желтый" title="Желтый" style="background:#ffe6c9;"></span>
+            <span class="color-choice" data-value="розовый" title="Розовый" style="background:#f7d6b6;"></span>
+            <span class="color-choice" data-value="серый" title="Серый" style="background:#b0b0b0;"></span>
+          </div>
+        </div>
+        <button id="toStep2Btn" class="dream-glow-btn" style="margin-top:10px;"><span>Далее</span></button>
+      </div>
+      <div id="detailsStep2" style="display:none;">
+        <div class="details-question">
+          <div class="details-q-title" style="font-weight:600;">Техники саморефлексии</div>
+          <div style="font-size:0.97em;line-height:1.5;margin-bottom:10px;">
+            <b>📝 Три вопроса к себе:</b>
+            <ul style="margin:0 0 0 1em;padding:0 0 0 0.2em;">
+              <li>Какие эмоции я испытал(а) во сне?</li>
+              <li>Какой момент или образ запомнился больше всего?</li>
+              <li>Есть ли что-то, что хочется сделать или понять после этого сна?</li>
+            </ul>
+            <b>🎨 Рисунок сна:</b>
+            <div>Попробуйте нарисовать что-то из сна — даже если это просто линии или цвета. Не думайте о художественности, просто передайте настроение.</div>
+          </div>
+          <label class="technique-answer-label" for="techniqueAnswer">Можно записать сюда свои размышления:</label>
+          <textarea id="techniqueAnswer" class="technique-answer" placeholder="Ваши мысли..."></textarea>
+        </div>
+        <button id="finishDetailsBtn" class="dream-glow-btn" style="margin-top:10px;"><span>Готово</span></button>
+      </div>
     </div>
   </div>
 
@@ -658,33 +703,11 @@
   <div class="footer">Saviora, 2025</div>
 
   <script>
-    // --- Овал "Добавим немного деталей" ---
+    // --- Модалка деталей сна ---
     const detailsOval = document.getElementById('detailsOval');
-    const detailsDropdown = document.getElementById('detailsDropdown');
-    let detailsOpen = false;
-    detailsOval.onclick = () => {
-      detailsOpen = !detailsOpen;
-      detailsDropdown.classList.toggle('active', detailsOpen);
-      if (detailsOpen) {
-        setTimeout(() => {
-          detailsDropdown.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 100);
-      }
-    };
-    document.addEventListener('click', (e) => {
-      if (
-        detailsOpen &&
-        !detailsOval.contains(e.target) &&
-        !detailsDropdown.contains(e.target)
-      ) {
-        detailsDropdown.classList.remove('active');
-        detailsOpen = false;
-        // Сброс шагов
-        showStep1();
-      }
-    });
-
-    // --- Два шага ---
+    const detailsModalBg = document.getElementById('detailsModalBg');
+    const detailsModal = document.getElementById('detailsModal');
+    const closeDetailsModal = document.getElementById('closeDetailsModal');
     const detailsStep1 = document.getElementById('detailsStep1');
     const detailsStep2 = document.getElementById('detailsStep2');
     const toStep2Btn = document.getElementById('toStep2Btn');
@@ -692,6 +715,23 @@
     const techniqueAnswer = document.getElementById('techniqueAnswer');
     let savedTechniqueAnswer = '';
 
+    // --- Открытие/закрытие модалки ---
+    detailsOval.onclick = () => {
+      detailsModalBg.classList.add('active');
+      showStep1();
+    };
+    closeDetailsModal.onclick = () => {
+      detailsModalBg.classList.remove('active');
+      showStep1();
+    };
+    detailsModalBg.onclick = (e) => {
+      if (e.target === detailsModalBg) closeDetailsModal.onclick();
+    };
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && detailsModalBg.classList.contains('active')) closeDetailsModal.onclick();
+    });
+
+    // --- Два шага ---
     function showStep1() {
       detailsStep1.style.display = '';
       detailsStep2.style.display = 'none';
@@ -712,8 +752,7 @@
     finishDetailsBtn.onclick = (e) => {
       e.preventDefault();
       savedTechniqueAnswer = techniqueAnswer.value;
-      detailsDropdown.classList.remove('active');
-      detailsOpen = false;
+      detailsModalBg.classList.remove('active');
       showStep1();
     };
 
