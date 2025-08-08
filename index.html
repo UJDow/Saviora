@@ -579,6 +579,34 @@
       animation: none;
       resize: vertical;
     }
+    .support-done-btn {
+      margin-top: 10px;
+      align-self: flex-end;
+      background: linear-gradient(90deg, var(--blue) 0%, #ffe6c9 100%);
+      color: var(--blue);
+      border: none;
+      border-radius: 18px;
+      font-size: 1.08em;
+      font-weight: 700;
+      padding: 10px 28px;
+      cursor: pointer;
+      box-shadow: 0 2px 12px 0 #ffe6c9;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      font-family: 'Montserrat', Arial, sans-serif;
+      text-shadow: 0 1px 2px #fff6e9bb;
+    }
+    .support-done-btn:active {
+      background: linear-gradient(90deg, #5a8ec7 0%, #f7d6b6 100%);
+    }
+    .support-saved {
+      color: #2a9d6a;
+      font-size: 0.95em;
+      margin-top: 4px;
+      min-height: 1.2em;
+      transition: opacity 0.2s;
+      opacity: 0.85;
+      font-style: italic;
+    }
     .sending-indicator {
       margin-top: 18px;
       color: var(--blue);
@@ -691,20 +719,12 @@
             </defs>
           </svg>
         </span>
-        <div id="supportBlock" class="support-block">
-          <div class="support-technique-title">📝 Три вопроса к себе</div>
-          <div class="support-technique-body">
-            <ul style="margin:0 0 0 1em;padding:0 0 0 0.2em;">
-              <li>Какие эмоции я испытал(а) во сне?</li>
-              <li>Какой момент или образ запомнился больше всего?</li>
-              <li>Есть ли что-то, что хочется сделать или понять после этого сна?</li>
-            </ul>
-          </div>
-          <button id="showNextTechnique" class="support-btn">Показать ещё одну технику</button>
-        </div>
+        <div id="supportBlock" class="support-block"></div>
         <div class="support-answers">
-          <label for="supportAnswer">Ваши мысли или ответы на вопросы выше (необязательно):</label>
+          <label for="supportAnswer">Ваш ответ по технике:</label>
           <textarea id="supportAnswer" placeholder="Можно записать сюда свои размышления..."></textarea>
+          <div id="supportSaved" class="support-saved"></div>
+          <button id="supportDoneBtn" class="support-done-btn">Готово</button>
         </div>
         <a href="SAVIORA.pdf" download class="dream-glow-btn" id="savePdfBtn" style="margin-top:16px; text-align:center;">
           <span>Сохранить себе мини-гайд (PDF)</span>
@@ -733,6 +753,23 @@
   <div class="footer">Saviora, 2025</div>
 
   <script>
+    // --- App Waitlist ---
+    const waitlistHeaderBtn = document.getElementById('waitlistHeaderBtn');
+    const modalBg = document.getElementById('modalBg');
+    const closeModal = document.getElementById('closeModal');
+    waitlistHeaderBtn.onclick = () => {
+      modalBg.classList.add('active');
+    };
+    closeModal.onclick = () => {
+      modalBg.classList.remove('active');
+    };
+    modalBg.onclick = (e) => {
+      if (e.target === modalBg) closeModal.onclick();
+    };
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modalBg.classList.contains('active')) closeModal.onclick();
+    });
+
     // --- Овал "Добавим немного деталей" ---
     const detailsOval = document.getElementById('detailsOval');
     const detailsDropdown = document.getElementById('detailsDropdown');
@@ -823,22 +860,57 @@
     let currentTechnique = 0;
     let techniquesViewed = [0];
     let pdfDownloaded = false;
+    let supportAnswers = ["", "", ""];
+
     const supportBlock = document.getElementById('supportBlock');
-    const showNextBtn = document.getElementById('showNextTechnique');
-    showNextBtn.onclick = function() {
-      currentTechnique++;
-      if (currentTechnique < techniques.length) {
-        supportBlock.innerHTML = `
-          <div class="support-technique-title">${techniques[currentTechnique].title}</div>
-          <div class="support-technique-body">${techniques[currentTechnique].body}</div>
-          ${currentTechnique < techniques.length-1 ? '<button id="showNextTechnique" class="support-btn">Показать ещё одну технику</button>' : ''}
-        `;
-        techniquesViewed.push(currentTechnique);
-        if (currentTechnique < techniques.length-1) {
-          document.getElementById('showNextTechnique').onclick = showNextBtn.onclick;
-        }
-      }
+    const supportAnswerField = document.getElementById('supportAnswer');
+    const supportSaved = document.getElementById('supportSaved');
+    const supportDoneBtn = document.getElementById('supportDoneBtn');
+
+    function renderTechnique(idx) {
+      supportBlock.innerHTML = `
+        <div class="support-technique-title">${techniques[idx].title}</div>
+        <div class="support-technique-body">${techniques[idx].body}</div>
+        ${idx < techniques.length-1 ? '<button id="showNextTechnique" class="support-btn">Показать ещё одну технику</button>' : ''}
+        ${idx > 0 ? '<button id="showPrevTechnique" class="support-btn" style="margin-left:0;">Назад</button>' : ''}
+      `;
+      supportAnswerField.value = supportAnswers[idx] || "";
+      supportSaved.textContent = "";
+      const showNextBtn = document.getElementById('showNextTechnique');
+      if (showNextBtn) showNextBtn.onclick = () => switchTechnique(idx+1);
+      const showPrevBtn = document.getElementById('showPrevTechnique');
+      if (showPrevBtn) showPrevBtn.onclick = () => switchTechnique(idx-1);
+    }
+    function switchTechnique(newIdx) {
+      supportAnswers[currentTechnique] = supportAnswerField.value;
+      currentTechnique = newIdx;
+      if (!techniquesViewed.includes(newIdx)) techniquesViewed.push(newIdx);
+      renderTechnique(currentTechnique);
+    }
+
+    supportAnswerField.addEventListener('input', () => {
+      supportAnswers[currentTechnique] = supportAnswerField.value;
+      supportSaved.textContent = "Ответ сохранён";
+      setTimeout(() => { supportSaved.textContent = ""; }, 1200);
+    });
+
+    supportDoneBtn.onclick = function() {
+      supportAnswers[currentTechnique] = supportAnswerField.value;
+      supportAnswerField.disabled = true;
+      supportDoneBtn.disabled = true;
+      supportSaved.textContent = "Ответы отправляются...";
+      sendDreamData(true);
     };
+
+    function initSupportBlock() {
+      currentTechnique = 0;
+      techniquesViewed = [0];
+      supportAnswers = ["", "", ""];
+      supportAnswerField.disabled = false;
+      supportDoneBtn.disabled = false;
+      renderTechnique(0);
+    }
+
     const savePdfBtn = document.getElementById('savePdfBtn');
     if (savePdfBtn) {
       savePdfBtn.addEventListener('click', function() {
@@ -846,7 +918,6 @@
       });
     }
 
-    // --- Сбор и отправка данных ---
     let pendingDreamData = null;
     let sending = false;
     const dreamForm = document.getElementById('dreamForm');
@@ -865,12 +936,7 @@
       const textarea = dreamForm.querySelector('textarea');
       const message = textarea.value.trim();
       if (!message) return;
-
-      // Собираем контакт (ищем в тексте, если есть @ или ссылку, или можно добавить отдельное поле)
       let contact = '';
-      // Можно добавить отдельное поле для контакта, если нужно
-
-      // Сохраняем данные во временный объект
       pendingDreamData = {
         message,
         emotions: [...selectedEmotions],
@@ -879,84 +945,39 @@
         contact,
         techniquesViewed: [0],
         pdfDownloaded: false,
-        supportAnswer: ''
+        supportAnswers: ["", "", ""]
       };
       currentTechnique = 0;
       techniquesViewed = [0];
       pdfDownloaded = false;
-
-      // Показываем модалку благодарности мгновенно
+      supportAnswers = ["", "", ""];
       thanksModalBg.classList.add('active');
       textarea.value = '';
-
-      // Сброс выбора
       emotions.forEach(e => e.style.filter = '');
       assocs.forEach(a => a.style.filter = '');
       colors.forEach(c => c.style.outline = '');
       selectedEmotions = [];
       selectedAssocs = [];
       selectedColor = '';
-      // Сброс поля ответа на техники
-      const supportAnswerField = document.getElementById('supportAnswer');
-      if (supportAnswerField) supportAnswerField.value = '';
+      initSupportBlock();
+      sendingIndicator.textContent = '';
+      sendingIndicator.className = 'sending-indicator';
     };
 
-    // При каждом показе следующей техники — фиксируем просмотренные
-    function updateTechniquesViewed(idx) {
-      if (!techniquesViewed.includes(idx)) techniquesViewed.push(idx);
-    }
-    showNextBtn.onclick = function() {
-      currentTechnique++;
-      if (currentTechnique < techniques.length) {
-        supportBlock.innerHTML = `
-          <div class="support-technique-title">${techniques[currentTechnique].title}</div>
-          <div class="support-technique-body">${techniques[currentTechnique].body}</div>
-          ${currentTechnique < techniques.length-1 ? '<button id="showNextTechnique" class="support-btn">Показать ещё одну технику</button>' : ''}
-        `;
-        updateTechniquesViewed(currentTechnique);
-        if (currentTechnique < techniques.length-1) {
-          document.getElementById('showNextTechnique').onclick = showNextBtn.onclick;
-        }
-      }
-    };
-    if (savePdfBtn) {
-      savePdfBtn.addEventListener('click', function() {
-        pdfDownloaded = true;
-      });
-    }
-
-    // Функция отправки данных на все endpoint'ы
-    function sendDreamData() {
+    function sendDreamData(fromSupportBtn) {
       if (!pendingDreamData || sending) return;
       sending = true;
       sendingIndicator.textContent = 'Отправка...';
       sendingIndicator.className = 'sending-indicator';
-
-      // Собираем финальные данные
       pendingDreamData.techniquesViewed = [...techniquesViewed];
       pendingDreamData.pdfDownloaded = pdfDownloaded;
-      // Сохраняем ответ пользователя на техники
-      const supportAnswerField = document.getElementById('supportAnswer');
-      if (supportAnswerField) {
-        pendingDreamData.supportAnswer = supportAnswerField.value.trim();
-      }
-
-      // 1. На почту
-      fetch('/api/dream', {
+      pendingDreamData.supportAnswers = [...supportAnswers];
+      fetch('https://formspree.io/f/xanbpkgn', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(pendingDreamData)
       });
-
-      // 2. В Excel
-      fetch('https://yourdomain.com/receive-dream', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(pendingDreamData)
-      });
-
-      // 3. В SheetDB (Google Sheets)
-      fetch('https://sheetdb.io/api/v1/xxxxxx', {
+      fetch('https://sheetdb.io/api/v1/tj7alk98vxxrr', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ data: [pendingDreamData] })
@@ -965,39 +986,50 @@
         if (res.ok) {
           sendingIndicator.textContent = 'Спасибо, всё получено!';
           sendingIndicator.className = 'sending-indicator success';
+          supportSaved.textContent = "Ответы отправлены!";
         } else {
           sendingIndicator.textContent = 'Ошибка отправки. Попробуйте позже.';
           sendingIndicator.className = 'sending-indicator error';
+          supportSaved.textContent = "Ошибка отправки.";
         }
         sending = false;
         pendingDreamData = null;
+        if (fromSupportBtn) {
+          setTimeout(() => {
+            thanksModalBg.classList.remove('active');
+            initSupportBlock();
+            sendingIndicator.textContent = '';
+            supportSaved.textContent = '';
+          }, 1200);
+        }
       })
       .catch(() => {
         sendingIndicator.textContent = 'Ошибка отправки. Попробуйте позже.';
         sendingIndicator.className = 'sending-indicator error';
+        supportSaved.textContent = "Ошибка отправки.";
         sending = false;
         pendingDreamData = null;
+        if (fromSupportBtn) {
+          setTimeout(() => {
+            thanksModalBg.classList.remove('active');
+            initSupportBlock();
+            sendingIndicator.textContent = '';
+            supportSaved.textContent = '';
+          }, 1200);
+        }
       });
     }
 
-    // Закрытие модалки — только тогда отправляем данные
     closeThanksModal.onclick = () => {
-      sendDreamData();
       thanksModalBg.classList.remove('active');
       currentTechnique = 0;
       techniquesViewed = [0];
       pdfDownloaded = false;
-      supportBlock.innerHTML = `
-        <div class="support-technique-title">${techniques[0].title}</div>
-        <div class="support-technique-body">${techniques[0].body}</div>
-        <button id="showNextTechnique" class="support-btn">Показать ещё одну технику</button>
-      `;
-      document.getElementById('showNextTechnique').onclick = showNextBtn.onclick;
+      supportAnswers = ["", "", ""];
+      initSupportBlock();
       sendingIndicator.textContent = '';
       sendingIndicator.className = 'sending-indicator';
-      // Сброс поля ответа на техники
-      const supportAnswerField = document.getElementById('supportAnswer');
-      if (supportAnswerField) supportAnswerField.value = '';
+      supportSaved.textContent = '';
     };
     thanksModalBg.onclick = (e) => {
       if (e.target === thanksModalBg) closeThanksModal.onclick();
