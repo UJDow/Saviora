@@ -218,7 +218,6 @@
     button[type="submit"]:active, .dream-glow-btn:active {
       background: linear-gradient(90deg, #5a8ec7 0%, #f7d6b6 100%);
     }
-    /* Modal styles - synchronized with main frame */
     .modal-bg {
       display: none;
       position: fixed;
@@ -344,7 +343,6 @@
       position: relative;
       user-select: none;
     }
-    /* Кнопка App Waitlist */
     .waitlist-header-btn {
       position: fixed;
       top: 32px;
@@ -373,7 +371,6 @@
       -webkit-appearance: none;
       appearance: none;
     }
-    /* --- Новый стиль для овала --- */
     .details-oval {
       background: var(--cloud-alpha, rgba(183,170,255,0.55));
       border-radius: 999px;
@@ -394,7 +391,6 @@
       box-shadow: 0 4px 24px 0 #b7aaff77;
       background: rgba(183,170,255,0.65);
     }
-    /* --- Модалка деталей сна --- */
     .details-modal-bg {
       display: none;
       position: fixed;
@@ -425,7 +421,6 @@
       z-index: 2;
       color: var(--blue);
       text-shadow: 0 1px 2px #fff6e9bb;
-      /* animation: containerGlow 6s ease-in-out infinite alternate; */ /* убрано! */
     }
     .details-modal .details-question {
       margin-bottom: 14px;
@@ -441,7 +436,6 @@
       font-size: 1.2rem;
       margin-right: 8px;
       cursor: pointer;
-      /* transition: filter 0.15s, outline 0.15s; */ /* убрано! */
       border-radius: 50%;
       padding: 2px 4px;
     }
@@ -460,13 +454,6 @@
       margin-top: 10px;
       font-size: 1.08rem;
       padding: 12px 0;
-    }
-    .details-modal .technique-answer-label {
-      font-size: 0.97em;
-      font-weight: 500;
-      margin-bottom: 2px;
-      color: var(--blue);
-      opacity: 0.8;
     }
     .details-modal .technique-answer {
       min-height: 60px;
@@ -597,6 +584,7 @@
   <div class="details-modal-bg" id="detailsModalBg" aria-modal="true" role="dialog">
     <div class="details-modal" id="detailsModal">
       <button class="close-modal" id="closeDetailsModal" aria-label="Закрыть">&times;</button>
+      <!-- Шаг 1: детали сна -->
       <div id="detailsStep1">
         <div class="details-question">
           <div class="details-q-title">Какие эмоции вы испытали во сне?</div>
@@ -634,21 +622,27 @@
         </div>
         <button id="toStep2Btn" class="dream-glow-btn" style="margin-top:10px;"><span>Далее</span></button>
       </div>
+      <!-- Шаг 2: вопрос 1 -->
       <div id="detailsStep2" style="display:none;">
         <div class="details-question">
-          <div class="details-q-title" style="font-weight:600;">Техники саморефлексии</div>
-          <div style="font-size:0.97em;line-height:1.5;margin-bottom:10px;">
-            <b>📝 Три вопроса к себе:</b>
-            <ul style="margin:0 0 0 1em;padding:0 0 0 0.2em;">
-              <li>Какие эмоции я испытал(а) во сне?</li>
-              <li>Какой момент или образ запомнился больше всего?</li>
-              <li>Есть ли что-то, что хочется сделать или понять после этого сна?</li>
-            </ul>
-            <b>🎨 Рисунок сна:</b>
-            <div>Попробуйте нарисовать что-то из сна — даже если это просто линии или цвета. Не думайте о художественности, просто передайте настроение.</div>
-          </div>
-          <label class="technique-answer-label" for="techniqueAnswer">Можно записать сюда свои размышления:</label>
-          <textarea id="techniqueAnswer" class="technique-answer" placeholder="Ваши мысли..."></textarea>
+          <div class="details-q-title" style="font-weight:600;">Какие эмоции я испытал(а) во сне?</div>
+          <textarea id="techniqueAnswer1" class="technique-answer" placeholder="Ваш ответ..."></textarea>
+        </div>
+        <button id="toStep3Btn" class="dream-glow-btn" style="margin-top:10px;"><span>Далее</span></button>
+      </div>
+      <!-- Шаг 3: вопрос 2 -->
+      <div id="detailsStep3" style="display:none;">
+        <div class="details-question">
+          <div class="details-q-title" style="font-weight:600;">Какой момент или образ запомнился больше всего?</div>
+          <textarea id="techniqueAnswer2" class="technique-answer" placeholder="Ваш ответ..."></textarea>
+        </div>
+        <button id="toStep4Btn" class="dream-glow-btn" style="margin-top:10px;"><span>Далее</span></button>
+      </div>
+      <!-- Шаг 4: вопрос 3 -->
+      <div id="detailsStep4" style="display:none;">
+        <div class="details-question">
+          <div class="details-q-title" style="font-weight:600;">Есть ли что-то, что хочется сделать или понять после этого сна?</div>
+          <textarea id="techniqueAnswer3" class="technique-answer" placeholder="Ваш ответ..."></textarea>
         </div>
         <button id="finishDetailsBtn" class="dream-glow-btn" style="margin-top:10px;"><span>Готово</span></button>
       </div>
@@ -709,23 +703,30 @@
     // --- Модалка деталей сна ---
     const detailsOval = document.getElementById('detailsOval');
     const detailsModalBg = document.getElementById('detailsModalBg');
-    const detailsModal = document.getElementById('detailsModal');
     const closeDetailsModal = document.getElementById('closeDetailsModal');
     const detailsStep1 = document.getElementById('detailsStep1');
     const detailsStep2 = document.getElementById('detailsStep2');
+    const detailsStep3 = document.getElementById('detailsStep3');
+    const detailsStep4 = document.getElementById('detailsStep4');
     const toStep2Btn = document.getElementById('toStep2Btn');
+    const toStep3Btn = document.getElementById('toStep3Btn');
+    const toStep4Btn = document.getElementById('toStep4Btn');
     const finishDetailsBtn = document.getElementById('finishDetailsBtn');
-    const techniqueAnswer = document.getElementById('techniqueAnswer');
-    let savedTechniqueAnswer = '';
+    const techniqueAnswer1 = document.getElementById('techniqueAnswer1');
+    const techniqueAnswer2 = document.getElementById('techniqueAnswer2');
+    const techniqueAnswer3 = document.getElementById('techniqueAnswer3');
+    let savedTechniqueAnswer1 = '';
+    let savedTechniqueAnswer2 = '';
+    let savedTechniqueAnswer3 = '';
 
     // --- Открытие/закрытие модалки ---
     detailsOval.onclick = () => {
       detailsModalBg.classList.add('active');
-      showStep1();
+      showStep(1);
     };
     closeDetailsModal.onclick = () => {
       detailsModalBg.classList.remove('active');
-      showStep1();
+      showStep(1);
     };
     detailsModalBg.onclick = (e) => {
       if (e.target === detailsModalBg) closeDetailsModal.onclick();
@@ -734,29 +735,38 @@
       if (e.key === 'Escape' && detailsModalBg.classList.contains('active')) closeDetailsModal.onclick();
     });
 
-    // --- Два шага ---
-    function showStep1() {
-      detailsStep1.style.display = '';
-      detailsStep2.style.display = 'none';
-      techniqueAnswer.value = savedTechniqueAnswer;
-    }
-    function showStep2() {
-      detailsStep1.style.display = 'none';
-      detailsStep2.style.display = '';
-      techniqueAnswer.value = savedTechniqueAnswer;
-      setTimeout(() => {
-        techniqueAnswer.focus();
-      }, 200);
+    // --- Шаги ---
+    function showStep(step) {
+      detailsStep1.style.display = step === 1 ? '' : 'none';
+      detailsStep2.style.display = step === 2 ? '' : 'none';
+      detailsStep3.style.display = step === 3 ? '' : 'none';
+      detailsStep4.style.display = step === 4 ? '' : 'none';
+      techniqueAnswer1.value = savedTechniqueAnswer1;
+      techniqueAnswer2.value = savedTechniqueAnswer2;
+      techniqueAnswer3.value = savedTechniqueAnswer3;
+      if (step === 2) setTimeout(() => techniqueAnswer1.focus(), 200);
+      if (step === 3) setTimeout(() => techniqueAnswer2.focus(), 200);
+      if (step === 4) setTimeout(() => techniqueAnswer3.focus(), 200);
     }
     toStep2Btn.onclick = (e) => {
       e.preventDefault();
-      showStep2();
+      showStep(2);
+    };
+    toStep3Btn.onclick = (e) => {
+      e.preventDefault();
+      savedTechniqueAnswer1 = techniqueAnswer1.value;
+      showStep(3);
+    };
+    toStep4Btn.onclick = (e) => {
+      e.preventDefault();
+      savedTechniqueAnswer2 = techniqueAnswer2.value;
+      showStep(4);
     };
     finishDetailsBtn.onclick = (e) => {
       e.preventDefault();
-      savedTechniqueAnswer = techniqueAnswer.value;
+      savedTechniqueAnswer3 = techniqueAnswer3.value;
       detailsModalBg.classList.remove('active');
-      showStep1();
+      showStep(1);
     };
 
     // --- Микро-игровой блок: логика выбора ---
@@ -814,7 +824,11 @@
         emotions: selectedEmotions,
         associations: selectedAssocs,
         color: selectedColor,
-        technique: savedTechniqueAnswer
+        technique: [
+          savedTechniqueAnswer1,
+          savedTechniqueAnswer2,
+          savedTechniqueAnswer3
+        ].filter(Boolean).join('\n\n')
       };
       thanksModalBg.classList.add('active');
       textarea.value = '';
@@ -824,8 +838,12 @@
       selectedEmotions = [];
       selectedAssocs = [];
       selectedColor = '';
-      savedTechniqueAnswer = '';
-      techniqueAnswer.value = '';
+      savedTechniqueAnswer1 = '';
+      savedTechniqueAnswer2 = '';
+      savedTechniqueAnswer3 = '';
+      techniqueAnswer1.value = '';
+      techniqueAnswer2.value = '';
+      techniqueAnswer3.value = '';
       fetch("https://formspree.io/f/xanbpkgn", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
