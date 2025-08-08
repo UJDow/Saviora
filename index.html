@@ -382,10 +382,22 @@
       cursor: pointer;
       text-align: center;
       margin-bottom: 8px;
-      transition: box-shadow 0.2s, background 0.2s;
+      transition: box-shadow 0.2s, background 0.2s, color 0.2s;
       user-select: none;
       position: relative;
       z-index: 1;
+    }
+    .details-oval.green {
+      background: #e3fbe9;
+      color: #3a9c5a;
+      box-shadow: 0 2px 16px 0 #6ccf8c55;
+      border: 1.5px solid #6ccf8c;
+    }
+    .details-oval.orange {
+      background: #fff3e0;
+      color: #b97a1a;
+      box-shadow: 0 2px 16px 0 #ffb34755;
+      border: 1.5px solid #ffb347;
     }
     .details-oval:hover {
       box-shadow: 0 4px 24px 0 #b7aaff77;
@@ -782,6 +794,7 @@
           selectedEmotions.push(val);
           e.style.filter = 'drop-shadow(0 0 6px #6ca6e3)';
         }
+        updateDetailsOvalColor();
       };
     });
     const assocs = document.querySelectorAll('.assoc');
@@ -796,6 +809,7 @@
           selectedAssocs.push(val);
           a.style.filter = 'drop-shadow(0 0 6px #b7aaff)';
         }
+        updateDetailsOvalColor();
       };
     });
     const colors = document.querySelectorAll('.color-choice');
@@ -805,7 +819,41 @@
         colors.forEach(cc => cc.style.outline = '');
         c.style.outline = '2.5px solid #6ca6e3';
         selectedColor = c.getAttribute('data-value');
+        updateDetailsOvalColor();
       };
+    });
+
+    // --- Цвет овала в зависимости от заполненности ---
+    function updateDetailsOvalColor() {
+      const allFilled =
+        selectedEmotions.length > 0 &&
+        selectedAssocs.length > 0 &&
+        selectedColor &&
+        (techniqueAnswer1.value.trim() || savedTechniqueAnswer1) &&
+        (techniqueAnswer2.value.trim() || savedTechniqueAnswer2) &&
+        (techniqueAnswer3.value.trim() || savedTechniqueAnswer3);
+
+      const anyFilled =
+        selectedEmotions.length > 0 ||
+        selectedAssocs.length > 0 ||
+        selectedColor ||
+        techniqueAnswer1.value.trim() ||
+        techniqueAnswer2.value.trim() ||
+        techniqueAnswer3.value.trim() ||
+        savedTechniqueAnswer1 ||
+        savedTechniqueAnswer2 ||
+        savedTechniqueAnswer3;
+
+      detailsOval.classList.remove('green', 'orange');
+      if (allFilled) {
+        detailsOval.classList.add('green');
+      } else if (anyFilled) {
+        detailsOval.classList.add('orange');
+      }
+    }
+
+    [techniqueAnswer1, techniqueAnswer2, techniqueAnswer3].forEach(el => {
+      el.addEventListener('input', updateDetailsOvalColor);
     });
 
     // Email валидация
@@ -825,9 +873,9 @@
         associations: selectedAssocs,
         color: selectedColor,
         technique: [
-          savedTechniqueAnswer1,
-          savedTechniqueAnswer2,
-          savedTechniqueAnswer3
+          techniqueAnswer1.value.trim() || savedTechniqueAnswer1,
+          techniqueAnswer2.value.trim() || savedTechniqueAnswer2,
+          techniqueAnswer3.value.trim() || savedTechniqueAnswer3
         ].filter(Boolean).join('\n\n')
       };
       thanksModalBg.classList.add('active');
@@ -844,6 +892,7 @@
       techniqueAnswer1.value = '';
       techniqueAnswer2.value = '';
       techniqueAnswer3.value = '';
+      updateDetailsOvalColor();
       fetch("https://formspree.io/f/xanbpkgn", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
