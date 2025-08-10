@@ -684,7 +684,7 @@
         </label>
         <div id="detailsOvalWrapper" style="margin-top:10px;">
           <div id="detailsOval" class="details-oval">
-            <span>Добавим немного деталей</span>
+            <span>добавить немного деталей</span>
           </div>
         </div>
         <button type="submit" class="dream-glow-btn"><span>Отправить сновидение</span></button>
@@ -699,37 +699,37 @@
       <!-- Шаг 1: детали сна -->
       <div id="detailsStep1">
         <div class="details-question">
-          <div class="details-q-title">Какие эмоции вы испытали во сне?</div>
-          <div id="emotions" class="details-emojis">
-            <span class="emotion" data-value="радость" title="Радость">😊</span>
-            <span class="emotion" data-value="страх" title="Страх">😨</span>
-            <span class="emotion" data-value="грусть" title="Грусть">😢</span>
-            <span class="emotion" data-value="удивление" title="Удивление">😲</span>
-            <span class="emotion" data-value="злость" title="Злость">😡</span>
-            <span class="emotion" data-value="любовь" title="Любовь">😍</span>
-            <span class="emotion" data-value="спокойствие" title="Спокойствие">😌</span>
+          <div class="details-q-title">Какие эмоции вы испытали?</div>
+          <div id="emotions" class="details-emojis" style="line-height: 2;">
+            <span class="emotion" data-value="радость" title="радость">😊 радость</span>
+            <span class="emotion" data-value="печаль" title="печаль">😢 печаль</span>
+            <span class="emotion" data-value="гнев" title="гнев">😡 гнев</span>
+            <span class="emotion" data-value="отвращение" title="отвращение">🤢 отвращение</span>
+            <span class="emotion" data-value="удивление" title="удивление">😲 удивление</span>
+            <span class="emotion" data-value="страдание (горе)" title="страдание (горе)">😭 страдание (горе)</span>
+            <span class="emotion" data-value="волнение (интерес)" title="волнение (интерес)">🤔 волнение (интерес)</span>
+            <span class="emotion" data-value="презрение" title="презрение">😒 презрение</span>
+            <span class="emotion" data-value="смущение" title="смущение">😳 смущение</span>
+            <span class="emotion" data-value="стыд" title="стыд">🙈 стыд</span>
+            <span class="emotion" data-value="вина" title="вина">😔 вина</span>
           </div>
         </div>
         <div class="details-question">
-          <div class="details-q-title">Что из этого было во сне?</div>
-          <div id="associations" class="details-emojis">
-            <span class="assoc" data-value="вода" title="Вода">💧</span>
-            <span class="assoc" data-value="окно" title="Окно">🪟</span>
-            <span class="assoc" data-value="дорога" title="Дорога">🛤️</span>
-            <span class="assoc" data-value="животное" title="Животное">🐾</span>
-            <span class="assoc" data-value="дом" title="Дом">🏠</span>
-            <span class="assoc" data-value="свет" title="Свет">💡</span>
-            <span class="assoc" data-value="тьма" title="Тьма">🌑</span>
+          <div class="details-q-title">Что это было? Вот для выбора классификация:</div>
+          <div id="associations" class="details-emojis" style="line-height: 2;">
+            <span class="assoc" data-value="Повторяющееся сновидение" title="Повторяющееся сновидение">🔁 Повторяющееся сновидение</span>
+            <span class="assoc" data-value="Кошмар" title="Кошмар">😱 Кошмар</span>
+            <span class="assoc" data-value="Сновидение о будущем" title="Сновидение о будущем">🔮 Сновидение о будущем</span>
+            <span class="assoc" data-value="Сновидение о прошлом" title="Сновидение о прошлом">🕰️ Сновидение о прошлом</span>
+            <span class="assoc" data-value="Эротическое сновидение" title="Эротическое сновидение">❤️ Эротическое сновидение</span>
+            <span class="assoc" data-value="Бессмысленное сновидение" title="Бессмысленное сновидение">🌀 Бессмысленное сновидение</span>
           </div>
         </div>
         <div class="details-question">
-          <div class="details-q-title">Какой цвет подходит к вашему сну?</div>
-          <div id="colors" class="details-colors">
-            <span class="color-choice" data-value="голубой" title="Голубой" style="background:#6ca6e3;"></span>
-            <span class="color-choice" data-value="фиолетовый" title="Фиолетовый" style="background:#b7aaff;"></span>
-            <span class="color-choice" data-value="желтый" title="Желтый" style="background:#ffe6c9;"></span>
-            <span class="color-choice" data-value="розовый" title="Розовый" style="background:#f7d6b6;"></span>
-            <span class="color-choice" data-value="серый" title="Серый" style="background:#b0b0b0;"></span>
+          <div class="details-q-title">Насколько сильные были ощущения?</div>
+          <div style="width:100%; display:flex; align-items:center; gap:10px;">
+            <input id="intensitySlider" type="range" min="1" max="10" value="5" style="flex:1;">
+            <div id="intensityValue" style="min-width:46px; text-align:center;">5/10</div>
           </div>
         </div>
         <button id="toStep2Btn" class="dream-glow-btn" style="margin-top:10px;"><span>Далее</span></button>
@@ -737,7 +737,7 @@
       <!-- Шаг 2: новое задание -->
       <div id="detailsStep2" style="display:none;">
         <div class="details-question">
-          <div class="details-q-title" style="font-weight:600;">Какое событие предшествовало сновидению?</div>
+          <div class="details-q-title" style="font-weight:600;">Что было "перед"?</div>
           <textarea id="techniqueAnswer1" class="technique-answer" placeholder="Ваш ответ..."></textarea>
         </div>
         <button id="toStep3Btn" class="dream-glow-btn" style="margin-top:10px;"><span>Далее</span></button>
@@ -745,8 +745,8 @@
       <!-- Шаг 3: вопрос 2 -->
       <div id="detailsStep3" style="display:none;">
         <div class="details-question">
-          <div class="details-q-title" style="font-weight:600;">Какой момент или образ запомнился больше всего?</div>
-          <textarea id="techniqueAnswer2" class="technique-answer" placeholder="Ваш ответ..."></textarea>
+          <div class="details-q-title" style="font-weight:600;">Ключевые слова в сновидении...</div>
+          <textarea id="techniqueAnswer2" class="technique-answer" placeholder="Запишите ключевые слова"></textarea>
         </div>
         <button id="toStep4Btn" class="dream-glow-btn" style="margin-top:10px;"><span>Далее</span></button>
       </div>
@@ -842,6 +842,19 @@
     const techniqueAnswer1 = document.getElementById('techniqueAnswer1');
     const techniqueAnswer2 = document.getElementById('techniqueAnswer2');
     const techniqueAnswer3 = document.getElementById('techniqueAnswer3');
+
+    // Новая шкала интенсивности
+    const intensitySlider = document.getElementById('intensitySlider');
+    const intensityValue = document.getElementById('intensityValue');
+    let selectedIntensity = intensitySlider ? parseInt(intensitySlider.value, 10) : 0;
+    if (intensitySlider) {
+      intensitySlider.oninput = () => {
+        selectedIntensity = parseInt(intensitySlider.value, 10);
+        if (intensityValue) intensityValue.textContent = selectedIntensity + '/10';
+        updateDetailsOvalColor();
+      };
+    }
+
     let savedTechniqueAnswer1 = '';
     let savedTechniqueAnswer2 = '';
     let savedTechniqueAnswer3 = '';
@@ -896,19 +909,20 @@
 
     const emotions = document.querySelectorAll('.emotion');
     let selectedEmotions = [];
-    emotions.forEach(e => {
-      e.onclick = () => {
-        const val = e.getAttribute('data-value');
+    emotions.forEach(el => {
+      el.onclick = () => {
+        const val = el.getAttribute('data-value');
         if (selectedEmotions.includes(val)) {
           selectedEmotions = selectedEmotions.filter(v => v !== val);
-          e.style.filter = '';
+          el.style.filter = '';
         } else {
           selectedEmotions.push(val);
-          e.style.filter = 'drop-shadow(0 0 6px #6ca6e3)';
+          el.style.filter = 'drop-shadow(0 0 6px #6ca6e3)';
         }
         updateDetailsOvalColor();
       };
     });
+
     const assocs = document.querySelectorAll('.assoc');
     let selectedAssocs = [];
     assocs.forEach(a => {
@@ -924,22 +938,12 @@
         updateDetailsOvalColor();
       };
     });
-    const colors = document.querySelectorAll('.color-choice');
-    let selectedColor = '';
-    colors.forEach(c => {
-      c.onclick = () => {
-        colors.forEach(cc => cc.style.outline = '');
-        c.style.outline = '2.5px solid #6ca6e3';
-        selectedColor = c.getAttribute('data-value');
-        updateDetailsOvalColor();
-      };
-    });
 
     function updateDetailsOvalColor() {
       const allFilled =
         selectedEmotions.length > 0 &&
         selectedAssocs.length > 0 &&
-        selectedColor &&
+        selectedIntensity > 0 &&
         (techniqueAnswer1.value.trim() || savedTechniqueAnswer1) &&
         (techniqueAnswer2.value.trim() || savedTechniqueAnswer2) &&
         (techniqueAnswer3.value.trim() || savedTechniqueAnswer3);
@@ -947,7 +951,7 @@
       const anyFilled =
         selectedEmotions.length > 0 ||
         selectedAssocs.length > 0 ||
-        selectedColor ||
+        selectedIntensity > 0 ||
         techniqueAnswer1.value.trim() ||
         techniqueAnswer2.value.trim() ||
         techniqueAnswer3.value.trim() ||
@@ -1055,8 +1059,8 @@
       if (!message) return;
       const details = {
         emotions: selectedEmotions,
-        associations: selectedAssocs,
-        color: selectedColor,
+        classifications: selectedAssocs,
+        intensity: selectedIntensity,
         technique: [
           techniqueAnswer1.value.trim() || savedTechniqueAnswer1,
           techniqueAnswer2.value.trim() || savedTechniqueAnswer2,
@@ -1066,18 +1070,25 @@
       lastDreamData = {
         message,
         emotions: details.emotions.join(', '),
-        associations: details.associations.join(', '),
-        color: details.color,
+        classifications: details.classifications.join(', '),
+        intensity: String(details.intensity),
         technique: details.technique
       };
       thanksModalBg.classList.add('active');
       textarea.value = '';
-      emotions.forEach(e => e.style.filter = '');
-      assocs.forEach(a => a.style.filter = '');
-      colors.forEach(c => c.style.outline = '');
+
+      // Сброс выделений
+      document.querySelectorAll('.emotion').forEach(el => el.style.filter = '');
+      document.querySelectorAll('.assoc').forEach(a => a.style.filter = '');
       selectedEmotions = [];
       selectedAssocs = [];
-      selectedColor = '';
+      // Сброс интенсивности к 5
+      if (intensitySlider) {
+        intensitySlider.value = 5;
+        selectedIntensity = 5;
+      }
+      if (intensityValue) intensityValue.textContent = '5/10';
+
       savedTechniqueAnswer1 = '';
       savedTechniqueAnswer2 = '';
       savedTechniqueAnswer3 = '';
