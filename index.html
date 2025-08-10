@@ -205,7 +205,7 @@
       100% { transform: translateX(-5px);}
     }
     button[type="submit"]:active, .dream-glow-btn:active {
-      background: linear-gradient(90deg, #5a8ec7 0%, #f7d6b6 100%);
+      background: linear-gradient(90deg, #5a8ec7 0%, #f7d6б6 100%);
     }
     .modal-bg {
       display: none;
@@ -360,6 +360,21 @@
       -webkit-appearance: none;
       appearance: none;
     }
+
+    /* Единая типографика вопросов */
+    .details-modal .details-q-title {
+      font-size: 1.02rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--blue);
+    }
+    .details-modal .details-q-subtitle {
+      font-size: 0.92rem;
+      font-weight: 400;
+      opacity: 0.9;
+      margin-bottom: 8px;
+    }
+
     .details-oval {
       background: var(--cloud-alpha, rgba(183,170,255,0.55));
       border-radius: 999px;
@@ -435,12 +450,6 @@
       margin-bottom: 14px;
       width: 100%;
     }
-    .details-modal .details-q-title {
-      font-size: 0.92rem;
-      font-weight: 500;
-      margin-bottom: 4px;
-      color: var(--blue);
-    }
     .details-modal .details-emojis span, .details-modal .details-colors span {
       font-size: 1.2rem;
       margin-right: 8px;
@@ -451,14 +460,31 @@
     .details-modal .details-emojis span:hover, .details-modal .details-colors span:hover {
       filter: brightness(1.1);
     }
-    .details-modal .details-colors span {
-      display: inline-block;
-      width: 24px;
-      height: 24px;
-      border: 2px solid #fff;
-      box-shadow: 0 0 4px #b7aaff55;
-      margin-right: 8px;
+
+    /* Список выбора (эмоции/классификации) */
+    .details-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
     }
+    .details-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 1px 6px 0 #b7aaff22;
+      margin-bottom: 8px;
+      background: #ffffff;
+    }
+    .details-list li:hover {
+      background: #f7f7ff;
+      box-shadow: 0 2px 12px 0 #b7aaff33;
+    }
+
     .details-modal .dream-glow-btn {
       margin-top: 10px;
       font-size: 1.08rem;
@@ -696,64 +722,84 @@
   <div class="details-modal-bg" id="detailsModalBg" aria-modal="true" role="dialog">
     <div class="details-modal" id="detailsModal">
       <button class="close-modal" id="closeDetailsModal" aria-label="Закрыть">&times;</button>
-      <!-- Шаг 1: детали сна -->
+
+      <!-- Шаг 1: эмоции -->
       <div id="detailsStep1">
         <div class="details-question">
           <div class="details-q-title">Какие эмоции вы испытали?</div>
-          <div id="emotions" class="details-emojis" style="line-height: 2;">
-            <span class="emotion" data-value="радость" title="радость">😊 радость</span>
-            <span class="emotion" data-value="печаль" title="печаль">😢 печаль</span>
-            <span class="emotion" data-value="гнев" title="гнев">😡 гнев</span>
-            <span class="emotion" data-value="отвращение" title="отвращение">🤢 отвращение</span>
-            <span class="emotion" data-value="удивление" title="удивление">😲 удивление</span>
-            <span class="emotion" data-value="страдание (горе)" title="страдание (горе)">😭 страдание (горе)</span>
-            <span class="emotion" data-value="волнение (интерес)" title="волнение (интерес)">🤔 волнение (интерес)</span>
-            <span class="emotion" data-value="презрение" title="презрение">😒 презрение</span>
-            <span class="emotion" data-value="смущение" title="смущение">😳 смущение</span>
-            <span class="emotion" data-value="стыд" title="стыд">🙈 стыд</span>
-            <span class="emotion" data-value="вина" title="вина">😔 вина</span>
-          </div>
+          <div class="details-q-subtitle">Можно выбрать несколько вариантов</div>
+          <ul id="emotionsList" class="details-list">
+            <li data-value="радость"><span class="emotion" title="радость">😊</span><span>радость</span></li>
+            <li data-value="печаль"><span class="emotion" title="печаль">😢</span><span>печаль</span></li>
+            <li data-value="гнев"><span class="emotion" title="гнев">😡</span><span>гнев</span></li>
+            <li data-value="отвращение"><span class="emotion" title="отвращение">🤢</span><span>отвращение</span></li>
+            <li data-value="удивление"><span class="emotion" title="удивление">😲</span><span>удивление</span></li>
+            <li data-value="страдание (горе)"><span class="emotion" title="страдание (горе)">😭</span><span>страдание (горе)</span></li>
+            <li data-value="волнение (интерес)"><span class="emotion" title="волнение (интерес)">🤔</span><span>волнение (интерес)</span></li>
+            <li data-value="презрение"><span class="emotion" title="презрение">😒</span><span>презрение</span></li>
+            <li data-value="смущение"><span class="emotion" title="смущение">😳</span><span>смущение</span></li>
+            <li data-value="стыд"><span class="emotion" title="стыд">🙈</span><span>стыд</span></li>
+            <li data-value="вина"><span class="emotion" title="вина">😔</span><span>вина</span></li>
+          </ul>
         </div>
+        <button id="toStep2Btn" class="dream-glow-btn" style="margin-top:10px;"><span>Далее</span></button>
+      </div>
+
+      <!-- Шаг 2: классификация -->
+      <div id="detailsStep2" style="display:none;">
         <div class="details-question">
-          <div class="details-q-title">Что это было? Вот для выбора классификация:</div>
-          <div id="associations" class="details-emojis" style="line-height: 2;">
-            <span class="assoc" data-value="Повторяющееся сновидение" title="Повторяющееся сновидение">🔁 Повторяющееся сновидение</span>
-            <span class="assoc" data-value="Кошмар" title="Кошмар">😱 Кошмар</span>
-            <span class="assoc" data-value="Сновидение о будущем" title="Сновидение о будущем">🔮 Сновидение о будущем</span>
-            <span class="assoc" data-value="Сновидение о прошлом" title="Сновидение о прошлом">🕰️ Сновидение о прошлом</span>
-            <span class="assoc" data-value="Эротическое сновидение" title="Эротическое сновидение">❤️ Эротическое сновидение</span>
-            <span class="assoc" data-value="Бессмысленное сновидение" title="Бессмысленное сновидение">🌀 Бессмысленное сновидение</span>
-          </div>
+          <div class="details-q-title">Что это было? Вот для выбора классификация</div>
+          <div class="details-q-subtitle">Можно выбрать несколько вариантов</div>
+          <ul id="assocsList" class="details-list">
+            <li data-value="Повторяющееся сновидение"><span class="assoc" title="Повторяющееся сновидение">🔁</span><span>Повторяющееся сновидение</span></li>
+            <li data-value="Кошмар"><span class="assoc" title="Кошмар">😱</span><span>Кошмар</span></li>
+            <li data-value="Сновидение о будущем"><span class="assoc" title="Сновидение о будущем">🔮</span><span>Сновидение о будущем</span></li>
+            <li data-value="Сновидение о прошлом"><span class="assoc" title="Сновидение о прошлом">🕰️</span><span>Сновидение о прошлом</span></li>
+            <li data-value="Эротическое сновидение"><span class="assoc" title="Эротическое сновидение">❤️</span><span>Эротическое сновидение</span></li>
+            <li data-value="Бессмысленное сновидение"><span class="assoc" title="Бессмысленное сновидение">🌀</span><span>Бессмысленное сновидение</span></li>
+          </ul>
         </div>
+        <button id="toStep3Btn" class="dream-glow-btn" style="margin-top:10px;"><span>Далее</span></button>
+      </div>
+
+      <!-- Шаг 3: интенсивность -->
+      <div id="detailsStep3" style="display:none;">
         <div class="details-question">
           <div class="details-q-title">Насколько сильные были ощущения?</div>
+          <div class="details-q-subtitle">Выберите уровень по шкале от 1 до 10</div>
           <div style="width:100%; display:flex; align-items:center; gap:10px;">
             <input id="intensitySlider" type="range" min="1" max="10" value="5" style="flex:1;">
             <div id="intensityValue" style="min-width:46px; text-align:center;">5/10</div>
           </div>
         </div>
-        <button id="toStep2Btn" class="dream-glow-btn" style="margin-top:10px;"><span>Далее</span></button>
-      </div>
-      <!-- Шаг 2: новое задание -->
-      <div id="detailsStep2" style="display:none;">
-        <div class="details-question">
-          <div class="details-q-title" style="font-weight:600;">Что было "перед"?</div>
-          <textarea id="techniqueAnswer1" class="technique-answer" placeholder="Ваш ответ..."></textarea>
-        </div>
-        <button id="toStep3Btn" class="dream-glow-btn" style="margin-top:10px;"><span>Далее</span></button>
-      </div>
-      <!-- Шаг 3: вопрос 2 -->
-      <div id="detailsStep3" style="display:none;">
-        <div class="details-question">
-          <div class="details-q-title" style="font-weight:600;">Ключевые слова в сновидении...</div>
-          <textarea id="techniqueAnswer2" class="technique-answer" placeholder="Запишите ключевые слова"></textarea>
-        </div>
         <button id="toStep4Btn" class="dream-glow-btn" style="margin-top:10px;"><span>Далее</span></button>
       </div>
-      <!-- Шаг 4: вопрос 3 -->
+
+      <!-- Шаг 4: "перед" -->
       <div id="detailsStep4" style="display:none;">
         <div class="details-question">
+          <div class="details-q-title" style="font-weight:600;">Что было "перед"?</div>
+          <div class="details-q-subtitle">Коротко опишите, что предшествовало сновидению</div>
+          <textarea id="techniqueAnswer1" class="technique-answer" placeholder="Ваш ответ..."></textarea>
+        </div>
+        <button id="toStep5Btn" class="dream-glow-btn" style="margin-top:10px;"><span>Далее</span></button>
+      </div>
+
+      <!-- Шаг 5: ключевые слова -->
+      <div id="detailsStep5" style="display:none;">
+        <div class="details-question">
+          <div class="details-q-title" style="font-weight:600;">Ключевые слова в сновидении...</div>
+          <div class="details-q-subtitle">Запишите важные слова или образы</div>
+          <textarea id="techniqueAnswer2" class="technique-answer" placeholder="Запишите ключевые слова"></textarea>
+        </div>
+        <button id="toStep6Btn" class="dream-glow-btn" style="margin-top:10px;"><span>Далее</span></button>
+      </div>
+
+      <!-- Шаг 6: что хочется сделать/понять -->
+      <div id="detailsStep6" style="display:none;">
+        <div class="details-question">
           <div class="details-q-title" style="font-weight:600;">Есть ли что-то, что хочется сделать или понять после этого сна?</div>
+          <div class="details-q-subtitle">Любые мысли, решения или инсайты</div>
           <textarea id="techniqueAnswer3" class="technique-answer" placeholder="Ваш ответ..."></textarea>
         </div>
         <button id="finishDetailsBtn" class="dream-glow-btn" style="margin-top:10px;"><span>Готово</span></button>
@@ -831,19 +877,26 @@
     const detailsOval = document.getElementById('detailsOval');
     const detailsModalBg = document.getElementById('detailsModalBg');
     const closeDetailsModal = document.getElementById('closeDetailsModal');
-    const detailsStep1 = document.getElementById('detailsStep1');
-    const detailsStep2 = document.getElementById('detailsStep2');
-    const detailsStep3 = document.getElementById('detailsStep3');
-    const detailsStep4 = document.getElementById('detailsStep4');
+
+    const detailsStep1 = document.getElementById('detailsStep1'); // эмоции
+    const detailsStep2 = document.getElementById('detailsStep2'); // классификация
+    const detailsStep3 = document.getElementById('detailsStep3'); // интенсивность
+    const detailsStep4 = document.getElementById('detailsStep4'); // "перед"
+    const detailsStep5 = document.getElementById('detailsStep5'); // ключевые слова
+    const detailsStep6 = document.getElementById('detailsStep6'); // действия/инсайты
+
     const toStep2Btn = document.getElementById('toStep2Btn');
     const toStep3Btn = document.getElementById('toStep3Btn');
     const toStep4Btn = document.getElementById('toStep4Btn');
+    const toStep5Btn = document.getElementById('toStep5Btn');
+    const toStep6Btn = document.getElementById('toStep6Btn');
     const finishDetailsBtn = document.getElementById('finishDetailsBtn');
+
     const techniqueAnswer1 = document.getElementById('techniqueAnswer1');
     const techniqueAnswer2 = document.getElementById('techniqueAnswer2');
     const techniqueAnswer3 = document.getElementById('techniqueAnswer3');
 
-    // Новая шкала интенсивности
+    // Шкала интенсивности
     const intensitySlider = document.getElementById('intensitySlider');
     const intensityValue = document.getElementById('intensityValue');
     let selectedIntensity = intensitySlider ? parseInt(intensitySlider.value, 10) : 0;
@@ -879,27 +932,21 @@
       detailsStep2.style.display = step === 2 ? '' : 'none';
       detailsStep3.style.display = step === 3 ? '' : 'none';
       detailsStep4.style.display = step === 4 ? '' : 'none';
+      detailsStep5.style.display = step === 5 ? '' : 'none';
+      detailsStep6.style.display = step === 6 ? '' : 'none';
       techniqueAnswer1.value = savedTechniqueAnswer1;
       techniqueAnswer2.value = savedTechniqueAnswer2;
       techniqueAnswer3.value = savedTechniqueAnswer3;
-      if (step === 2) setTimeout(() => techniqueAnswer1.focus(), 200);
-      if (step === 3) setTimeout(() => techniqueAnswer2.focus(), 200);
-      if (step === 4) setTimeout(() => techniqueAnswer3.focus(), 200);
+      if (step === 4) setTimeout(() => techniqueAnswer1.focus(), 200);
+      if (step === 5) setTimeout(() => techniqueAnswer2.focus(), 200);
+      if (step === 6) setTimeout(() => techniqueAnswer3.focus(), 200);
     }
-    toStep2Btn.onclick = (e) => {
-      e.preventDefault();
-      showStep(2);
-    };
-    toStep3Btn.onclick = (e) => {
-      e.preventDefault();
-      savedTechniqueAnswer1 = techniqueAnswer1.value;
-      showStep(3);
-    };
-    toStep4Btn.onclick = (e) => {
-      e.preventDefault();
-      savedTechniqueAnswer2 = techniqueAnswer2.value;
-      showStep(4);
-    };
+
+    toStep2Btn.onclick = (e) => { e.preventDefault(); showStep(2); };
+    toStep3Btn.onclick = (e) => { e.preventDefault(); showStep(3); };
+    toStep4Btn.onclick = (e) => { e.preventDefault(); showStep(4); };
+    toStep5Btn.onclick = (e) => { e.preventDefault(); savedTechniqueAnswer1 = techniqueAnswer1.value; showStep(5); };
+    toStep6Btn && (toStep6Btn.onclick = (e) => { e.preventDefault(); savedTechniqueAnswer2 = techniqueAnswer2.value; showStep(6); });
     finishDetailsBtn.onclick = (e) => {
       e.preventDefault();
       savedTechniqueAnswer3 = techniqueAnswer3.value;
@@ -907,33 +954,39 @@
       showStep(1);
     };
 
-    const emotions = document.querySelectorAll('.emotion');
+    // Выбор эмоций (множественный, список)
+    const emotionsList = document.getElementById('emotionsList');
     let selectedEmotions = [];
-    emotions.forEach(el => {
-      el.onclick = () => {
-        const val = el.getAttribute('data-value');
+    emotionsList.querySelectorAll('li').forEach(li => {
+      li.onclick = () => {
+        const val = li.getAttribute('data-value');
         if (selectedEmotions.includes(val)) {
           selectedEmotions = selectedEmotions.filter(v => v !== val);
-          el.style.filter = '';
+          li.style.boxShadow = '0 1px 6px 0 #b7aaff22';
+          li.style.background = '#ffffff';
         } else {
           selectedEmotions.push(val);
-          el.style.filter = 'drop-shadow(0 0 6px #6ca6e3)';
+          li.style.boxShadow = '0 0 0 2px #6ca6e399, 0 2px 12px 0 #b7aaff55';
+          li.style.background = '#f5faff';
         }
         updateDetailsOvalColor();
       };
     });
 
-    const assocs = document.querySelectorAll('.assoc');
+    // Выбор классификаций (множественный, список)
+    const assocsList = document.getElementById('assocsList');
     let selectedAssocs = [];
-    assocs.forEach(a => {
-      a.onclick = () => {
-        const val = a.getAttribute('data-value');
+    assocsList.querySelectorAll('li').forEach(li => {
+      li.onclick = () => {
+        const val = li.getAttribute('data-value');
         if (selectedAssocs.includes(val)) {
           selectedAssocs = selectedAssocs.filter(v => v !== val);
-          a.style.filter = '';
+          li.style.boxShadow = '0 1px 6px 0 #b7aaff22';
+          li.style.background = '#ffffff';
         } else {
           selectedAssocs.push(val);
-          a.style.filter = 'drop-shadow(0 0 6px #b7aaff)';
+          li.style.boxShadow = '0 0 0 2px #b7aaff99, 0 2px 12px 0 #b7aaff55';
+          li.style.background = '#f5faff';
         }
         updateDetailsOvalColor();
       };
@@ -959,6 +1012,7 @@
         savedTechniqueAnswer2 ||
         savedTechniqueAnswer3;
 
+      const detailsOval = document.getElementById('detailsOval');
       detailsOval.classList.remove('green', 'orange');
       if (allFilled) {
         detailsOval.classList.add('green');
@@ -975,7 +1029,7 @@
 
     let lastDreamData = null;
 
-   // --- Модалка благодарности с контактом ---
+    // --- Модалка благодарности с контактом ---
     const thanksModalBg = document.getElementById('thanksModalBg');
     const closeThanksModal = document.getElementById('closeThanksModal');
     const contactInput = document.getElementById('contactInput');
@@ -1036,7 +1090,7 @@
       if (e.key === 'Escape' && thanksModalBg.classList.contains('active')) closeThanksModal.onclick();
     });
 
-    // --- Вот тут изменённый обработчик! ---
+    // --- Закрытие подтверждения ---
     closeConfirmModal.onclick = () => {
       confirmModalBg.classList.remove('active');
       confirmModalBg.style.display = 'none';
@@ -1065,7 +1119,7 @@
           techniqueAnswer1.value.trim() || savedTechniqueAnswer1,
           techniqueAnswer2.value.trim() || savedTechniqueAnswer2,
           techniqueAnswer3.value.trim() || savedTechniqueAnswer3
-        ].filter(Boolean).join('\n\n')
+        ].filter(Boolean).join('\\n\\n')
       };
       lastDreamData = {
         message,
@@ -1077,12 +1131,12 @@
       thanksModalBg.classList.add('active');
       textarea.value = '';
 
-      // Сброс выделений
-      document.querySelectorAll('.emotion').forEach(el => el.style.filter = '');
-      document.querySelectorAll('.assoc').forEach(a => a.style.filter = '');
+      // Сброс выделений и значений
+      emotionsList.querySelectorAll('li').forEach(li => { li.style.boxShadow = '0 1px 6px 0 #b7aaff22'; li.style.background = '#ffffff'; });
+      assocsList.querySelectorAll('li').forEach(li => { li.style.boxShadow = '0 1px 6px 0 #b7aaff22'; li.style.background = '#ffffff'; });
       selectedEmotions = [];
       selectedAssocs = [];
-      // Сброс интенсивности к 5
+
       if (intensitySlider) {
         intensitySlider.value = 5;
         selectedIntensity = 5;
