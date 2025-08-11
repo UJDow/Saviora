@@ -205,7 +205,7 @@
       100% { transform: translateX(-5px);}
     }
     button[type="submit"]:active, .dream-glow-btn:active {
-      background: linear-gradient(90deg, #5a8ec7 0%, #f7d6б6 100%);
+      background: linear-gradient(90deg, #5a8ec7 0%, #f7d6b6 100%);
     }
     .modal-bg {
       display: none;
@@ -667,27 +667,87 @@
       align-items: center;
       gap: 10px;
     }
-.pdf-btn {
-  display: inline-block;
-  margin-top: 18px;
-  padding: 14px 24px;
-  font-size: 1.08rem;
-  font-weight: 700;
-  color: #fff;
-  background: linear-gradient(90deg, var(--blue) 0%, #ffe6c9 100%);
-  border-radius: 32px;
-  text-decoration: none;
-  box-shadow: 0 2px 12px 0 #ffe6c9;
-  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-  text-align: center;
-  text-shadow: 0 1px 2px #6ca6e3bb, 0 0 16px var(--glow1), 0 0 32px var(--glow2);
-}
-.pdf-btn:hover, .pdf-btn:focus {
-  background: linear-gradient(90deg, #5a8ec7 0%, #f7d6b6 100%);
-  color: #fff;
-  text-decoration: none;
-  text-shadow: 0 1px 2px #fff6e9bb, 0 0 16px var(--glow2), 0 0 32px var(--glow3);
-}
+    .pdf-btn {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 14px 24px;
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(90deg, var(--blue) 0%, #ffe6c9 100%);
+      border-radius: 32px;
+      text-decoration: none;
+      box-shadow: 0 2px 12px 0 #ffe6c9;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      text-align: center;
+      text-shadow: 0 1px 2px #6ca6e3bb, 0 0 16px var(--glow1), 0 0 32px var(--glow2);
+    }
+    .pdf-btn:hover, .pdf-btn:focus {
+      background: linear-gradient(90deg, #5a8ec7 0%, #f7d6b6 100%);
+      color: #fff;
+      text-decoration: none;
+      text-shadow: 0 1px 2px #fff6e9bb, 0 0 16px var(--glow2), 0 0 32px var(--glow3);
+    }
+
+    /* Оптимизация производительности */
+
+    /* 1) Если пользователь предпочитает меньше анимации */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+
+    /* 2) Мобильная оптимизация: упрощение фона и эффектов */
+    @media (max-width: 600px) {
+      .background-overlay {
+        background-attachment: scroll !important;
+        opacity: 0.18 !important;
+      }
+      body::after {
+        backdrop-filter: none !important;
+        mix-blend-mode: normal !important;
+        background: none !important;
+      }
+      .container,
+      .dream-glow-btn,
+      textarea,
+      .modal,
+      .waitlist-header-btn,
+      .details-oval,
+      .details-modal {
+        animation: none !important;
+      }
+      .container,
+      .modal,
+      .details-modal,
+      .dream-glow-btn,
+      textarea,
+      .waitlist-header-btn,
+      .details-oval {
+        box-shadow: 0 1px 6px rgba(0,0,0,0.08) !important;
+        text-shadow: none !important;
+      }
+      .dream-glow-btn span {
+        animation: none !important;
+        text-shadow: none !important;
+      }
+      .main-phrase .emoji,
+      .details-list .emotion,
+      .details-list .assoc {
+        filter: none !important;
+      }
+    }
+
+    /* 3) Лёгкий режим по классу .lite (можно включить программно) */
+    body.lite .background-overlay { background-attachment: scroll !important; opacity: 0.15 !important; }
+    body.lite::after { backdrop-filter: none !important; mix-blend-mode: normal !important; background: none !important; }
+    body.lite .container,
+    body.lite .modal,
+    body.lite .details-modal,
+    body.lite .dream-glow-btn,
+    body.lite textarea,
+    body.lite .waitlist-header-btn,
+    body.lite .details-oval { animation: none !important; box-shadow: 0 1px 6px rgba(0,0,0,0.08) !important; text-shadow: none !important; }
+    body.lite .dream-glow-btn span { animation: none !important; text-shadow: none !important; }
   </style>
 </head>
 <body>
@@ -841,18 +901,18 @@
     </div>
   </div>
 
-<!-- Новая модалка подтверждения -->
-<div class="modal-bg" id="confirmModalBg" aria-modal="true" role="dialog" style="display:none;">
-  <div class="modal" id="confirmModal">
-    <button class="close-modal" id="closeConfirmModal" aria-label="Закрыть">&times;</button>
-    <div class="success-message">
-      Saviora скоро тихонько постучится
-      <a href="SAVIORA.pdf" download class="pdf-btn">
-        Мини-гайд "Как относиться к сновидениям"
-      </a>
+  <!-- Модалка подтверждения -->
+  <div class="modal-bg" id="confirmModalBg" aria-modal="true" role="dialog" style="display:none;">
+    <div class="modal" id="confirmModal">
+      <button class="close-modal" id="closeConfirmModal" aria-label="Закрыть">&times;</button>
+      <div class="success-message">
+        Saviora скоро тихонько постучится
+        <a href="SAVIORA.pdf" download class="pdf-btn">
+          Мини-гайд "Как относиться к сновидениям"
+        </a>
+      </div>
     </div>
   </div>
-</div>
 
   <!-- Модалка App Waitlist -->
   <div class="modal-bg" id="modalBg" aria-modal="true" role="dialog">
@@ -1119,7 +1179,7 @@
           techniqueAnswer1.value.trim() || savedTechniqueAnswer1,
           techniqueAnswer2.value.trim() || savedTechniqueAnswer2,
           techniqueAnswer3.value.trim() || savedTechniqueAnswer3
-        ].filter(Boolean).join('\\n\\n')
+        ].filter(Boolean).join('\n\n')
       };
       lastDreamData = {
         message,
