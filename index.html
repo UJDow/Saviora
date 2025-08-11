@@ -1119,12 +1119,18 @@
       sendContactBtn.textContent = 'Отправка...';
       fetch("https://formspree.io/f/xanbpkgn", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify({
           ...lastDreamData,
           contact
         })
-      }).then(() => {
+      }).then(async (res) => {
+        if (!res.ok) {
+          throw new Error('Formspree submission failed');
+        }
         hideContactFields();
         sendContactBtn.textContent = 'Спасибо!';
         confirmModalBg.style.display = 'flex';
@@ -1132,7 +1138,8 @@
         sendContactBtn.disabled = false;
         resetContactModal();
         lastDreamData = null;
-      }).catch(() => {
+      }).catch((err) => {
+        console.error(err);
         sendContactBtn.disabled = false;
         sendContactBtn.textContent = 'Ошибка. Попробуйте ещё раз';
       });
@@ -1181,6 +1188,7 @@
           techniqueAnswer3.value.trim() || savedTechniqueAnswer3
         ].filter(Boolean).join('\n\n')
       };
+
       lastDreamData = {
         message,
         emotions: details.emotions.join(', '),
