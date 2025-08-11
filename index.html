@@ -897,7 +897,7 @@
       </div>
       <div class="contact-disclaimer"></div>
       <input type="text" id="contactInput" class="contact-input" placeholder="@" />
-      <button class="contact-btn" id="sendContactBtn">Отправить</button>
+      <button type="button" class="contact-btn" id="sendContactBtn">Отправить</button>
     </div>
   </div>
 
@@ -1112,25 +1112,24 @@
       document.querySelector('.contact-disclaimer').style.display = 'none';
     }
 
-    sendContactBtn.onclick = function() {
+    sendContactBtn.onclick = async function() {
       if (!lastDreamData) return;
       const contact = contactInput.value.trim();
       sendContactBtn.disabled = true;
       sendContactBtn.textContent = 'Отправка...';
-      fetch("https://formspree.io/f/xanbpkgn", {
-        method: "POST",
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          ...lastDreamData,
-          contact
-        })
-      }).then(async (res) => {
-        if (!res.ok) {
-          throw new Error('Formspree submission failed');
-        }
+      try {
+        const res = await fetch("https://formspree.io/f/xanbpkgn", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            ...lastDreamData,
+            contact
+          })
+        });
+        if (!res.ok) throw new Error('Formspree response not ok');
         hideContactFields();
         sendContactBtn.textContent = 'Спасибо!';
         confirmModalBg.style.display = 'flex';
@@ -1138,11 +1137,10 @@
         sendContactBtn.disabled = false;
         resetContactModal();
         lastDreamData = null;
-      }).catch((err) => {
-        console.error(err);
+      } catch (err) {
         sendContactBtn.disabled = false;
         sendContactBtn.textContent = 'Ошибка. Попробуйте ещё раз';
-      });
+      }
     };
 
     closeThanksModal.onclick = () => {
@@ -1188,7 +1186,6 @@
           techniqueAnswer3.value.trim() || savedTechniqueAnswer3
         ].filter(Boolean).join('\n\n')
       };
-
       lastDreamData = {
         message,
         emotions: details.emotions.join(', '),
